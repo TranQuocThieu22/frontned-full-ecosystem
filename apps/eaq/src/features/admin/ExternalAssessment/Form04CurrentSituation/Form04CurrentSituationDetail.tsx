@@ -9,8 +9,8 @@ import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQ
 import { Modal, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconEye } from "@tabler/icons-react";
-import EvidenceUsageTab from "../../ModuleEvidenceManagement/EvidenceUsageTab/EvidenceUsageTab";
-import EvidenceVersionsTab from "../../ModuleEvidenceManagement/EvidenceVersionsTab/EvidenceVersionsTab";
+import EvidenceUsageTab from "@/shared/components/evidence/EvidenceUsageTab/EvidenceUsageTab";
+import EvidenceVersionsTab from "@/shared/components/evidence/EvidenceVersionsTab/EvidenceVersionsTab";
 
 export default function Form04CurrentSituationDetail({ evidence }: { evidence: IEvidence }) {
     const disc = useDisclosure();

@@ -30,9 +30,6 @@ export default function CheckStudentProposalViewButton({ values }: IProps) {
                 size: "70vw",
                 title: "Chi tiết đề xuất"
             }}
-            scrollAreaAutosizeProps={{
-                h: "auto"
-            }}
             onSubmit={() => { }}
             actionIconProps={{
                 actionType: "view",

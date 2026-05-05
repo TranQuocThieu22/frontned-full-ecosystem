@@ -1,6 +1,6 @@
 import ILimitationDetail from "@/shared/interfaces/limitation/ILimitationDetail";
 import { IReport } from "@/shared/interfaces/report/IReport";
-import { Accordion, Box, Group, Stack, Text } from "@mantine/core";
+import { Accordion, Box, Group, Paper, Stack, Text } from "@mantine/core";
 import ViewDetailResultRow from "./ViewDetailResultRow";
 import { useMemo } from "react";
 
@@ -9,13 +9,11 @@ export default function ViewDetailResult({ data }: { data?: ILimitationDetail; }
     return Object.values(data?.eaqReports || {});
   }, [data?.eaqReports])
   return (
-    <>
-      <Accordion className="border" mb={4}>
+    <Paper>
+      <Accordion className="border" >
         <Accordion.Item value="3">
           <Accordion.Control>
-            <Group
-              className={`ml-1 border-l-4 border-l-[var(--mantine-color-blue-4)] px-2 w-fit bg-[var(--mantine-color-blue-1)]`}
-            >
+            <Group ml={1} >
               <Text fw={600} c="var(--mantine-color-blue-9)">
                 Danh sách kết quả thực hiện đảm bảo chất lượng CTĐT
               </Text>
@@ -51,6 +49,6 @@ export default function ViewDetailResult({ data }: { data?: ILimitationDetail; }
           </Accordion.Panel>
         </Accordion.Item>
       </Accordion>
-    </>
+    </Paper>
   );
 }

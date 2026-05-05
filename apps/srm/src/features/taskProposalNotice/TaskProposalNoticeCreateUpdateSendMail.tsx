@@ -3,12 +3,13 @@ import { EnumLabelProposalNotificationType, EnumProposalNotificationType } from 
 import useAcademicYearStore from "@/shared/features/AcademicYear/useAcademicYearStore";
 import { SRMNotificationRecipients } from "@/shared/interfaces/SRMNotificationRecipients";
 import { SRMProposalNotification } from "@/shared/interfaces/SRMProposalNotification";
-import { applyReadOnlyToChildren, CustomButtonCreateUpdate } from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
+import { CustomButtonCreateUpdate } from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
 import { CustomDateInput } from "@aq-fe/core-ui/shared/components/input/CustomDateInput";
 import { CustomFileInput } from "@aq-fe/core-ui/shared/components/input/CustomFileInput";
 import { CustomRichTextEditor } from "@aq-fe/core-ui/shared/components/input/CustomRichTextEditor";
 import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
 import { CustomTabs } from "@aq-fe/core-ui/shared/components/navigation/CustomTabs/CustomTabs";
+import { applyReadOnlyToChildren } from "@aq-fe/core-ui/shared/libs/applyReadOnlyToChildren";
 import { actionType } from "@aq-fe/core-ui/shared/types/actionType";
 import { fileUtils } from "@aq-fe/core-ui/shared/utils/fileUtils";
 import { SimpleGrid, Stack } from "@mantine/core";
@@ -77,7 +78,6 @@ export default function TaskProposalNoticeCreateUpdateSendMail({
                 title: "Chi tiết thông báo",
                 size: "80%"
             }}
-            scrollAreaAutosizeProps={{ h: "65vh" }}
             isUpdate={isUpdate}
             useCustomReactMutationProps={{
                 ...(actionType == "sendMail" && ({

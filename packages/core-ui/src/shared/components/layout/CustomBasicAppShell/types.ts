@@ -10,6 +10,9 @@ export interface I_BasicAppShell_LinkItem {
     links?: I_BasicAppShell_LinkItem[];
     note?: string;
     icon?: ReactNode;
+    isHidden?: boolean;
+    isHideFromSearch?: boolean;
+    parentPageId?: number;
 }
 
 export interface CustomBasicAppShellProps {
@@ -19,5 +22,8 @@ export interface CustomBasicAppShellProps {
     extraTopRight?: React.ReactNode;
     title?: string;
     logoutRedirect?: string;
-
+    /** Tắt gọi API pageService.getAll() (page content) nếu true */
+    disablePageContentQuery?: boolean;
+    /** Tắt gọi API GetAQModule (logo, favicon, module name) nếu true */
+    disableGetAQModuleQuery?: boolean;
 }

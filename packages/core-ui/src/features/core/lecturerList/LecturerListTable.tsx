@@ -1,7 +1,7 @@
 import { accountService } from '@aq-fe/core-ui/shared/APIs/accountService'
 import { AQDataSynchronizationService } from '@aq-fe/core-ui/shared/APIs/AQDataSynchronizationService'
 import { CustomColumnDef } from '@aq-fe/core-ui/shared/components/dataDisplay/CustomDataTable'
-import CustomButtonModalSync from '@aq-fe/core-ui/shared/components/withAPI/CustomButtonModalSync'
+import { CustomButtonModalSync } from "@aq-fe/core-ui/shared/components/withAPI/CustomButtonModalSync";
 import { CustomDataTableAPI } from '@aq-fe/core-ui/shared/components/withAPI/CustomDataTableAPI'
 import { useCustomReactQuery } from '@aq-fe/core-ui/shared/hooks/useCustomReactQuery'
 import { User } from '@aq-fe/core-ui/shared/interfaces/User'

@@ -1,11 +1,11 @@
 "use client"
-import { MyPageContent } from 'aq-fe-framework/components'
-import { F_accountManagement } from 'aq-fe-framework/modules-features'
+import { AccountManagementUserTable } from '@aq-fe/core-ui/features/core/accountManagement/AccountManagementUserTable'
+import { CustomPageContent } from '@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent'
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <F_accountManagement />
-        </MyPageContent>
+        <CustomPageContent>
+            <AccountManagementUserTable />
+        </CustomPageContent>
     )
 }

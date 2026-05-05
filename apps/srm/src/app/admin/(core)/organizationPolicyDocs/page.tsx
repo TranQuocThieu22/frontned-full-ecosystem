@@ -1,10 +1,10 @@
 "use client"
 
 import { documentTypesObject } from "@/shared/consts/object/documentTypesObject"
-import { F_organizationPolicyDocs } from "@aq-fe/core-ui/features/core/organizationPolicyDocs/F_organizationPolicyDocs"
+import { OrganizationPolicyDocsLayout } from "@aq-fe/core-ui/features/core/organizationPolicyDocs/OrganizationPolicyDocsLayout"
 
 export default function Page() {
     return (
-        <F_organizationPolicyDocs RegulationsTypeId={documentTypesObject.Regulations} />
+        <OrganizationPolicyDocsLayout documentType={documentTypesObject.Regulations} />
     )
 }

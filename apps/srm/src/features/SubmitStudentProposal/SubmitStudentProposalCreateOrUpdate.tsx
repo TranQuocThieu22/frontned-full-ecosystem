@@ -95,9 +95,6 @@ export default function SubmitStudentProposalCreateOrUpdate({ initValues }: { in
 
     return (
         <CustomButtonCreateUpdate
-            scrollAreaAutosizeProps={{
-                h: "auto",
-            }}
             modalProps={{
                 size: "70vw",
                 title: initValues

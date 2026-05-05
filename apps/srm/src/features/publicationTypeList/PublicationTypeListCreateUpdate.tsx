@@ -79,9 +79,6 @@ export default function PublicationTypeListCreateUpdate({ values, actionType }: 
       modalProps={{
         size: "40vw",
       }}
-      scrollAreaAutosizeProps={{
-        h: "auto"
-      }}
       onSubmit={handleSubmit}
       form={form}
       isUpdate={!!values}

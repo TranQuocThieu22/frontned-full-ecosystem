@@ -4,15 +4,17 @@ export const departmentType: Record<number, string> = {
     3: "Phòng",
     4: "Trung tâm",
 };
-export enum departmenType {
+
+export enum DepartmentType {
     Falcuty = 1,
     Subject = 2,
     Department = 3,
     Center = 4,
 }
-export const departmentLabel: Record<departmenType, string> = {
-    [departmenType.Falcuty]: "Khoa",
-    [departmenType.Subject]: "Bộ môn",
-    [departmenType.Department]: "Phòng",
-    [departmenType.Center]: "Trung tâm",
+
+export const DepartmentLabel: Record<DepartmentType, string> = {
+    [DepartmentType.Falcuty]: "Khoa",
+    [DepartmentType.Subject]: "Bộ môn",
+    [DepartmentType.Department]: "Phòng",
+    [DepartmentType.Center]: "Trung tâm",
 };

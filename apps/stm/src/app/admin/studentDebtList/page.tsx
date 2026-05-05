@@ -1,11 +1,11 @@
 "use client";
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_jzmczvppf6_Read from "@/modules-features/admin/jzmczvppf6/F_jzmczvppf6_Read";
+import F_jzmczvppf6_Read from "@/features/admin/jzmczvppf6/F_jzmczvppf6_Read";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <F_jzmczvppf6_Read />
-        </MyPageContent>
+        </CustomPageContent>
     );
 }

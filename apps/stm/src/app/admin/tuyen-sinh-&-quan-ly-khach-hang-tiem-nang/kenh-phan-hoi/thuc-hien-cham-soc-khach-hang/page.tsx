@@ -1,12 +1,12 @@
 'use client'
 
-import CustomerCareExecutionTable from "@/modules-features/admin/ModuleMECustomerCareExecution/CustomerCareExecutionTable"
-import { MyPageContent } from "aq-fe-framework/components"
+import CustomerCareExecutionTable from "@/features/admin/ModuleMECustomerCareExecution/CustomerCareExecutionTable"
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent"
 
 export default function page() {
   return (
-    <MyPageContent>
-        <CustomerCareExecutionTable/>
-    </MyPageContent>
+    <CustomPageContent>
+      <CustomerCareExecutionTable />
+    </CustomPageContent>
   )
 }

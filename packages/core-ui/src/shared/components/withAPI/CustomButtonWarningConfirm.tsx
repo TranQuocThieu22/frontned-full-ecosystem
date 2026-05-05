@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import { CustomReactMutationProps, useCustomReactMutation } from "../../hooks/useCustomReactMutation";
 import { BaseEntity } from "../../interfaces/BaseEntity";
 import { CustomApiResponse } from "../../libs/createBaseApi";
-import { SafeOmitType } from "../../types/safeOmitType";
+import { SafeOmitType } from "@aq-fe/core-ui/shared/types/safeOmitType";
 import { CustomButton } from "../button/CustomButton/CustomButton";
 import { CustomButtonModal, CustomButtonModalProps } from "../button/CustomButtonModal/CustomButtonModal";
 import { CustomFlexEnd } from "../layout/CustomFlexEnd";

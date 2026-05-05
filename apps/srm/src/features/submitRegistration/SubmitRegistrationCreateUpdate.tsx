@@ -96,11 +96,20 @@ export default function SubmitRegistrationCreateUpdate({
                             <SimpleGrid cols={{ base: 1, md: 2 }}>
                                 <CustomTextInput withAsterisk label="Tên đề tài" {...form.getInputProps("registerName")} />
                                 <CustomTextInput withAsterisk label="Thời gian thực hiện (Tháng)" {...form.getInputProps("duration")} />
-                                <Shared_AreaSelect withAsterisk {...form.getInputProps("srmAreaId")} />
+                                <Shared_AreaSelect
+                                    withAsterisk
+                                    value={form.values.srmAreaId}
+                                    onChange={(value) => form.setFieldValue("srmAreaId", value)}
+                                    error={form.errors.srmAreaId}
+                                />
                                 <CustomNumberInput withAsterisk inputType="currency" label="Tổng kinh phí thực hiện" {...form.getInputProps("totalCost")} />
                                 <MonthPickerInput withAsterisk label="Từ tháng/ năm" placeholder="Chọn tháng/ năm" {...form.getInputProps("fromDate")} />
                                 <MonthPickerInput withAsterisk label="Đến tháng/ năm" placeholder="Chọn tháng/ năm" {...form.getInputProps("toDate")} />
-                                <Shared_TypeSelect {...form.getInputProps("srmTypeId")} />
+                                <Shared_TypeSelect
+                                    value={form.values.srmTypeId}
+                                    onChange={(value) => form.setFieldValue("srmTypeId", value)}
+                                    error={form.errors.srmTypeId}
+                                />
                                 <CustomFileInput
                                     label="File thuyết minh"
                                     value={new File([], form.getValues().attachmentDetail?.fileName!)}

@@ -1,12 +1,12 @@
 'use client'
 
-import ExchangeGiftsLayout from "@/modules-features/admin/ModuleMEExchangeGifts/ExchangeGiftsLayout";
-import { MyPageContent } from "aq-fe-framework/components";
+import ExchangeGiftsLayout from "@/features/admin/ModuleMEExchangeGifts/ExchangeGiftsLayout";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <ExchangeGiftsLayout />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

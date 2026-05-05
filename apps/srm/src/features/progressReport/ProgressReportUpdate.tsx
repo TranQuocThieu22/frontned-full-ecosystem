@@ -21,9 +21,6 @@ export default function ProgressReportUpdate({ isCheck, readOnly, historyReport 
                 title: "Cập nhật báo cáo định kỳ",
                 size: "80vw"
             }}
-            toolTipProps={{
-                label: readOnly && "Xem chi tiết"
-            }}
             isActionIcon
             disclosure={disc}
             actionIconProps={{

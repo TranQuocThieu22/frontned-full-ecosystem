@@ -37,6 +37,8 @@ export function CustomAppSpotlight({ menu }: { menu: I_BasicAppShell_LinkItem[] 
     }, [menu]);
 
     const filteredItems = allChildItems.filter((item) => {
+        if (item.parentPageId) return false;
+        
         const lowerQuery = query.toLowerCase().trim();
         return (
             item.label.toLowerCase().includes(lowerQuery) ||

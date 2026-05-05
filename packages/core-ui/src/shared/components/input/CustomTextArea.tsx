@@ -6,6 +6,14 @@ interface CustomTextAreaProps extends TextareaProps {
 
 export function CustomTextArea({ label, ...rest }: CustomTextAreaProps) {
     return (
-        <Textarea autosize minRows={5} maxRows={5} label={label} placeholder={label ? `Nhập ${label?.toLowerCase()}` : ""}{...rest} />
+        <Textarea
+            inputWrapperOrder={['label', 'input', 'error', 'description']}
+            autosize
+            minRows={5}
+            maxRows={5}
+            label={label}
+            placeholder={label ? `Nhập ${label?.toLowerCase()}` : ""}
+            {...rest}
+        />
     )
 }

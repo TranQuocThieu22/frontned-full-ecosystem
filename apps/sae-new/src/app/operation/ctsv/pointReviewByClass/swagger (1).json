@@ -1,0 +1,2018 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "AQ IAM API Project",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "/be"
+    }
+  ],
+  "paths": {
+    "/api/academicyear/{tenantId}": {
+      "get": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Get all academic years with pagination and optional related data inclusion.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "CodeOrName",
+            "in": "query",
+            "description": "Filter by code or name (contains, case-insensitive)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "State",
+            "in": "query",
+            "description": "Filter by state. Null = all states.\r\n\r\n1: Draft (Nháp)\r\n\r\n2: Active (Kích hoạt)\r\n\r\n3: Inactive (Ngừng hoạt động)\r\n\r\n4: Archived (Đã lưu trữ)",
+            "schema": {
+              "$ref": "#/components/schemas/AcademicYearState"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Create academic year",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Request parameters",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAcademicYearRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAcademicYearRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAcademicYearRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/academicyear/{tenantId}/{id}": {
+      "put": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Update academic year",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Academic year identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Request parameters",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAcademicYearRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAcademicYearRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAcademicYearRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Delete academic year",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Academic year identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Get academic year by id",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated related data to include.\r\nAvailable values: semesters, scoreFrameworkVersion, semesterCount",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/academicyear/{tenantId}/{id}/activate": {
+      "post": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Activate academic year",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Academic year identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/academicyear/{tenantId}/{id}/archive": {
+      "post": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Archive an academic year",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Academic year identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/academicyear/{tenantId}/current": {
+      "get": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Get current active academic year",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/academicyear/{tenantId}/exists": {
+      "get": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Check if there is an academic year with the specified state",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "State to check. \r\n\r\n1: Draft (Nháp) \r\n\r\n2: Active (Kích hoạt) \r\n\r\n3: Inactive (Ngừng hoạt động) \r\n\r\n4: Archived (Đã lưu trữ) \r\n",
+            "schema": {
+              "$ref": "#/components/schemas/AcademicYearState"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/academicyear/{tenantId}/{id}/criterias": {
+      "get": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Get criteria by academic year id",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Academic year identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/academicyear/{tenantId}/{id}/semesters": {
+      "get": {
+        "tags": [
+          "AcademicYear"
+        ],
+        "summary": "Get semesters by academic year id",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Academic year identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/activity/{tenantId}": {
+      "post": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "The create activity api.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateActivityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateActivityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateActivityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "The delete tenant api.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "CodeOrName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ActivityType"
+            }
+          },
+          {
+            "name": "State",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ActivityState"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/activity/{tenantId}/{id}": {
+      "put": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "The update activity api.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateActivityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateActivityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateActivityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "The delete tenant api.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "The delete tenant api.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/activity/{tenantId}/{id}/register": {
+      "post": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "The register activity API.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterActivityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterActivityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterActivityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/activity/{tenantId}/{id}/import-activity-participations": {
+      "post": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "The import activity participation API.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportActivityParticipationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportActivityParticipationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportActivityParticipationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/activity/{tenantId}/{id}/change-state": {
+      "put": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "The change activity state API.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeActivityStateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeActivityStateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeActivityStateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/scoreframeworkversion/{tenantId}": {
+      "get": {
+        "tags": [
+          "ScoreFrameworkVersion"
+        ],
+        "summary": "Get all score framework versions with optional filter and related data inclusion.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "CodeOrName",
+            "in": "query",
+            "description": "Filter by code or name (contains, case-insensitive)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "State",
+            "in": "query",
+            "description": "Filter by state. Null = all states.\r\n\r\n1: Draft (Nháp)\r\n\r\n2: Published (Xuất bản)\r\n\r\n3: Archived (Đã lưu trữ)",
+            "schema": {
+              "$ref": "#/components/schemas/ScoreFrameworkVersionState"
+            }
+          },
+          {
+            "name": "Include",
+            "in": "query",
+            "description": "Comma-separated related data to include (academicYears, totalMaxScore)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ScoreFrameworkVersion"
+        ],
+        "summary": "Create score framework version API",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Request parameters",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateScoreFrameworkVersionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateScoreFrameworkVersionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateScoreFrameworkVersionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/scoreframeworkversion/{tenantId}/{id}": {
+      "put": {
+        "tags": [
+          "ScoreFrameworkVersion"
+        ],
+        "summary": "Update score framework version API",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Score framework version identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Request parameters",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateScoreFrameworkVersionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateScoreFrameworkVersionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateScoreFrameworkVersionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ScoreFrameworkVersion"
+        ],
+        "summary": "Delete score framework version API",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Score framework version identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ScoreFrameworkVersion"
+        ],
+        "summary": "Get score framework version by Id with optional related data inclusion.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Score framework version identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "description": "Comma-separated related data to include (academicYears, totalMaxScore, criterias).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/scoreframeworkversion/{tenantId}/{id}/publish": {
+      "post": {
+        "tags": [
+          "ScoreFrameworkVersion"
+        ],
+        "summary": "Publish score framework version API",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Score framework version identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/scoreframeworkversion/{tenantId}/{id}/archive": {
+      "post": {
+        "tags": [
+          "ScoreFrameworkVersion"
+        ],
+        "summary": "Archive score framework version API",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Tenant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Score framework version identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/semester/{tenantId}/{id}": {
+      "delete": {
+        "tags": [
+          "Semester"
+        ],
+        "summary": "Xóa học kỳ.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Id của tenant.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id của học kỳ.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/studentselfassessment/{tenantId}/student-save-draft": {
+      "post": {
+        "tags": [
+          "StudentSelfAssessment"
+        ],
+        "summary": "Lưu nháp đánh giá kết quả rèn luyện.\r\nChỉ dành cho sinh viên tự đánh giá.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Id của tenant.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Thông tin đánh giá.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveSelfAssessmentDraftRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveSelfAssessmentDraftRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveSelfAssessmentDraftRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/studentselfassessment/{tenantId}/student-current-semester": {
+      "get": {
+        "tags": [
+          "StudentSelfAssessment"
+        ],
+        "summary": "Lấy thông tin đánh giá hiện tại của sinh viên theo học kỳ đang active.\r\nChỉ dành cho sinh viên tự đánh giá.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Id của tenant.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return academic year detail \r\n\r\n=== State in response ===\r\n\r\n1. Draft. (Nháp)\r\n\r\n2. Pending Class Approval. (Chờ duyệt cấp lớp)\r\n\r\n3. Pending Faculty Approval. (Chờ duyệt cấp khoa)\r\n\r\n4. Pending University Approval. (Chờ duyệt cấp trường)\r\n\r\n5. Approved. (Đã duyệt)\r\n"
+          }
+        }
+      }
+    },
+    "/api/studentselfassessment/{tenantId}/{id}/student-submit": {
+      "post": {
+        "tags": [
+          "StudentSelfAssessment"
+        ],
+        "summary": "Nộp điểm tự đánh giá sinh viên (Chuyển từ Draft -> Pending Class Approval).\r\nChỉ dành cho sinh viên tự đánh giá.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Id của tenant.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id của phiếu tự đánh giá.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/studentselfassessment/{tenantId}/current-semester-class-approval": {
+      "get": {
+        "tags": [
+          "StudentSelfAssessment"
+        ],
+        "summary": "Lấy danh sách phiếu tự đánh giá thuộc học kỳ hiện tại (Dành cho duyệt cấp lớp).",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Id của tenant.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "State",
+            "in": "query",
+            "description": "Trạng thái phiếu đánh giá\r\n1.Draft (Bị trả lại - Đã nộp nhưng bị từ chối)\r\n2.Pending Class Approval (Chờ duyệt cấp lớp)\r\n3.Pending Faculty Approval (Chờ duyệt cấp khoa)",
+            "schema": {
+              "$ref": "#/components/schemas/StudentSelfAssessmentState"
+            }
+          },
+          {
+            "name": "Search",
+            "in": "query",
+            "description": "Tìm kiếm theo tên hoặc mã sinh viên (TODO)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "description": "Sắp xếp: name, score, submittedAt (Mặc định: submittedAt)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderDirection",
+            "in": "query",
+            "description": "Thứ tự sắp xếp: desc, asc (Mặc định: desc)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/studentselfassessment/{tenantId}/{id}": {
+      "get": {
+        "tags": [
+          "StudentSelfAssessment"
+        ],
+        "summary": "Lấy chi tiết phiếu tự đánh giá theo Id.",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Id của tenant.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id của phiếu đánh giá.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/studentselfassessment/{tenantId}/{id}/class-save-draft": {
+      "post": {
+        "tags": [
+          "StudentSelfAssessment"
+        ],
+        "summary": "Lưu nháp phiếu đánh giá cấp lớp (Không chuyển trạng thái).",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Id của tenant.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id của phiếu đánh giá.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Thông tin đánh giá.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassApproveRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassApproveRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassApproveRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/studentselfassessment/{tenantId}/{id}/class-approve": {
+      "post": {
+        "tags": [
+          "StudentSelfAssessment"
+        ],
+        "summary": "Phê duyệt phiếu đánh giá cấp lớp (Lớp duyệt -> Chuyển lên Khoa).",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Id của tenant.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id của phiếu đánh giá.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Thông tin duyệt.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassApproveRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassApproveRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassApproveRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/studentselfassessment/{tenantId}/{id}/class-reject": {
+      "post": {
+        "tags": [
+          "StudentSelfAssessment"
+        ],
+        "summary": "Từ chối phiếu đánh giá cấp lớp (Lớp từ chối -> Quay về Draft để sinh viên sửa).",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "description": "Id của tenant.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id của phiếu đánh giá.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Thông tin từ chối.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentClassRejectRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentClassRejectRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentClassRejectRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AcademicYearCreateUpdateSemesterRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Thời gian bắt đầu",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Thời gian kết thúc",
+            "format": "date-time",
+            "nullable": true
+          },
+          "selfAssessmentOpen": {
+            "type": "string",
+            "description": "Ngày bắt đầu mở cổng tự đánh giá",
+            "format": "date-time",
+            "nullable": true
+          },
+          "selfAssessmentClose": {
+            "type": "string",
+            "description": "Ngày kết thúc mở cổng tự đánh giá",
+            "format": "date-time",
+            "nullable": true
+          },
+          "classApprovalOpen": {
+            "type": "string",
+            "description": "Ngày mở cổng duyệt cấp lớp",
+            "format": "date-time",
+            "nullable": true
+          },
+          "facultyApprovalOpen": {
+            "type": "string",
+            "description": "Ngày mở cổng duyệt cấp khoa",
+            "format": "date-time",
+            "nullable": true
+          },
+          "universityApprovalOpen": {
+            "type": "string",
+            "description": "Ngày mở cổng duyệt cấp trường",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request for create or update semester within academic year."
+      },
+      "AcademicYearState": {
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ActivityState": {
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "ActivityType": {
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "AssessmentClassRejectRequest": {
+        "type": "object",
+        "properties": {
+          "classRejectComment": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChangeActivityStateRequest": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/ActivityState"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClassApproveDetailRequest": {
+        "type": "object",
+        "properties": {
+          "criteriaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "classApprovalScore": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClassApproveRequest": {
+        "type": "object",
+        "properties": {
+          "classApprovalComment": {
+            "type": "string",
+            "nullable": true
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClassApproveDetailRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateAcademicYearRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Mã năm học",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Tên năm học",
+            "nullable": true
+          },
+          "scoreFrameworkVersionId": {
+            "type": "string",
+            "description": "Phiên bản khung điểm",
+            "format": "uuid"
+          },
+          "semesters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcademicYearCreateUpdateSemesterRequest"
+            },
+            "description": "Danh sách học kỳ",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The create academic year request."
+      },
+      "CreateActivityParticipationRequest": {
+        "type": "object",
+        "properties": {
+          "studentCode": {
+            "type": "string",
+            "description": "Mã học sinh.",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "classCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "proposedScore": {
+            "type": "integer",
+            "description": "Điểm đề xuất.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateActivityRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Mã hoạt động.",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Tên hoạt động.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Mô tả hoạt động.",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/ActivityType"
+          },
+          "semesterId": {
+            "type": "string",
+            "description": "Học kì Id.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "quota": {
+            "type": "integer",
+            "description": "Chỉ tiêu đăng ký hoạt động.(Được hiểu là số lượng đăng ký tối đa.)",
+            "format": "int32"
+          },
+          "maxScore": {
+            "type": "integer",
+            "description": "Điểm tối đa của hoạt động.",
+            "format": "int32"
+          },
+          "organizerUnit": {
+            "type": "string",
+            "description": "Đơn vị tổ chức.",
+            "nullable": true
+          },
+          "criteriaId": {
+            "type": "string",
+            "description": "Tiêu chí Id.",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateScoreFrameworkVersionRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Code",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name",
+            "nullable": true
+          },
+          "state": {
+            "$ref": "#/components/schemas/ScoreFrameworkVersionState"
+          },
+          "criterias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScoreFrameworkVersionCreateUpdateCriteriaRequest"
+            },
+            "description": "List criteria",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Create score framework version request"
+      },
+      "ImportActivityParticipationRequest": {
+        "type": "object",
+        "properties": {
+          "participations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateActivityParticipationRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegisterActivityRequest": {
+        "type": "object",
+        "properties": {
+          "activityId": {
+            "type": "string",
+            "description": "Hoạt động Id.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "studentId": {
+            "type": "string",
+            "description": "Học sinh Id.",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SaveSelfAssessmentDraftDetailRequest": {
+        "type": "object",
+        "properties": {
+          "criteriaId": {
+            "type": "string",
+            "description": "Id của tiêu chí.",
+            "format": "uuid"
+          },
+          "score": {
+            "type": "integer",
+            "description": "Điểm số cho tiêu chí này.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "The detail for saving a draft self assessment."
+      },
+      "SaveSelfAssessmentDraftRequest": {
+        "type": "object",
+        "properties": {
+          "semesterId": {
+            "type": "string",
+            "description": "Id của học kỳ.",
+            "format": "uuid"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SaveSelfAssessmentDraftDetailRequest"
+            },
+            "description": "Danh sách các chi tiết đánh giá.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The request to save a student self assessment as a draft."
+      },
+      "ScoreFrameworkVersionCreateUpdateCriteriaRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "code": {
+            "type": "string",
+            "description": "Code",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name",
+            "nullable": true
+          },
+          "maxScore": {
+            "type": "integer",
+            "description": "Max score",
+            "format": "int32",
+            "nullable": true
+          },
+          "orderIndex": {
+            "type": "integer",
+            "description": "Order index",
+            "format": "int32",
+            "nullable": true
+          },
+          "parentId": {
+            "type": "string",
+            "description": "Parent Id",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request for create or update criteria within score framework version."
+      },
+      "ScoreFrameworkVersionState": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "StudentSelfAssessmentState": {
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "UpdateAcademicYearRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "scoreFrameworkVersionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "semesters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcademicYearCreateUpdateSemesterRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateActivityRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxScore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "organizerUnit": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateScoreFrameworkVersionRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Tên của version",
+            "nullable": true
+          },
+          "state": {
+            "$ref": "#/components/schemas/ScoreFrameworkVersionState"
+          },
+          "criterias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScoreFrameworkVersionCreateUpdateCriteriaRequest"
+            },
+            "description": "List criteria",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "The update score framework version request."
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Enter: Bearer {your JWT token}",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}

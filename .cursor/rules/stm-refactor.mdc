@@ -1,0 +1,43 @@
+---
+description: Refactor STM theo chuẩn SRM/core-ui — services, 1 cấp folder, useCustomReactQuery/Mutation, CustomDataTableAPI, CustomButtonCreateUpdate
+globs: apps/stm/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# STM Refactor conventions
+
+Khi refactor hoặc tạo mới feature trong **STM**, áp dụng các quy ước sau. Chi tiết đầy đủ nằm trong **skill** `.cursor/skills/stm-refactor/SKILL.md`.
+
+## Checklist nhanh
+
+1. **Services**
+   - Dùng `createBaseApi<T>(CONTROLLER, axiosInstance)` từ `@aq-fe/core-ui/shared/libs/createBaseApi`.
+   - File: `shared/APIs/{domain}Service.ts` (hoặc `api/services`), export `{domain}Service`.
+   - Interface `T` trong `shared/interfaces/`, extend `BaseEntity` khi có id/code/name.
+
+2. **Cấu trúc module**
+   - **1 cấp folder** cho mỗi feature: mọi file (Table, CreateOrUpdate, Import…) nằm trực tiếp trong folder feature, không tạo subfolder con.
+
+3. **Tên file**
+   - Component: PascalCase (ví dụ `CandidateListTable.tsx`, `CandidateListCreateOrUpdate.tsx`).
+   - Service: `{domain}Service.ts`. Interface: `shared/interfaces/`.
+
+4. **Lấy data**
+   - Dùng **useCustomReactQuery** từ `@aq-fe/core-ui/shared/hooks/useCustomReactQuery`.
+   - `queryKey` rõ ràng, `axiosFn` gọi service (getAll, get, custom).
+
+5. **Mutation**
+   - Dùng **useCustomReactMutation** từ `@aq-fe/core-ui/shared/hooks/useCustomReactMutation` cho create/update/delete.
+   - Form Create/Update: dùng **CustomButtonCreateUpdate** (đã tích hợp mutation), `onSubmit` gọi service.create / service.update.
+
+6. **Bảng**
+   - Data từ API: dùng **CustomDataTableAPI** từ `@aq-fe/core-ui/shared/components/withAPI/CustomDataTableAPI`, truyền `query` (useCustomReactQuery), `columns`, `deleteFn`/`deleteListFn`.
+   - Data có sẵn: dùng **CustomDataTable** từ `@aq-fe/core-ui/shared/components/dataDisplay/CustomDataTable`.
+
+7. **Form & input**
+   - CustomButtonCreateUpdate + Mantine `useForm` + input từ core-ui (CustomTextInput, CustomSelect, CustomNumberInput, CustomCheckbox, …).
+
+## Tham chiếu
+
+- Skill đầy đủ: `.cursor/skills/stm-refactor/SKILL.md`
+- Import Excel / code mapping / createList: `.cursor/skills/srm-refactor/SKILL.md`

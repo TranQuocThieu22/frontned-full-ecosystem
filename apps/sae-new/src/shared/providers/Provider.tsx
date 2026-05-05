@@ -1,0 +1,40 @@
+"use client"
+import CustomProvider from '@aq-fe/core-ui/shared/providers/CustomProvider';
+import { useProjectInfoStore } from '@aq-fe/core-ui/shared/stores/useProjectInfoStore';
+import 'ldrs/react/DotWave.css';
+import { ReactNode } from 'react';
+
+export default function Provider({ children }: { children?: ReactNode }) {
+    const projectInfoStore = useProjectInfoStore()
+    // const { flag: isReady } = useLoadAxiosConfig({ prefix: APP_CONFIG.alias, aqModule: APP_CONFIG.aqModule });
+
+    // useEffect(() => {
+    //     // Set giá trị AQ module hiện tại đang 
+    //     // hỗ trợ cho phần tạo tài khoản update 08/09/2025
+    //     projectInfoStore.setProperty("aqModuleId", aqModuleIdEnum.SRM)
+    // }, [])
+
+    // if (!isReady) return (
+    //     <div
+    //         style={{
+    //             display: 'flex',
+    //             justifyContent: 'center',
+    //             alignItems: 'center',
+    //             height: '100vh',
+    //         }}
+    //     >
+    //         <DotWave
+    //             size="70"
+    //             speed="1"
+    //             color="gray"
+    //         />
+    //     </div>
+    // )
+
+
+    return (
+        <CustomProvider>
+            {children}
+        </CustomProvider>
+    )
+}

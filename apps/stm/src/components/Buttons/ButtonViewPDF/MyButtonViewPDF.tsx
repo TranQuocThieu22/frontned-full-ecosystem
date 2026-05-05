@@ -1,5 +1,5 @@
 'use client'
-import baseAxios from "@/api/config/baseAxios";
+import baseAxios from "@aq-fe/core-ui/shared/configs/axiosInstance";
 import { ActionIcon, Button, Group, LoadingOverlay, Modal, Paper, Text, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconLivePhoto, IconMaximize, IconMinimize } from "@tabler/icons-react";

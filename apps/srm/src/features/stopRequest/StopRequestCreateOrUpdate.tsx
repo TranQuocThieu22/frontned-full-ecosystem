@@ -52,9 +52,6 @@ export default function StopRequestCreateOrUpdate({ initValues }: { initValues?:
             modalProps={{
                 size: "xl"
             }}
-            scrollAreaAutosizeProps={{
-                h: "auto"
-            }}
             onSubmit={(formValues) => {
                 if (!!initValues) {
                     setSelectedContract(null);

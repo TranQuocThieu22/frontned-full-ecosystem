@@ -1,12 +1,12 @@
 'use client';
 
-import TickerRepositoryTable from "@/modules-features/admin/ModuleMETickerRepository/TickerRepositoryTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import TickerRepositoryTable from "@/features/admin/ModuleMETickerRepository/TickerRepositoryTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function page() {
   return (
-    <MyPageContent>
-        <TickerRepositoryTable/>
-    </MyPageContent>
+    <CustomPageContent>
+      <TickerRepositoryTable />
+    </CustomPageContent>
   )
 }

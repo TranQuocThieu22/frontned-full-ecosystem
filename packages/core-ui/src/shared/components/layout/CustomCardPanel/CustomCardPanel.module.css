@@ -1,0 +1,77 @@
+.root {
+    padding: 8px 12px;
+    background: light-dark(
+        var(--mantine-color-white),
+        var(--mantine-color-dark-7)
+    );
+    border-left: 3px solid transparent;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background 150ms ease, border-color 150ms ease;
+}
+
+.root[data-selected] {
+    background: light-dark(
+        var(--mantine-color-blue-0),
+        var(--mantine-color-dark-6)
+    );
+    border-left-color: var(--card-accent, var(--mantine-color-blue-6));
+}
+
+.root:hover:not([data-selected]) {
+    background: light-dark(
+        var(--mantine-color-gray-0),
+        var(--mantine-color-dark-6)
+    );
+    border-left-color: var(--mantine-color-gray-4);
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.title {
+    font-size: 13px;
+    font-weight: 600;
+    color: light-dark(
+        var(--mantine-color-dark-8),
+        var(--mantine-color-white)
+    );
+    margin-bottom: 3px;
+    line-height: 1.4;
+}
+
+.metaRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.code {
+    font-size: 11px;
+    color: var(--mantine-color-dimmed);
+    line-height: 1.4;
+}
+
+/* ── Description ─────────────────────────────────────── */
+.description {
+    font-size: 11px;
+    color: var(--mantine-color-dimmed);
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+/* ── Footer ───────────────────────────────────────────── */
+.footer {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid light-dark(
+        var(--mantine-color-gray-2),
+        var(--mantine-color-dark-5)
+    );
+}

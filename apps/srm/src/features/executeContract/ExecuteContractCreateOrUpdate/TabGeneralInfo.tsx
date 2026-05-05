@@ -97,7 +97,6 @@ export default function TabGeneralInfo({
           <CustomFileInput
             label="File hợp đồng"
             placeholder="Chọn file hợp đồng"
-            accept=".pdf"
             clearable
             defaultValue={form.getValues().attachmentPath ? new File([], form.getValues().attachmentPath?.split("/").pop() || "") : undefined}
             onChange={async (file) => {

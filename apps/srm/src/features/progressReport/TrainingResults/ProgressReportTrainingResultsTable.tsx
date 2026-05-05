@@ -8,6 +8,7 @@ import { MRT_ColumnDef } from "mantine-react-table";
 import { useMemo } from "react";
 import ProgressReportTrainingResultsCreateUpdate from "./ProgressReportTrainingResultsCreateUpdate";
 import ProgressReportTrainingResultsDelete from "./ProgressReportTrainingResultsDelete";
+import ProgressReportTrainingResultsDeleteList from "./ProgressReportTrainingResultsDeleteList";
 import TrainingResultsExport from "./TrainingResultsExport";
 
 export default function ProgressReportTrainingResultsTable({ readonly, trainingOutcomesData }: { readonly?: boolean, trainingOutcomesData?: SRMTrainingOutcome[] }) {
@@ -48,7 +49,10 @@ export default function ProgressReportTrainingResultsTable({ readonly, trainingO
             renderTopToolbarCustomActions={({ table }) => {
                 return (
                     <Group>
-                        {!readonly && <ProgressReportTrainingResultsCreateUpdate />}
+                        {!readonly && <>
+                            <ProgressReportTrainingResultsCreateUpdate />
+                            <ProgressReportTrainingResultsDeleteList table={table} />
+                        </>}
                         <TrainingResultsExport table={table} />
                     </Group>
                 )

@@ -1,5 +1,5 @@
-export const APP_CONFIG = {
-    alias: '/srm-internal',
-    aqModule: 'srm',
+export const appConfig = {
+    alias: '/iam-develop',
+    aqModule: 'iam',
     supperAdminId: "5"
 };

@@ -12,6 +12,7 @@ import { useProjectInfoStore } from "@aq-fe/core-ui/shared/stores/useProjectInfo
 import { excelUtils } from "@aq-fe/core-ui/shared/utils/excelUtils";
 import { textUtils } from "@aq-fe/core-ui/shared/utils/textUtils";
 import { useDebouncedValue } from "@mantine/hooks";
+import { CustomEnumBadge } from "@aq-fe/core-ui/shared/components/dataDisplay/CustomEnumBadge/CustomEnumBadge";
 import { IconSearch } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 
@@ -75,9 +76,6 @@ export default function StudentListTable() {
                 parseType: "date"
             }
         },
-        // {
-        //     header: "Trạng thái",
-        // },
         {
             header: "Mã lớp",
             accessorKey: "class.code",
@@ -108,6 +106,7 @@ export default function StudentListTable() {
             accessorKey: "class.coeGrade.coeProgram.department.code"
         }
     ], [])
+
     return (
         <CustomDataTableAPI
             enableRowSelection
@@ -119,8 +118,8 @@ export default function StudentListTable() {
             query={studentQuery}
             rowCount={studentQuery.dataCount}
             columns={columns}
-            deleteFn={accountService.delete}
-            deleteListFn={accountService.deleteListIds}
+            safeDeleteFn={accountService.safeDelete}
+            safeDeleteListFn={accountService.safeDeleteList}
             syncButtonProps={{
                 axiosFn: () => AQDataSynchronizationService.AQDataStudentFull()
             }}

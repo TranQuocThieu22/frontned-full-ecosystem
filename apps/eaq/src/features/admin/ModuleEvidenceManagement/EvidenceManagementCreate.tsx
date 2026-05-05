@@ -4,6 +4,7 @@ import { service_EAQEvidence } from "@/shared/APIs/service_EAQEvidence";
 import { service_Department } from "@/shared/APIs/service__department";
 import { IEnvidenceVersion } from "@/shared/interfaces/evidence/IEnvidenceVersion";
 import { IEvidence } from "@/shared/interfaces/evidence/IEvidence";
+import { service_EvidenceType } from "@/shared/APIs/service_EvidenceType";
 import { Stack, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
@@ -12,7 +13,7 @@ import { IconListDetails, IconPlus, IconReportAnalytics } from "@tabler/icons-re
 import { service_EAQEvidenceVersion } from "@/shared/APIs/service_EAQEvidenceVersion";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useState } from "react";
-import EvidenceVersionsTab from "./EvidenceVersionsTab/EvidenceVersionsTab";
+import EvidenceVersionsTab from "@/shared/components/evidence/EvidenceVersionsTab/EvidenceVersionsTab";
 import { CustomButton } from "@aq-fe/core-ui/shared/components/button/CustomButton/CustomButton";
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
 import { CustomButtonModal } from "@aq-fe/core-ui/shared/components/button/CustomButtonModal/CustomButtonModal";
@@ -44,6 +45,7 @@ export default function EvidenceManagementCreate({
       name: "",
       note: "",
       referenceEvidenceId: undefined,
+      evidenceTypeId: undefined,
       versions: [],
     },
     validate: {
@@ -55,6 +57,10 @@ export default function EvidenceManagementCreate({
       name: (value) => {
         if (!value?.trim()) return "Tên minh chứng là bắt buộc";
         if (value.length > 255) return "Tên minh chứng không được quá 255 ký tự";
+        return null;
+      },
+      evidenceTypeId: (value) => {
+        if (!value) return "Loại minh chứng là bắt buộc";
         return null;
       },
       versions: (value) => {
@@ -77,6 +83,11 @@ export default function EvidenceManagementCreate({
   const getAllDepartmentQuery = useCustomReactQuery({
     queryKey: ["query_Unit_GetAll"],
     axiosFn: () => service_Department.getAll(),
+  });
+
+  const getEvidenceTypeQuery = useCustomReactQuery({
+    queryKey: ["query_EvidenceType_GetAll"],
+    axiosFn: () => service_EvidenceType.GetEvidenceTypeByDepartment(),
   });
 
   // Generate code when modal opens
@@ -123,8 +134,13 @@ export default function EvidenceManagementCreate({
     if (isSubmitting) return;
 
     // Validate form
-    const validationErrors = form.validate();
-    if (validationErrors.hasErrors) {
+    const result = form.validate();
+    if (result.hasErrors) {
+      notifications.show({
+        color: "red",
+        message: "Vui lòng kiểm tra lại các trường thông tin bắt buộc",
+        title: "Lỗi validation",
+      });
       return;
     }
 
@@ -139,6 +155,7 @@ export default function EvidenceManagementCreate({
         name: values?.name?.trim(),
         note: values.note?.trim() || "",
         referenceEvidenceId: values.referenceEvidenceId,
+        evidenceTypeId: values.evidenceTypeId,
       };
 
       // Create evidence
@@ -254,6 +271,31 @@ export default function EvidenceManagementCreate({
                   />
 
                   <CustomSelect
+                    withAsterisk
+                    label="Loại minh chứng"
+                    placeholder="Chọn loại minh chứng"
+                    disabled={isSubmitting}
+                    data={
+                      getEvidenceTypeQuery.data?.map((item) => ({
+                        value: String(item.id),
+                        label: item.name ?? "",
+                      })) || []
+                    }
+                    {...form.getInputProps("evidenceTypeId")}
+                    value={
+                      form.values.evidenceTypeId
+                        ? String(form.values.evidenceTypeId)
+                        : null
+                    }
+                    onChange={(val) =>
+                      form.setFieldValue(
+                        "evidenceTypeId",
+                        val && val !== "" ? Number(val) : undefined
+                      )
+                    }
+                  />
+
+                  <CustomSelect
                     data={parentEvidenceOptions}
                     label="Trực thuộc minh chứng"
                     placeholder="Chọn minh chứng cha (nếu có)"
@@ -261,6 +303,11 @@ export default function EvidenceManagementCreate({
                     searchable
                     disabled={isSubmitting}
                     {...form.getInputProps("referenceEvidenceId")}
+                    value={
+                      form.values.referenceEvidenceId
+                        ? String(form.values.referenceEvidenceId)
+                        : null
+                    }
                     onChange={(val) =>
                       form.setFieldValue(
                         "referenceEvidenceId",

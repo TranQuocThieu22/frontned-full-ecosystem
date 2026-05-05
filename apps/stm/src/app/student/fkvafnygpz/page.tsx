@@ -1,20 +1,20 @@
 'use client'
 import MyFlexColumn from "@/components/Layouts/FlexColumn/MyFlexColumn";
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_fkvafnygpz_Read from "@/modules-features/student/fkvafnygpz/F_fkvafnygpz_Read";
+import F_fkvafnygpz_Read from "@/features/student/fkvafnygpz/F_fkvafnygpz_Read";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 
 //fkvafnygpz
 export default function Page() {
 
 
-    
+
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <MyFlexColumn>
-                    <F_fkvafnygpz_Read />
+                <F_fkvafnygpz_Read />
             </MyFlexColumn>
-        </MyPageContent>
+        </CustomPageContent>
     )
 }
 

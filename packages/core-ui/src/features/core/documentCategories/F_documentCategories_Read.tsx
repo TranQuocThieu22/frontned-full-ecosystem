@@ -12,14 +12,15 @@ import { F_documentCategories_Import } from "./F_documentCategories_Import";
 import { F_documentCategories_Update } from "./F_documentCategories_Update";
 
 interface I {
-    id?: number, name?: string, code?: string
+    id?: number; name?: string; code?: string
 }
 export function F_documentCategories_Read({ documentType }: { documentType: number }
 ) {
     const documentAttributeQuery = useCustomReactQuery({
         queryKey: ["F_core18256_Read" + documentType],
-        axiosFn: () => documentAttributeService.GetByType(documentType)
+        axiosFn: () => documentAttributeService.getByType(documentType)
     })
+
     const columns = useMemo<CustomColumnDef<I>[]>(
         () => [
             {
@@ -64,7 +65,7 @@ export function F_documentCategories_Read({ documentType }: { documentType: numb
                 return (
                     <CustomCenterFull>
                         <F_documentCategories_Update values={row.original} />
-                        <F_documentCategories_Delete id={row.original.id!} context={row.original.code} />
+                        <F_documentCategories_Delete value={row.original} context={row.original.code} />
                     </CustomCenterFull>
                 )
             }}

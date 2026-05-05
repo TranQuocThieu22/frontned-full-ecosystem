@@ -1,16 +1,11 @@
 import { departmentService } from "@aq-fe/core-ui/shared/APIs/departmentService";
 import { CustomButton } from "@aq-fe/core-ui/shared/components/button/CustomButton/CustomButton";
+import { DepartmentLabel, DepartmentType } from "@aq-fe/core-ui/shared/consts/enum/departmentEnum";
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
 import { Department } from "@aq-fe/core-ui/shared/interfaces/Department";
 import { excelUtils } from "@aq-fe/core-ui/shared/utils/excelUtils";
-import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
-const type: Record<number, string> = {
-    1: "Khoa",
-    2: "Bộ môn",
-    3: "Phòng",
-    4: "Trung tâm",
-};
+
 const exportConfig = {
     fields: [
         {
@@ -24,14 +19,21 @@ const exportConfig = {
         {
             header: "Loại đơn vị",
             fieldName: "type",
-            formatFunction: (value: any) => type[value as any]
+            formatFunction: (value: any) => DepartmentLabel[value as DepartmentType]
         },
-        { header: "Trực thuộc", fieldName: "unitName" }
+        {
+            header: "Trực thuộc",
+            fieldName: "unitName"
+        },
+        {
+            header: "Đơn vị ngoài trường",
+            fieldName: "isWorkingUnit",
+            formatFunction: (value: any) => !value ? "TRUE" : "FALSE"
+        }
     ]
 }
 
 export default function DepartmentExport({ data }: { data?: Department[] }) {
-    const disc = useDisclosure()
     const active = useState(false)
     const userQuery = useCustomReactQuery({
         queryKey: ['accounts'],
@@ -42,11 +44,11 @@ export default function DepartmentExport({ data }: { data?: Department[] }) {
     })
 
     useEffect(() => {
-        if (!userQuery.data) return
+        if (!active[0] || !userQuery.data) return
         excelUtils.handleExport(userQuery.data.map(item => ({
             ...item,
             unitName: item.unit?.name
-        })), exportConfig as any, 'export danh sách đơn vị')
+        })), exportConfig as any, 'Danh sách đơn vị')
         active[1](false)
     }, [userQuery.data, active[0]])
 

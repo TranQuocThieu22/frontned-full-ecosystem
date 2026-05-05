@@ -41,9 +41,6 @@ export default function SRMAwardLevelCreateOrUpdate({ initValues }: { initValues
      }, [initValues])
      return (
           <CustomButtonCreateUpdate
-               scrollAreaAutosizeProps={{
-                    h: "auto"
-               }}
                modalProps={{
                     size: "70%",
                     title: initValues

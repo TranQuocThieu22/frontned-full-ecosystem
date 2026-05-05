@@ -1,4 +1,3 @@
-import { useGetAQModuleQuery } from "@aq-fe/core-ui/shared/hooks/useGetAQModuleQuery";
 import { AQFileDetail } from "@aq-fe/core-ui/shared/interfaces/AQFileDetail";
 import { createGenericStore } from "@aq-fe/core-ui/shared/libs/createGenericStore";
 
@@ -6,6 +5,7 @@ import { createGenericStore } from "@aq-fe/core-ui/shared/libs/createGenericStor
 interface I {
     moduleCode?: string
     moduleName?: string
+    officelName?: string
 
     logoFileDetail?: AQFileDetail,
     faviconFileDetail?: AQFileDetail
@@ -29,16 +29,58 @@ const useStore = createGenericStore<I>({
         menuCode: "",
         moduleCode: "Module code",
         moduleName: "Module name",
+        officelName: "",
         title: "",
         opened: true,
         groupMenuOpenId: []
     },
     storageKey: "useStore_BasicAppShell" + process.env.NEXT_PUBLIC_AQMODULE,
+    persistOptions: {
+        storage: {
+            getItem: (name: string) => {
+                if (typeof window === "undefined") return null;
+                try {
+                    return window.localStorage.getItem(name);
+                } catch {
+                    return null;
+                }
+            },
+            setItem: (name: string, value: string) => {
+                if (typeof window === "undefined") return;
+                try {
+                    window.localStorage.setItem(name, value);
+                } catch (e: any) {
+                    // QuotaExceededError thường do base64/logo nặng đã bị persist trước đó.
+                    if (e?.name === "QuotaExceededError") {
+                        try {
+                            window.localStorage.removeItem(name);
+                            window.localStorage.setItem(name, value);
+                            return;
+                        } catch {
+                            // ignore
+                        }
+                    }
+                }
+            },
+            removeItem: (name: string) => {
+                if (typeof window === "undefined") return;
+                try {
+                    window.localStorage.removeItem(name);
+                } catch {
+                    // ignore
+                }
+            },
+        },
+        // Avoid persisting large base64 logo/favicon payloads in localStorage (causes QuotaExceededError).
+        partialize: (state: I) => {
+            const { logoFileDetail, faviconFileDetail, ...rest } = state;
+            return rest;
+        },
+    },
 });
 
 export function useBasicAppShellStore() {
     const store = useStore();
-    const GetAQModule_query = useGetAQModuleQuery()
     function toggle() {
         store.setProperty("opened", !store.state.opened);
     }
@@ -57,17 +99,10 @@ export function useBasicAppShellStore() {
     function clearGroupMenuOpenId() {
         store.setProperty("groupMenuOpenId", []);
     }
-    function setDefault() {
-        if (!GetAQModule_query.data) return
-        store.setProperty("faviconFileDetail", GetAQModule_query.data?.faviconFileDetail)
-        store.setProperty("logoFileDetail", GetAQModule_query.data?.logoFileDetail)
-    }
-
     return {
         ...store,
         toggle,
         toggleGroupMenuOpenId,
         clearGroupMenuOpenId,
-        setDefault
     };
 }

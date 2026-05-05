@@ -2,6 +2,7 @@ import { AQFileDetail } from "@aq-fe/core-ui/shared/interfaces/AQFileDetail";
 import { BaseEntity } from "./BaseEntity";
 import { Class } from "./Class";
 import { Faculty } from "./Faculty";
+import { Role } from "./Role";
 import { UserSkillCenters } from "./UserSkillCenters";
 import { WorkingUnit } from "./WorkingUnit";
 
@@ -30,4 +31,6 @@ export interface User extends BaseEntity {
     faculty?: Faculty
     roleId?: number
     class?: Class
+    roles?: Role[]
+    status?: number
 }

@@ -58,6 +58,9 @@ export interface CustomColumnDef<TData extends MRT_RowData, TImport = TData> ext
 const getValueByPath = (obj: any, path: string) =>
     path.split('.').reduce((acc, key) => acc?.[key], obj);
 
+/** Tiêu đề cột số thứ tự khi export Excel từ CustomDataTable */
+const EXPORT_EXCEL_STT_HEADER = 'STT';
+
 export interface PaginationState {
     pageIndex: number;
     pageSize: number;
@@ -125,10 +128,13 @@ export function CustomDataTable<TData extends MRT_RowData, TImport = TData>(
         }))
 
 
-        // Lấy giá trị hiển thị (ưu tiên accessorFn)
-        const excelRows = exportRows.map(rowItem => {
+        // Lấy giá trị hiển thị (ưu tiên accessorFn); cột STT ở đầu (1…n theo thứ tự dòng export)
+        const excelHeaders = [EXPORT_EXCEL_STT_HEADER, ...headers.map(h => h.header)];
+        const excelRows = exportRows.map((rowItem, index) => {
             const original = rowItem.original;
-            const row: any = {};
+            const row: Record<string, unknown> = {
+                [EXPORT_EXCEL_STT_HEADER]: index + 1,
+            };
 
             headers.forEach(h => {
                 let value: any;
@@ -139,16 +145,16 @@ export function CustomDataTable<TData extends MRT_RowData, TImport = TData>(
                     value = getValueByPath(original, h.accessorKey);
                 }
                 if (Array.isArray(value)) {
-                    row[h.header] = value.map(v => `• ${v}`).join('\n');
+                    row[h.header as string] = value.map(v => `• ${v}`).join('\n');
                 } else {
-                    row[h.header] = value;
+                    row[h.header as string] = value;
                 }
             });
             return row;
         });
 
         const worksheet = utils.json_to_sheet(excelRows, {
-            header: headers.map(h => h.header)
+            header: excelHeaders,
         });
 
         const workbook = utils.book_new();

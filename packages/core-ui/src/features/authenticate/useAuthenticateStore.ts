@@ -2,6 +2,7 @@ import { createGenericStore } from "@aq-fe/core-ui/shared/libs/createGenericStor
 
 export interface IStore_Authenticate {
   token?: string
+  refreshToken?: string
   userId?: number
   fullName?: string
   code?: string,
@@ -13,7 +14,7 @@ export interface IStore_Authenticate {
 }
 
 const useStore = createGenericStore<IStore_Authenticate>({
-  initialState: { token: "", saveLogin: false, username: "", password: "", workingUnitId: 0, roleIds: [] },
+  initialState: { token: "", refreshToken: "", saveLogin: false, username: "", password: "", workingUnitId: 0, roleIds: [] },
 
   storageKey: "useAuthenticateStore" + process.env.NEXT_PUBLIC_AQMODULE
 })

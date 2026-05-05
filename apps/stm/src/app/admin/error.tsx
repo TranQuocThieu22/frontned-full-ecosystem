@@ -1,9 +1,9 @@
 'use client' // Error components must be Client Components
 
 import MyFlexColumn from '@/components/Layouts/FlexColumn/MyFlexColumn'
+import { colorsObject } from '@aq-fe/core-ui/shared/consts/object/colorsObject'
 import { Button, Center, Container, Paper, Title } from '@mantine/core'
 import { IconRefresh } from '@tabler/icons-react'
-import { colorsObject } from "aq-fe-framework/shared"
 import { useEffect } from 'react'
 
 export default function Error({

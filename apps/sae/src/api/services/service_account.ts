@@ -3,7 +3,7 @@ import { CurrentUser } from "@/interfaces/currentUser";
 import axiosInstance from "@aq-fe/core-ui/shared/configs/axiosInstance";
 import { BaseEntity } from "@aq-fe/core-ui/shared/interfaces/BaseEntity";
 import { createBaseApi, CustomApiResponse, PagingParams } from "@aq-fe/core-ui/shared/libs/createBaseApi";
-const CONTROLLER = 'Account'
+const CONTROLLER = '/Account'
 
 
 interface Params extends BaseEntity {
@@ -57,5 +57,9 @@ export const service_account = {
     },
     AQDataStudent: (body: any) => {
         return axiosInstance.post<CustomApiResponse<string>>(`${CONTROLLER}/AQDataStudent`, body)
+    },
+    //GetGoogleSetting
+    getGoogleSetting: () => {
+        return axiosInstance.get<CustomApiResponse<{ clientId: string }>>(`${CONTROLLER}/GetGoogleSetting`)
     }
 }

@@ -1,11 +1,11 @@
 'use client';
-import TrialLearningManagementTable from "@/modules-features/admin/ModuleMETrialLearningManagement/TrialLearningManagementTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import TrialLearningManagementTable from "@/features/admin/ModuleMETrialLearningManagement/TrialLearningManagementTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function page() {
     return (
-        <MyPageContent>
-            <TrialLearningManagementTable/>
-        </MyPageContent>
+        <CustomPageContent>
+            <TrialLearningManagementTable />
+        </CustomPageContent>
     )
 }

@@ -1,6 +1,6 @@
 'use client'
 import MyFlexColumn from "@/components/Layouts/FlexColumn/MyFlexColumn";
-import F_iynoujfptk_Read from "@/modules-features/lecturer/iynoujfptk/F_iynoujfptk_Read";
+import F_iynoujfptk_Read from "@/features/lecturer/iynoujfptk/F_iynoujfptk_Read";
 
 
 //iynoujfptk

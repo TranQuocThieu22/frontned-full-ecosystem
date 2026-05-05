@@ -1,5 +1,6 @@
 import { CustomButtonDeleteList, CustomButtonDeleteListProps } from "@aq-fe/core-ui/shared/components/button/CustomButtonDeleteList";
 import { MRT_RowData, MRT_TableInstance } from "mantine-react-table";
+import { CustomButtonSafeDeleteList } from "../button/CustomButtonSafeDeleteList";
 
 interface CustomDeleteListAPIProps<TData extends MRT_RowData> extends Omit<CustomButtonDeleteListProps, "onSubmit"> {
     table: MRT_TableInstance<TData>

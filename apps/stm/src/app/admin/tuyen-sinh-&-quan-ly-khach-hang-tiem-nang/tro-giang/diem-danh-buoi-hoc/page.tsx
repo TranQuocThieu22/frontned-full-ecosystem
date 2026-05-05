@@ -1,11 +1,11 @@
 'use client'
-import ClassAttendanceCheckTable from '@/modules-features/admin/ModuleMEClassAttendanceCheck/ClassAttendanceCheckTable'
-import { MyPageContent } from 'aq-fe-framework/components'
+import ClassAttendanceCheckTable from '@/features/admin/ModuleMEClassAttendanceCheck/ClassAttendanceCheckTable'
+import { CustomPageContent } from '@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent'
 
 export default function page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <ClassAttendanceCheckTable />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

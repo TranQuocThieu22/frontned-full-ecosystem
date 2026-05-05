@@ -28,11 +28,11 @@ export function F_systemUpdateDocs_CreateUpdate({
       isUpdate && values
         ? {
           ...values,
-          file: new File([], values.path?.split("/")[values.path.split("/").length - 1]!),
-          startDate: new Date(values.startDate!),
-          endDate: new Date(values.endDate!),
-          meetingDate: new Date(values.meetingDate!),
-        }
+          file: values.path ? new File([], values.path.split("/").pop()!) : undefined,
+          startDate: values.startDate ? new Date(values.startDate) : undefined,
+          endDate: values.endDate ? new Date(values.endDate) : undefined,
+          meetingDate: values.meetingDate ? new Date(values.meetingDate) : undefined,
+        } as any
         : undefined,
     validate: {
       meetingDate: (value) => (value ? null : "Không được để trống"),
@@ -46,11 +46,22 @@ export function F_systemUpdateDocs_CreateUpdate({
           : "Ngày kết thúc phải lớn hơn ngày bắt đầu",
     },
   });
+
   useEffect(() => {
-    if (!values) return
-    form.setValues(values)
-    form.setInitialValues(values)
-  }, [values])
+    if (!values || !isUpdate) return;
+
+    const formattedValues = {
+      ...values,
+      file: values.path ? new File([], values.path.split("/").pop()!) : undefined,
+      startDate: values.startDate ? new Date(values.startDate) : undefined,
+      endDate: values.endDate ? new Date(values.endDate) : undefined,
+      meetingDate: values.meetingDate ? new Date(values.meetingDate) : undefined,
+    };
+    
+    form.setInitialValues(formattedValues as any);
+    form.setValues(formattedValues as any);
+  }, [values, isUpdate]);
+
   return (
     <CustomButtonCreateUpdate
       isUpdate={isUpdate}

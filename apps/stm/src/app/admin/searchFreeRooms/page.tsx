@@ -1,11 +1,11 @@
 'use client'
-import SearchFreeRoomsRead from "@/modules-features/admin/searchFreeRooms/searchFreeRoomsRead";
-import { MyPageContent } from "aq-fe-framework/components";
+import SearchFreeRoomsRead from "@/features/admin/searchFreeRooms/searchFreeRoomsRead";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <SearchFreeRoomsRead />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

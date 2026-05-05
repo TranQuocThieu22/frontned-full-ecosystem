@@ -9,6 +9,7 @@ import { useMemo } from "react";
 import CompletedProductsExport from "./CompletedProductsExport";
 import ProgressReportCompletedProductsCreateUpdate from "./ProgressReportCompletedProductsCreateUpdate";
 import ProgressReportCompletedProductsDelete from "./ProgressReportCompletedProductsDelete";
+import ProgressReportCompletedProductsDeleteList from "./ProgressReportCompletedProductsDeleteList";
 
 
 export default function ProgressReportCompletedProductsTable({ readOnly, completedProductData }: { readOnly?: boolean, completedProductData?: SRMCompletedProduct[] }) {
@@ -49,15 +50,15 @@ export default function ProgressReportCompletedProductsTable({ readOnly, complet
             enableRowSelection
             columns={columns}
             data={completedProductData || []}
-            renderTopToolbarCustomActions={({ table }) => {
-                table
-                return (
+            renderTopToolbarCustomActions={({ table }) => (
                     <Group>
-                        {readOnly == false && <ProgressReportCompletedProductsCreateUpdate />}
+                        {readOnly == false && <>
+                            <ProgressReportCompletedProductsCreateUpdate />
+                            <ProgressReportCompletedProductsDeleteList table={table} />
+                        </>}
                         <CompletedProductsExport table={table} />
                     </Group>
-                )
-            }}
+            )}
             renderRowActions={({ row }) => (
                 <CustomCenterFull>
                     <ProgressReportCompletedProductsCreateUpdate values={row.original} />

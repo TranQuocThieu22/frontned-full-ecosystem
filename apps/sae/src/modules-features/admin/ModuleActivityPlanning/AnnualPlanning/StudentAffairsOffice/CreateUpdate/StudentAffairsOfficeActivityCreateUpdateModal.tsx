@@ -98,7 +98,7 @@ export default function StudentAffairsOfficeActivityCreateUpdateModal({ futurePl
             name: (value) => (!value ? "Vui lòng nhập tên hoạt động ngoại khóa" : null),
 
             host: (value) => !value ? 'Đơn vị tổ chức không được để trống' : null,
-            reviewedBy: (value) => !value ? "Đơn vị ghi nhận không được để trống" : null,
+            // reviewedBy: (value) => !value ? "Đơn vị ghi nhận không được để trống" : null,
             completedBy: (value) => !value ? 'Đơn vị công nhận không được để trống' : null,
 
             session: (value) => (!value ? "Vui lòng chọn buổi" : null),

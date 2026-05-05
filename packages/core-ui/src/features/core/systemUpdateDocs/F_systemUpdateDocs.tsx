@@ -16,12 +16,17 @@ import F_systemUpdateDocs_Export from "./F_systemUpdateDocs_Export";
 import F_systemUpdateDocs_Import from "./F_systemUpdateDocs_Import";
 
 export function F_systemUpdateDocs({ RefinementTypeId }: { RefinementTypeId: number }) {
-  const query = useCustomReactQuery({
+  const documentQuery = useCustomReactQuery({
     queryKey: ["F_systemUpdateDocs_Read"],
-    axiosFn: () => documentService.GetByType(RefinementTypeId),
+    axiosFn: () => documentService.getByType(RefinementTypeId),
   });
-  const columns = useMemo<CustomColumnDef<Document>[]>(
+
+  const documentColumns = useMemo<CustomColumnDef<Document>[]>(
     () => [
+      {
+        header: "Ngày họp",
+        accessorFn: (row) => row.meetingDate ? dateUtils.toDDMMYYYY(new Date(row.meetingDate!)) : "",
+      },
       {
         header: "Đơn vị yêu cầu",
         accessorKey: "departmentName",
@@ -29,6 +34,10 @@ export function F_systemUpdateDocs({ RefinementTypeId }: { RefinementTypeId: num
       {
         header: "Nội dung cải tiến",
         accessorKey: "description",
+      },
+      {
+        header: "Kết luận",
+        accessorKey: "conclusion",
       },
       {
         header: "Ngày bắt đầu",
@@ -39,24 +48,24 @@ export function F_systemUpdateDocs({ RefinementTypeId }: { RefinementTypeId: num
         accessorFn: (row) => dateUtils.toDDMMYYYY(new Date(row.endDate!)),
       },
       {
+        header: "Ghi chú",
+        accessorKey: "note",
+      },
+      {
         header: "File",
         accessorKey: "path",
         type: "viewFile",
       },
-      // {
-      //   header: "Ghi chú",
-      //   accessorKey: "note",
-      // }
     ],
     []
   );
 
   return (
     <CustomDataTable
-      isLoading={query.isLoading}
-      isError={query.isError}
-      columns={columns}
-      data={query.data || []}
+      isLoading={documentQuery.isLoading}
+      isError={documentQuery.isError}
+      columns={documentColumns}
+      data={documentQuery.data || []}
       enableRowSelection
       renderTopToolbarCustomActions={({ table }) => (
         <>

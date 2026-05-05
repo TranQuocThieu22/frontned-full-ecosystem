@@ -6,9 +6,9 @@ interface I {
 
 const useStore = createGenericStore<I>({
   initialState: { token: "" },
-  storageKey: "useStore_Authenticate "
+  storageKey: "useAuthenticateStore "
 })
-export default function useStore_Authenticate() {
+export default function useAuthenticateStore() {
   const store = useStore()
   return {
     ...store

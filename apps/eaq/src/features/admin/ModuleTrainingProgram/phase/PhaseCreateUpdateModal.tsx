@@ -1,23 +1,23 @@
 "use client";
 
-import { IPhase } from '@/shared/interfaces/Phase/IPhase';
 import { service_EAQPhase } from "@/shared/APIs/service_EAQPhase";
 import { service_EAQTrainingProgram } from "@/shared/APIs/service_EAQTrainingProgram";
-import { Grid } from "@mantine/core";
+import { IPhase } from '@/shared/interfaces/Phase/IPhase';
+import {
+    CustomButtonCreateUpdate
+} from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
+import { CustomCheckbox } from "@aq-fe/core-ui/shared/components/input/CustomCheckbox";
+import { CustomDateInput } from "@aq-fe/core-ui/shared/components/input/CustomDateInput";
+import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
+import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
+import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
+import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
+import { Box, Flex, Grid } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { phaseStatusOptions } from "./PhaseTable";
-import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
-import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
-import {
-    CustomButtonCreateUpdate
-} from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
-import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
-import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
-import { CustomDateInput } from "@aq-fe/core-ui/shared/components/input/CustomDateInput";
-import { CustomCheckbox } from "@aq-fe/core-ui/shared/components/input/CustomCheckbox";
 
 interface Props {
     values?: IPhase;
@@ -129,7 +129,7 @@ export default function PhaseCreateUpdateModal({
             isUpdate={isUpdate}
             onSubmit={() => handleSubmit(form.values, isUpdate)}
             disclosure={disc}
-            useMyReactMutationProps={{
+            useCustomReactMutationProps={{
                 options: {
                     onSuccess: () => {
                         // Invalidate the standardSetQuery to refetch fresh data
@@ -144,10 +144,11 @@ export default function PhaseCreateUpdateModal({
                 }
             }}
         >
-            <Grid>
-                <Grid.Col span={6}>
+            <Flex align={'center'} justify={'space-between'} w={'100%'}>
+                <Box w={'49%'}>
                     {/*  CASE: 22/9/2025 Tạm chưa rõ được đổi ctdt của 1 giai đoạn không */}
                     <CustomSelect
+                        w={'100%'}
                         withAsterisk
                         label="Chương trình đào tạo"
                         isLoading={trainingProgramQuery.isLoading}
@@ -166,6 +167,7 @@ export default function PhaseCreateUpdateModal({
                         error={form.errors.eaqStandardSetTrainingProgramId}
                     />
                     <CustomTextInput
+                        w={'100%'}
                         withAsterisk
                         pt={10}
                         label="Mã giai đoạn kiểm định"
@@ -174,14 +176,15 @@ export default function PhaseCreateUpdateModal({
                         readOnly={isUpdate}
                     />
                     <CustomTextInput
+                        w={'100%'}
                         withAsterisk
                         pt={10}
                         label="Tên giai đoạn kiểm định"
                         {...form.getInputProps("name")}
                         error={form.errors.name}
                     />
-                </Grid.Col>
-                <Grid.Col span={6}>
+                </Box>
+                <Box w={'49%'}>
                     <CustomSelect
                         withAsterisk
                         label="Trạng thái giai đoạn"
@@ -214,8 +217,8 @@ export default function PhaseCreateUpdateModal({
                         {...form.getInputProps("endDate")}
                         error={form.errors.endDate}
                     />
-                </Grid.Col>
-            </Grid>
+                </Box>
+            </Flex>
             <div
                 style={{
                     display: "flex",

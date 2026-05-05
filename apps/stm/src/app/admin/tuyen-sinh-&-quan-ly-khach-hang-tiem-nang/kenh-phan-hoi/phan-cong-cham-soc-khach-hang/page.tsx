@@ -1,11 +1,11 @@
 "use client";
-import CustomerCareAssignmentTable from "@/modules-features/admin/ModuleCustomerCareAssignment/CustomerCareAssignmentTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import CustomerCareAssignmentTable from "@/features/admin/ModuleCustomerCareAssignment/CustomerCareAssignmentTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <CustomerCareAssignmentTable/>
-        </MyPageContent>
+        <CustomPageContent>
+            <CustomerCareAssignmentTable />
+        </CustomPageContent>
     );
 }

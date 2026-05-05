@@ -1,11 +1,11 @@
 'use client'
-import LeaveCompensationTable from "@/modules-features/admin/MELeaveCompensation/LeaveCompensationTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import LeaveCompensationTable from "@/features/admin/MELeaveCompensation/LeaveCompensationTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <LeaveCompensationTable/>
-        </MyPageContent>
+        <CustomPageContent>
+            <LeaveCompensationTable />
+        </CustomPageContent>
     )
 }

@@ -1,22 +1,22 @@
 "use client";
 
-import { IStandardSet } from "@/shared/interfaces/standardSet/StandardSet";
 import { service_EAQStandardSet } from "@/shared/APIs/service_EAQStandardSet";
+import { IStandardSet } from "@/shared/interfaces/standardSet/StandardSet";
+import {
+    CustomButtonCreateUpdate
+} from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
+import { CustomDateInput } from "@aq-fe/core-ui/shared/components/input/CustomDateInput";
+import { CustomFileInput } from "@aq-fe/core-ui/shared/components/input/CustomFileInput";
+import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
+import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
+import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
+import { fileUtils } from "@aq-fe/core-ui/shared/utils/fileUtils";
 import { SimpleGrid, Stack } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { AccreditationType } from "./StandardSetManagementTable";
-import {
-    CustomButtonCreateUpdate
-} from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
-import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
-import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
-import { CustomFileInput } from "@aq-fe/core-ui/shared/components/input/CustomFileInput";
-import { CustomDateInput } from "@aq-fe/core-ui/shared/components/input/CustomDateInput";
-import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
-import { fileUtils } from "@aq-fe/core-ui/shared/utils/fileUtils";
 
 export default function StandardSetCreateUpdateModal({
     values,
@@ -100,7 +100,7 @@ export default function StandardSetCreateUpdateModal({
             isUpdate={!!values}
             onSubmit={() => handleSubmit(form.values, !!values)}
             disclosure={disc}
-            useMyReactMutationProps={{
+            useCustomReactMutationProps={{
                 options: {
                     onSuccess: () => {
                         queryClient.invalidateQueries({ queryKey: ['standardSetQuery'] });

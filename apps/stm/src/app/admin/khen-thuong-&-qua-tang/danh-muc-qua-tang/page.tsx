@@ -1,12 +1,12 @@
 'use client'
-import GiftCatalogTable from "@/modules-features/admin/GiftCatalog/GiftCatalogTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import GiftCatalogTable from "@/features/admin/GiftCatalog/GiftCatalogTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <GiftCatalogTable />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }
 

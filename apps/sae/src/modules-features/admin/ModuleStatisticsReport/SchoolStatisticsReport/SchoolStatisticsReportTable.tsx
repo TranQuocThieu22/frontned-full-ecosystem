@@ -105,7 +105,7 @@ export default function SchoolStatisticsReportTable({
       }}
       columns={columns}
       data={data || []}
-      getRowId={(item) => item.facultyId!.toString()}
+      getRowId={(item) => item.facultyId?item.facultyId?.toString() : ''}
       enableRowNumbers
       enableRowSelection
       enableColumnFilters

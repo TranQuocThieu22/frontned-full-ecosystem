@@ -4,7 +4,7 @@ import { IRequirement } from "@/shared/interfaces/requirement/Requirement";
 import { service_EAQEvidence } from "@/shared/APIs/service_EAQEvidence";
 import { service_EAQEvidenceVersion } from "@/shared/APIs/service_EAQEvidenceVersion";
 import { service_EAQRequirement } from "@/shared/APIs/service_EAQRequirement";
-import { Badge, Box, Grid, Group, Text } from "@mantine/core";
+import { Badge, Box, Grid, Group, Stack, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconClockCheck, IconClockX } from "@tabler/icons-react";
@@ -22,6 +22,7 @@ import { CustomButtonModal } from "@aq-fe/core-ui/shared/components/button/Custo
 import { CustomFieldset } from "@aq-fe/core-ui/shared/components/layout/CustomFieldset";
 import { CustomButtonViewFileAPI } from "@aq-fe/core-ui/shared/components/withAPI/CustomButtonViewFileAPI";
 import { CustomDataTable } from "@aq-fe/core-ui/shared/components/dataDisplay/CustomDataTable";
+import ViewOrUpdateRequirementLayout from "@/shared/components/ViewOrUpdateRequirementLayout";
 
 export default function TrackingJustificationViewButton({ data }: { data: IRequirement }) {
   const dis = useDisclosure();
@@ -212,46 +213,47 @@ export default function TrackingJustificationViewButton({ data }: { data: IRequi
         title: "Chi tiết Phiếu tự đánh giá",
       }}
     >
-      <Grid style={{ minHeight: "75vh", position: "relative" }}>
-        <Group gap={2} my={6} mx={8}>
-          <Text span fw={500}>
-            Yêu cầu:{" "}
-            <Text span fw={400}>
-              {data.name}
-            </Text>
-          </Text>
-        </Group>
-        <Grid.Col span={12}>
-          <ViewDetailResult data={requirementDetailQuery.data || {}} />
-          <CustomFieldset title="Nội dung báo cáo yêu cầu hiện tại">
-            <CustomButtonViewFileAPI
-              filePath={pathFile}
-              externalDisc={discViewFile}
-              buttonProps={{ hidden: true }}
-            />
-            {renderViewOnlyContent()}
-          </CustomFieldset>
-          <CustomFieldset title="Danh sách minh chứng sử dụng">
-            <CustomDataTable
-              columns={columns}
-              data={evidenceUsageQuery.data || []}
-              isLoading={evidenceUsageQuery.isLoading}
-              isError={evidenceUsageQuery.isError}
-              renderRowActions={({ row }) => {
-                return (
-                  <CustomCenterFull>
-                    <ViewDetailResultTableEvidenceDetail
-                      evidenceId={row.original.eaqEvidenceCurrentVersion?.eaqEvidenceId!}
-                      evidenceCode={row.original.code!}
-                      evidenceName={row.original.name!}
-                    />
-                  </CustomCenterFull>
-                );
-              }}
-            />
-          </CustomFieldset>
-        </Grid.Col>
-      </Grid>
-    </CustomButtonModal>
+      <Stack gap="md" style={{ height: '80vh' }}>
+        <ViewOrUpdateRequirementLayout data={data} />
+        <Box
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            overflowX: "hidden",
+          }}
+        >
+          <Stack gap='lg'>
+            <ViewDetailResult data={requirementDetailQuery.data || {}} />
+            <CustomFieldset title="Nội dung báo cáo yêu cầu hiện tại">
+              <CustomButtonViewFileAPI
+                filePath={pathFile}
+                externalDisc={discViewFile}
+                buttonProps={{ hidden: true }}
+              />
+              {renderViewOnlyContent()}
+            </CustomFieldset>
+            <CustomFieldset title="Danh sách minh chứng sử dụng">
+              <CustomDataTable
+                columns={columns}
+                data={evidenceUsageQuery.data || []}
+                isLoading={evidenceUsageQuery.isLoading}
+                isError={evidenceUsageQuery.isError}
+                renderRowActions={({ row }) => {
+                  return (
+                    <CustomCenterFull>
+                      <ViewDetailResultTableEvidenceDetail
+                        evidenceId={row.original.eaqEvidenceCurrentVersion?.eaqEvidenceId!}
+                        evidenceCode={row.original.code!}
+                        evidenceName={row.original.name!}
+                      />
+                    </CustomCenterFull>
+                  );
+                }}
+              />
+            </CustomFieldset>
+          </Stack>
+        </Box>
+      </Stack>
+    </CustomButtonModal >
   );
 }

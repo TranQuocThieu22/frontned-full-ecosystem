@@ -10,15 +10,24 @@ const CONTROLLER = "/account"
 
 export const accountService = {
     ...createBaseApi<User>(CONTROLLER, axiosInstance),
-    signIn: (values: { userName?: string, passWord?: string }) => {
-        return axiosInstance.post<CustomApiResponse<ISignInRes[]>>(CONTROLLER + `/SignIn`, { values });
+    signIn: (values: ISignInViewModel) => {
+        return axiosInstance.post<CustomApiResponse<ISignInRes>>(CONTROLLER + `/SignIn`, values);
     },
-    getAdminAccount: (params: { paging?: PagingParams, name?: string } = {}) => {
+    signInWithToken: (code: string) => {
+        return axiosInstance.post<CustomApiResponse<ISignInRes>>(CONTROLLER + `/SignInWithToken`, null, { params: { code } });
+    },
+    googleLogin: (token: string) => {
+        return axiosInstance.post<CustomApiResponse<ISignInRes>>(CONTROLLER + `/google-login`, token, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+    },
+    getAdminAccount: (params: { paging?: PagingParams, name?: string, workingUnitId?: number } = {}) => {
         return axiosInstance.get<CustomApiResponse<User[]>>(CONTROLLER + `/GetAdminAccount`, {
             params: {
                 pageNumber: params.paging?.pageNumber,
                 pageSize: params.paging?.pageSize,
-                name: params.name
+                name: params.name,
+                workingUnitId: params.workingUnitId
             }
         });
     },
@@ -62,7 +71,7 @@ export const accountService = {
     createLecturer: (body: Lecturer) => {
         return axiosInstance.post<CustomApiResponse<any>>(`${CONTROLLER}/CreateLecturer`, body)
     },
-    import: (values: Lecturer[]) => {
+    importLecturers: (values: Lecturer[]) => {
         return axiosInstance.post<CustomApiResponse<any>>(`${CONTROLLER}/import-lecturers`, values)
     },
     getStudentsBasicInfo: (params?: {
@@ -86,6 +95,17 @@ export interface ISignInRes {
     token?: string
     roleIds?: number[]
     permissions?: PagePermission[]
+}
+
+export interface ISignInViewModel {
+    userName?: string;
+    passWord?: string;
+    rememberMe?: boolean;
+}
+
+export interface IAQSSOViewModel {
+    token?: string;
+    clientId?: string;
 }
 
 export interface IChangePassWordBody {

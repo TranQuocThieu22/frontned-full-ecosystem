@@ -1,22 +1,22 @@
 "use client";
 
-import { IComment } from "@/shared/interfaces/comment/IComment";
-import { MRT_ColumnDef } from "mantine-react-table";
-import { useEffect, useMemo } from "react";
 import { service_EAQComment } from "@/shared/APIs/service_EAQComment";
-import { useDisclosure } from "@mantine/hooks";
-import { useForm } from "@mantine/form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Stack } from "@mantine/core";
-import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
-import { CustomFieldset } from "@aq-fe/core-ui/shared/components/layout/CustomFieldset";
-import { CustomDataTable } from "@aq-fe/core-ui/shared/components/dataDisplay/CustomDataTable";
-import { CustomCenterFull } from "@aq-fe/core-ui/shared/components/layout/CustomCenterFull";
+import { IComment } from "@/shared/interfaces/comment/IComment";
 import { CustomActionIconDelete } from "@aq-fe/core-ui/shared/components/button/CustomActionIconDelete";
 import {
   CustomButtonCreateUpdate
 } from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
+import { CustomDataTable } from "@aq-fe/core-ui/shared/components/dataDisplay/CustomDataTable";
 import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
+import { CustomCenterFull } from "@aq-fe/core-ui/shared/components/layout/CustomCenterFull";
+import { CustomFieldset } from "@aq-fe/core-ui/shared/components/layout/CustomFieldset";
+import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
+import { Stack } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { useDisclosure } from "@mantine/hooks";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { MRT_ColumnDef } from "mantine-react-table";
+import { useEffect, useMemo } from "react";
 
 export default function ShareExternalAssessmentEvaluate({
   taskDetailId,
@@ -207,7 +207,7 @@ export function CreateUpdateCommentButton({
       isUpdate={!!data}
       onSubmit={() => handleSave()}
       disclosure={disc}
-      useMyReactMutationProps={{
+      useCustomReactMutationProps={{
         successNotification: !data ? "Thêm nhận xét thành công!" : "Cập nhật nhận xét thành công!",
         options: {
           onSuccess: () => {

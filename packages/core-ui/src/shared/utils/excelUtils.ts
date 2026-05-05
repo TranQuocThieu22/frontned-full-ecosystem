@@ -4,7 +4,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Workbook } from "exceljs";
 import saveAs from "file-saver";
 import { utils, writeFile } from "xlsx";
-import { SafeOmitType } from "../types/safeOmitType";
+import { SafeOmitType } from "@aq-fe/core-ui/shared/types/safeOmitType";
 import { IExportConfig } from "./fileUtils";
 dayjs.extend(customParseFormat);
 export interface IExcelColumnConfig<T> {

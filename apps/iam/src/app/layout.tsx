@@ -10,12 +10,12 @@ import '@mantine/tiptap/styles.css';
 import 'mantine-react-table/styles.css';
 import "./globals.css";
 
-import Provider from '@/shared/providers/Provider';
-import { ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript } from "@mantine/core";
+import Provider from "@/shared/providers/Provider";
 
 export const metadata = {
-  title: 'My Mantine app',
-  description: 'I have followed setup instructions carefully',
+  title: "AQ IAM",
+  description: "IAM module",
 };
 
 export default async function RootLayout({
@@ -23,10 +23,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Providing all messages to the client
-  // side is the easiest way to get started
   return (
-    <html suppressHydrationWarning >
+    <html suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
       </head>

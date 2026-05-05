@@ -12,10 +12,10 @@ import { notifications } from "@mantine/notifications";
 import { IconClockCheck, IconClockX } from "@tabler/icons-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { SECTION_CONTENT } from "../Constants/selfAssessmentTitle";
 import Form04CurrentSituationDetail from "../../ModuleSelfAssessmentForm04/Form04CurrentSituation/Form04CurrentSituationDetail";
 import MyCustomTitleGroup from "../../ModuleSelfAssessmentForm04/Shared/MyCustomTitleGroup";
 import LoadingSkeleton from "../../TrackingProgressSeftAssessment/ComponentShared/LoadingSkeleton";
+import { SECTION_CONTENT } from "../Constants/selfAssessmentTitle";
 import ContainerComment from "../Shared/ContainerComment";
 import HtmlWraperComment from "../Shared/HtmlWraperComment";
 

@@ -1,10 +1,10 @@
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_d1o6p6letg_Read from "@/modules-features/admin/d1o6p6letg/F_d1o6p6letg_Read";
+import CancelExamParticipationTable from "@/features/admin/cancelExamParticipation/CancelExamParticipationTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <F_d1o6p6letg_Read />
-        </MyPageContent>
+        <CustomPageContent>
+            <CancelExamParticipationTable />
+        </CustomPageContent>
     )
 }

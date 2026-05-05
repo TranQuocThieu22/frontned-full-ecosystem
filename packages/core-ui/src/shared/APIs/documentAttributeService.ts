@@ -10,9 +10,14 @@ const CONTROLLER = '/DocumentAttribute';
 export const documentAttributeService = {
   // Ở đây đã tạo sẵn các Axios gồm interface: GetAll, Create, Update, CreateOrUpdate, Delete.
   ...createBaseApi<DocumentAttribute>(CONTROLLER, axiosInstance),
-  GetByType: (FormTypeId?: number) => {
+
+  getByType: (documentType?: number) => {
     return axiosInstance.get<CustomApiResponse<DocumentAttribute[]>>(
-      CONTROLLER + `/GetByType?documentType=${FormTypeId}`
+      CONTROLLER + `/GetByType?documentType=${documentType}`
     );
   },
+
+  import: (values: DocumentAttribute[]) => {
+    return axiosInstance.post<CustomApiResponse<any>>(`${CONTROLLER}/import`, values);
+  }
 };

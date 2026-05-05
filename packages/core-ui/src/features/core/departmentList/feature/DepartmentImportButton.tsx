@@ -71,33 +71,33 @@ export default function DepartmentImportButton() {
           id: number;
           name: string;
         }>[] = [
-          {
-            fieldKey: "id",
-            fieldName: "Id loại đơn vị",
-            isRequired: true,
-          },
-          {
-            fieldKey: "name",
-            fieldName: "Tên loại đơn vị",
-            isRequired: true,
-          },
-        ];
+            {
+              fieldKey: "id",
+              fieldName: "Id loại đơn vị",
+              isRequired: true,
+            },
+            {
+              fieldKey: "name",
+              fieldName: "Tên loại đơn vị",
+              isRequired: true,
+            },
+          ];
 
         const unitConfig: IExcelColumnConfig<{
           value: string;
           label: string;
         }>[] = [
-          {
-            fieldKey: "value",
-            fieldName: "Id trực thuộc",
-            isRequired: true,
-          },
-          {
-            fieldKey: "label",
-            fieldName: "Tên trực thuộc",
-            isRequired: true,
-          },
-        ];
+            {
+              fieldKey: "value",
+              fieldName: "Id trực thuộc",
+              isRequired: true,
+            },
+            {
+              fieldKey: "label",
+              fieldName: "Tên trực thuộc",
+              isRequired: true,
+            },
+          ];
 
         await excelUtils.addSheet<{ id: number; name: string }>({
           workbook: workbook,

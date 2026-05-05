@@ -1,6 +1,6 @@
 import { FileInput, FileInputProps } from "@mantine/core";
 import { AQFileDetail } from "../../interfaces/AQFileDetail";
-import { SafeOmitType } from "../../types/safeOmitType";
+import { SafeOmitType } from "@aq-fe/core-ui/shared/types/safeOmitType";
 import { fileUtils } from "../../utils/fileUtils";
 
 interface CustomAQFileInputProps extends SafeOmitType<FileInputProps, "value" | "defaultValue" | "onChange"> {

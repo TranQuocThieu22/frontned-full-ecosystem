@@ -1,7 +1,9 @@
 "use client";
 import { CustomFlexColumn } from "@aq-fe/core-ui/shared/components/layout/CustomFlexColumn";
 import axiosInstance from "@aq-fe/core-ui/shared/configs/axiosInstance";
+import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
 import { PagePermission } from "@aq-fe/core-ui/shared/interfaces/PagePermission";
+import { CustomApiResponse } from "@aq-fe/core-ui/shared/libs/createBaseApi";
 import { usePermissionStore } from "@aq-fe/core-ui/shared/stores/usePermissionStore";
 import {
     Anchor,
@@ -10,6 +12,7 @@ import {
     ButtonProps,
     Center,
     Checkbox,
+    Divider,
     Flex,
     Group,
     Paper,
@@ -19,9 +22,11 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation.js";
 import { ReactNode, useEffect } from "react";
+import { GoogleLoginButton } from "./GoogleLoginButton";
 import { useAuthenticateStore } from "./useAuthenticateStore";
 
 interface ILoginInfo {
@@ -59,6 +64,7 @@ interface AuthenticateLoginProps {
     loginButtonProps?: ButtonProps
     /** ✅ Cho phép truyền axios từ bên ngoài */
     // customAxios?: AxiosInstance;
+    onGoogleLoginSuccess?: (codeResponse: any) => void;
 }
 
 export function AuthenticateLogin({
@@ -74,18 +80,24 @@ export function AuthenticateLogin({
     customSubmit,
     onError,
     loginButtonProps,
+    onGoogleLoginSuccess,
     // customAxios
 }: AuthenticateLoginProps) {
     const router = useRouter()
     const authenticateStore = useAuthenticateStore()
     const permissionStore = usePermissionStore()
+    const googleClientIdQuery = useCustomReactQuery({
+        queryKey: ['getGoogleSetting'],
+        axiosFn: () => axiosInstance.post<CustomApiResponse<string>>("/Account/ClientId", {})
+    })
     // const axiosInstance = customAxios || baseAxios;
-    const mutation = useMutation({
+    const loginMutation = useMutation({
         mutationFn: async (values: { userName?: string, passWord?: string }) => {
             const result = await axiosInstance.post("/Account/SignIn", values)
             return result.data
         }
     })
+
     const form = useForm<ILoginInfo>({
         initialValues: {
             username: "",
@@ -114,7 +126,7 @@ export function AuthenticateLogin({
         if (customSubmit) {
             return customSubmit(userName, passWord)
         }
-        mutation.mutate({
+        loginMutation.mutate({
             "userName": userName,
             "passWord": passWord
         }, {
@@ -207,7 +219,7 @@ export function AuthenticateLogin({
                             </Group>
                             {showLoginButton &&
                                 <Button
-                                    loading={mutation.isPending}
+                                    loading={loginMutation.isPending}
                                     type="submit"
                                     fullWidth
                                     {...loginButtonProps}
@@ -215,6 +227,16 @@ export function AuthenticateLogin({
                                     Đăng nhập
                                 </Button>
                             }
+                            {googleClientIdQuery.data && <Divider label="Hoặc" labelPosition="center" mt={-5} mb={0} />}
+                            {googleClientIdQuery.data && (
+                                <GoogleOAuthProvider clientId={googleClientIdQuery.data}>
+                                    <GoogleLoginButton
+                                        onSuccess={onSuccess}
+                                        onError={onError}
+                                        redirectUrlAfterLogin={redirectUrlAfterLogin}
+                                    />
+                                </GoogleOAuthProvider>
+                            )}
                             {additionalActions}
                         </CustomFlexColumn>
                     </form>

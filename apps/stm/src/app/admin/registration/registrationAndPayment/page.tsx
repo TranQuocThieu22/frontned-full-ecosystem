@@ -1,11 +1,11 @@
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import MainLayout from "@/modules-features/admin/ModuleRegistration/RegistrationAndPayment/MainLayout";
+import MainLayout from "@/features/admin/ModuleRegistration/RegistrationAndPayment/MainLayout";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <MainLayout />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }
 

@@ -9,6 +9,7 @@ import { MRT_ColumnDef } from "mantine-react-table";
 import { useMemo } from "react";
 import ProgressReportMainJobsCreateUpdate from "./ProgressReportMainJobsCreateUpdate";
 import ProgressReportMainJobsDelete from "./ProgressReportMainJobsDelete";
+import ProgressReportMainJobsDeleteList from "./ProgressReportMainJobsDeleteList";
 import ProgressReportMainJobsExport from "./ProgressReportMainJobsExport";
 
 export default function ProgressReportMainJobsTable({ readOnly, mainTasksData }: { readOnly?: boolean, mainTasksData?: SRMMainTask[] }) {
@@ -60,6 +61,7 @@ export default function ProgressReportMainJobsTable({ readOnly, mainTasksData }:
                     <Group>
                         {readOnly == false && <>
                             <ProgressReportMainJobsCreateUpdate />
+                            <ProgressReportMainJobsDeleteList table={table} />
                         </>}
                         <ProgressReportMainJobsExport table={table} />
                     </Group>

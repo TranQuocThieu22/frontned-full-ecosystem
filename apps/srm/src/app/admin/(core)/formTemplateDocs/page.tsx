@@ -1,9 +1,10 @@
 "use client"
 import { documentTypesObject } from '@/shared/consts/object/documentTypesObject'
-import { F_formTemplateDocs } from '@aq-fe/core-ui/features/core/formTemplateDocs/F_formTemplateDocs'
+import { FormTemplateDocsLayout } from '@aq-fe/core-ui/features/core/formTemplateDocs/FormTemplateDocsLayout'
+
 
 export default function Page() {
     return (
-        <F_formTemplateDocs FormTypeId={documentTypesObject.Form} />
+        <FormTemplateDocsLayout documentType={documentTypesObject.Form} />
     )
 }

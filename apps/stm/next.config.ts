@@ -1,15 +1,16 @@
+import { APP_CONFIG } from "@/shared/configs/appConfig";
 import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   output: 'export',
   distDir: 'release',
-  basePath: '/stm',
-  assetPrefix: '/stm/',
+  basePath: APP_CONFIG.alias,
+  assetPrefix: APP_CONFIG.alias,
   trailingSlash: true,
-  transpilePackages: ['aq-fe-framework'],
-  // experimental: {
-  //   optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
-  // },
+  transpilePackages: ['core-ui'],
+  experimental: {
+    optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+  },
 };
 
 // const withNextIntl = createNextIntlPlugin();

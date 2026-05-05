@@ -1,16 +1,14 @@
 'use client'
 
 import { documentAttributeService } from "@aq-fe/core-ui/shared/APIs/documentAttributeService"
-import { CustomActionIconDelete } from "@aq-fe/core-ui/shared/components/button/CustomActionIconDelete"
+import { CustomActionIconSafeDelete } from "@aq-fe/core-ui/shared/components/button/CustomActionIconSafeDelete"
+import { DocumentAttribute } from "@aq-fe/core-ui/shared/interfaces/DocumentAttribute"
 
-export function F_documentCategories_Delete({ id, context }: { id: number, context?: string }) {
+export function F_documentCategories_Delete({ value, context }: { value: DocumentAttribute, context?: string }) {
     return (
-        <CustomActionIconDelete
-            // onSubmit={
-            //     async () => await baseAxios.post("/DocumentAttribute/Delete", { id: id })
-            // }
+        <CustomActionIconSafeDelete
             contextData={context}
-            onSubmit={() => documentAttributeService.delete(id)}
+            onSubmit={() => documentAttributeService.safeDelete(value)}
         />
     )
 }

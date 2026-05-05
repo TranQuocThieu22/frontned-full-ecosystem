@@ -1,7 +1,7 @@
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
 import { BaseEntity } from "@aq-fe/core-ui/shared/interfaces/BaseEntity";
 import { useEffect } from "react";
-import { SafeOmitType } from "../../types/safeOmitType";
+import { SafeOmitType } from "@aq-fe/core-ui/shared/types/safeOmitType";
 import { CustomSelect, CustomSelectProps } from "../input/CustomSelect";
 
 export interface CustomSelectAPIProps<IRes extends BaseEntity>

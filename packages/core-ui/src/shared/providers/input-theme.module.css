@@ -1,0 +1,46 @@
+/* ===== LIGHT MODE ===== */
+.input {
+    background-color: var(--mantine-color-gray-0);
+    border: 1px solid var(--mantine-color-gray-4);
+    font-weight: 500;
+    border-radius: var(--mantine-radius-md);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.input:focus,
+.input:focus-within {
+    border-color: var(--mantine-color-blue-6);
+    box-shadow: 0 0 0 2px rgba(34, 139, 230, 0.25);
+}
+
+.input[readonly] {
+    background-color: var(--mantine-color-gray-1);
+    cursor: default;
+    box-shadow: none;
+}
+
+/* ===== DARK MODE ===== */
+:global([data-mantine-color-scheme='dark']) .input {
+    background-color: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-4);
+    box-shadow:
+        0 1px 2px rgba(255, 255, 255, 0.04),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+:global([data-mantine-color-scheme='dark']) .input:hover {
+    box-shadow:
+        0 2px 6px rgba(255, 255, 255, 0.06),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+:global([data-mantine-color-scheme='dark']) .input:focus,
+:global([data-mantine-color-scheme='dark']) .input:focus-within {
+    border-color: var(--mantine-color-blue-5);
+    box-shadow: 0 0 0 2px rgba(34, 139, 230, 0.35);
+}

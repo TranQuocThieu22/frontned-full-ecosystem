@@ -1,14 +1,14 @@
 "use client";
 
-import GiftInventoryTable from "@/modules-features/admin/ModuleMEGiftInventory/GiftInventoryTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import GiftInventoryTable from "@/features/admin/ModuleMEGiftInventory/GiftInventoryTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
   return (
-    <MyPageContent
+    <CustomPageContent
       title="Kho quà tặng"
     >
       <GiftInventoryTable />
-    </MyPageContent>
+    </CustomPageContent>
   );
 }

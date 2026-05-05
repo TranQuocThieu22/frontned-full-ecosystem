@@ -35,7 +35,7 @@ const PageTitle = ({ title, status }: { title: string; status?: string }) => {
     );
 };
 
-export default function MyPageContent({ leftTopBar, title, canBack = false, rightTopBar, status, children }: IPageContent) {
+export default function CustomPageContent({ leftTopBar, title, canBack = false, rightTopBar, status, children }: IPageContent) {
     const SidebarStore = useStore_BasicAppShell();
     const finalTitle = title || SidebarStore.state.title;
     return (

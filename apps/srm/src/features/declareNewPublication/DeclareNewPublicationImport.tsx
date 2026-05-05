@@ -1,237 +1,176 @@
+"use client";
+
+import { contractService } from "@/shared/APIs/contractService";
 import { publicationDeclarationService } from "@/shared/APIs/publicationDeclarationService";
+import { publicationService } from "@/shared/APIs/publicationService";
 import { publicationTypeService } from "@/shared/APIs/publicationTypeService";
 import { EnumlabelLangguage, EnumLangguage } from "@/shared/consts/enum/EnumLangguage";
 import useAcademicYearStore from "@/shared/features/AcademicYear/useAcademicYearStore";
 import { SRMPublicationDeclaration } from "@/shared/interfaces/SRMPublicationDeclaration";
-import { CustomButton } from "@aq-fe/core-ui/shared/components/button/CustomButton/CustomButton";
-import { ModalImportId, MyModalImport } from "@aq-fe/core-ui/shared/components/overlays/MyModalStackImport/MyModalImport";
-import { useCustomReactMutation } from "@aq-fe/core-ui/shared/hooks/useCustomReactMutation";
-import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
+import { CustomButtonImport } from "@aq-fe/core-ui/shared/components/button/CustomButtonImport/CustomButtonImport";
+import { FieldOption } from "@aq-fe/core-ui/shared/components/button/CustomButtonImport/CustomMappingDataModal/CustomMappingFormatDataModal";
+import { CustomApiResponse } from "@aq-fe/core-ui/shared/libs/createBaseApi";
 import { converterUtils } from "@aq-fe/core-ui/shared/utils/converterUtils";
 import { excelUtils, IExcelColumnConfig } from "@aq-fe/core-ui/shared/utils/excelUtils";
-import { useModalsStack } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
+import { AxiosResponse } from "axios";
 import { Workbook } from "exceljs";
 
+type ImportRow = SRMPublicationDeclaration & {
+    srmPublicationTypeCode?: string;
+    publicationCode?: string;
+    srmContractCode?: string;
+};
 
-const config: IExcelColumnConfig<SRMPublicationDeclaration>[] = [
-    // Tab 1: Thông tin chung (TabGeneralInfo)
-    // Cột trái
-    {
-        fieldName: "Mã công bố",
-        fieldKey: "code",
-        isRequired: true,
-    },
-    {
-        fieldName: "Tên công bố",
-        fieldKey: "name",
-        isRequired: true,
-    },
-    {
-        fieldName: "Mã loại công bố",
-        fieldKey: "srmPublicationTypeId",
-        isRequired: true,
-    },
-    {
-        fieldName: "Đơn vị công tác của tác giả khi công bố",
-        fieldKey: "affiliation",
-    },
-    {
-        fieldName: "Tóm tắt (Abstract)",
-        fieldKey: "abstract",
-    },
-    // Cột phải
-    {
-        fieldName: "Năm xuất bản(YYYY)",
-        fieldKey: "publicationYear",
-        isRequired: true,
-    },
-    {
-        fieldName: "Trích dẫn số trang",
-        fieldKey: "citation",
-    },
-    {
-        fieldName: "Chỉ số trích dẫn (Scopus)",
-        fieldKey: "citationIndex",
-    },
-    {
-        fieldName: "Liên kết toàn văn",
-        fieldKey: "fullTextLink",
-    },
-    {
-        fieldName: "Ngôn ngữ",
-        fieldKey: "language",
-    },
+const fields: FieldOption<ImportRow>[] = [
+    { fieldKey: "code", fieldName: "Mã công bố", isRequired: true },
+    { fieldKey: "name", fieldName: "Tên công bố", isRequired: true },
+    { fieldKey: "publicationCode", fieldName: "Mã nhóm công bố" },
+    { fieldKey: "srmPublicationTypeCode", fieldName: "Mã loại công bố", isRequired: true },
+    { fieldKey: "srmContractCode", fieldName: "Mã đề tài liên quan" },
+    { fieldKey: "affiliation", fieldName: "Đơn vị công tác của tác giả khi công bố" },
+    { fieldKey: "abstract", fieldName: "Tóm tắt (Abstract)" },
+    { fieldKey: "publicationYear", fieldName: "Năm xuất bản(YYYY)", isRequired: true, parseType: "number" },
+    { fieldKey: "citation", fieldName: "Trích dẫn số trang" },
+    { fieldKey: "citationIndex", fieldName: "Chỉ số trích dẫn (Scopus)" },
+    { fieldKey: "fullTextLink", fieldName: "Liên kết toàn văn" },
+    { fieldKey: "language", fieldName: "Ngôn ngữ" },
+];
 
-    // // Tab 2: Tạp chí/Hội thảo/NXB (TabPublicationVenue)
-    // {
-    //     fieldName: "Tạp chí/ Nhà xuất bản",
-    //     fieldKey: "journal",
-    // },
-    // {
-    //     fieldName: "ISN/ISBN",
-    //     fieldKey: "issn",
-    // },
-    // {
-    //     fieldName: "Cơ sở dữ liệu chỉ mục",
-    //     fieldKey: "databaseIndex",
-    // },
-    // {
-    //     fieldName: "Chỉ số tác động (Impact Factor)",
-    //     fieldKey: "impactFactor",
-    // },
+const config2: IExcelColumnConfig<{ value: string; label: string }>[] = [
+    { fieldName: "Mã ngôn ngữ", fieldKey: "value" },
+    { fieldName: "Tên ngôn ngữ", fieldKey: "label" },
+];
 
-    // // Tab 3: Bằng sáng chế (TabPatent)
-    // {
-    //     fieldName: "Số bằng độc quyền",
-    //     fieldKey: "patentNumber",
-    // },
-    // {
-    //     fieldName: "Ngày cấp bằng",
-    //     fieldKey: "grantDate",
-    // },
-    // {
-    //     fieldName: "Đơn vị cấp bằng",
-    //     fieldKey: "issuingAuthority",
-    // },
-    // {
-    //     fieldName: "Phạm vi bảo hộ",
-    //     fieldKey: "protectionScope",
-    // },
-
-    // // Tab 4: Sách/Giáo trình (TabBookPublication)
-    // {
-    //     fieldName: "Tổng số trang",
-    //     fieldKey: "totalPage",
-    // },
-    // {
-    //     fieldName: "Tổng số chương",
-    //     fieldKey: "totalChapter",
-    // },
-    // {
-    //     fieldName: "Phiên bản/ Lần xuất bản",
-    //     fieldKey: "version",
-    // },
-]
-
-const config2: IExcelColumnConfig<{ value: string, label: string }>[] = [
-    {
-        fieldName: "Mã ngôn ngữ",
-        fieldKey: "value",
-    },
-    {
-        fieldName: "Tên ngôn ngữ",
-        fieldKey: "label",
-    }
-]
-
-const config3: IExcelColumnConfig<{ value: string, label: string }>[] = [
-    {
-        fieldName: "Mã loại công bố",
-        fieldKey: "value",
-    },
-    {
-        fieldName: "Tên loại công bố",
-        fieldKey: "label",
-    }
-]
-
+function validateRequiredFields(data: any[], requiredKeys: string[], fieldNames: Record<string, string>): string[] {
+    const errors: string[] = [];
+    data.forEach((item, index) => {
+        requiredKeys.forEach((key) => {
+            const value = item[key];
+            if (!value || (typeof value === "string" && value.trim() === "")) {
+                errors.push(`Dòng ${index + 1}: Trường "${fieldNames[key] ?? key}" là bắt buộc`);
+            }
+        });
+    });
+    return errors;
+}
 
 export default function DeclareNewPublicationImport() {
-    const stack = useModalsStack<ModalImportId>([])
     const store = useAcademicYearStore();
 
-    //Loại công bố
-    const publicationTypeQuery = useCustomReactQuery({
-        queryKey: ['publicationTypeQuery'],
-        axiosFn: () => publicationTypeService.getAllIsActive(),
-    });
-
-    const importMutation = useCustomReactMutation({
-        axiosFn: (body: SRMPublicationDeclaration[]) =>
-            publicationDeclarationService.createOrUpdateList(body),
-        mutationType: "import",
-    });
-
-    const validateRequiredFields = (data: any[]) => {
-        const requiredFields = config.filter(field => field.isRequired);
-        const errors: string[] = [];
-
-        data.forEach((item, index) => {
-            requiredFields.forEach(field => {
-                const value = item[field.fieldKey];
-                if (!value || (typeof value === 'string' && value.trim() === '')) {
-                    errors.push(`Dòng ${index + 1}: Trường "${field.fieldName}" là bắt buộc`);
-                }
-            });
-        });
-
-        return errors;
-    };
-
-    const handleExport = async () => {
-        const workbook = new Workbook()
-        await excelUtils.addSheet({ workbook, config: config, sheetName: "Danh sách kê khai công bố", data: [] })
-        await excelUtils.addSheet({
-            workbook, config: config2,
-            sheetName: "Danh sách ngôn ngữ",
-            data: converterUtils.mapEnumToSelectData(EnumLangguage, EnumlabelLangguage),
-        })
-        await excelUtils.addSheet({
-            workbook, config: config3,
-            sheetName: "Danh sách loại công bố",
-            data: publicationTypeQuery.data?.map(item => ({
-                value: item.id?.toString() ?? "",
-                label: item.name ?? "",
-            })) || [],
-        })
-        await excelUtils.download({ workbook: workbook, name: "Danh_sach_ke_khai_cong_bo" })
-    }
     return (
-        <>
-            <MyModalImport
-                fieldDefinition={config.map((item) => ({
-                    key: item.fieldKey,
-                    label: item.fieldName,
-                }))}
-                stack={stack}
-                onExportStructure={handleExport}
-                onExecute={(finalValues: any[]) => {
-                    // Validate required fields
-                    const validationErrors = validateRequiredFields(finalValues);
+        <CustomButtonImport<ImportRow>
+            fields={fields}
+            fileName="Danh_sach_ke_khai_cong_bo"
+            onPrepareWorkbook={async (workbook: Workbook) => {
+                excelUtils.addSheet({
+                    workbook,
+                    config: config2,
+                    sheetName: "Danh sách ngôn ngữ",
+                    data: converterUtils.mapEnumToSelectData(EnumLangguage, EnumlabelLangguage),
+                });
+            }}
+            onSubmit={async (finalValues): Promise<AxiosResponse<CustomApiResponse<ImportRow[]>>> => {
+                const requiredKeys = ["code", "name", "srmPublicationTypeCode", "publicationYear"];
+                const fieldNames: Record<string, string> = {
+                    code: "Mã công bố",
+                    name: "Tên công bố",
+                    srmPublicationTypeCode: "Mã loại công bố",
+                    publicationYear: "Năm xuất bản(YYYY)",
+                };
 
-                    if (validationErrors.length > 0) {
-                        // Show error notification
-                        notifications.show({
-                            title: 'Thông tin không hợp lệ',
-                            message: (
-                                <div>
-                                    <p>Vui lòng kiểm tra lại dữ liệu:</p>
-                                    <ul style={{ marginTop: '8px', paddingLeft: '20px' }}>
-                                        {validationErrors.map((error, index) => (
-                                            <li key={index}>{error}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ),
-                            color: 'red',
-                            autoClose: 10000,
-                        });
-                        return;
+                const validationErrors = validateRequiredFields(finalValues ?? [], requiredKeys, fieldNames);
+                if (validationErrors.length > 0) {
+                    notifications.show({
+                        title: "Thông tin không hợp lệ",
+                        message: `Vui lòng kiểm tra lại dữ liệu: ${validationErrors.join("; ")}`,
+                        color: "red",
+                        autoClose: 10000,
+                    });
+                    throw new Error(validationErrors.join("; "));
+                }
+
+                const [typeRes, publicationRes, contractRes] = await Promise.all([
+                    publicationTypeService.getAllIsActive(),
+                    publicationService.getAll(),
+                    contractService.GetAllByAcademicYear({ AcademicYearId: store.state.academicYear?.id ?? 0 }),
+                ]);
+
+                const typeList = typeRes.data.data ?? [];
+                const publicationList = publicationRes.data.data ?? [];
+                const contractList = contractRes.data.data ?? [];
+
+                const typeByCode = new Map<string, any>(
+                    typeList.map((t: any) => [String(t.code ?? "").trim(), t]),
+                );
+                const publicationByCode = new Map<string, any>(
+                    publicationList.map((p: any) => [String(p.code ?? "").trim(), p]),
+                );
+                const contractByCode = new Map<string, any>(
+                    contractList.map((c: any) => [String(c.code ?? "").trim(), c]),
+                );
+
+                const errors: string[] = [];
+                const mapped: SRMPublicationDeclaration[] = [];
+
+                (finalValues ?? []).forEach((row, idx) => {
+                    const rowIndex = idx + 1;
+
+                    let srmPublicationTypeId: number | undefined;
+                    if (row.srmPublicationTypeCode) {
+                        const type = typeByCode.get(String(row.srmPublicationTypeCode).trim());
+                        if (!type) {
+                            errors.push(
+                                `Dòng ${rowIndex}: Không tìm thấy Mã loại công bố "${row.srmPublicationTypeCode}"`,
+                            );
+                        } else {
+                            srmPublicationTypeId = type.id;
+
+                            if (row.publicationCode) {
+                                const pub = publicationByCode.get(String(row.publicationCode).trim());
+                                if (!pub) {
+                                    errors.push(
+                                        `Dòng ${rowIndex}: Không tìm thấy Nhóm công bố "${row.publicationCode}"`,
+                                    );
+                                } else if (type.srmPublicationId !== pub.id) {
+                                    errors.push(
+                                        `Dòng ${rowIndex}: Mã loại công bố "${row.srmPublicationTypeCode}" không thuộc Nhóm công bố "${row.publicationCode}"`,
+                                    );
+                                }
+                            }
+                        }
                     }
 
-                    const values = finalValues.map(item => ({
-                        ...item,
+                    let srmContractId: number | undefined;
+                    if (row.srmContractCode) {
+                        const contract = contractByCode.get(String(row.srmContractCode).trim());
+                        if (!contract) {
+                            errors.push(
+                                `Dòng ${rowIndex}: Không tìm thấy Đề tài liên quan "${row.srmContractCode}"`,
+                            );
+                        } else {
+                            srmContractId = contract.id;
+                        }
+                    }
+
+                    mapped.push({
+                        ...row,
+                        srmPublicationTypeId,
+                        srmContractId,
                         academicYearId: store.state.academicYear?.id,
-                    }));
-                    importMutation.mutate(values, {
-                        onSuccess: () => {
-                            stack.closeAll();
-                        },
                     });
-                }}
-            />
-            <CustomButton actionType="import" onClick={() => stack.open("FileImportConfig")} />
-        </>
+                });
+
+                if (errors.length > 0) {
+                    throw new Error(errors.join("\n"));
+                }
+
+                const response = await publicationDeclarationService.createList(mapped) as AxiosResponse<
+                    CustomApiResponse<ImportRow[]>
+                >;
+
+                return response;
+            }}
+        />
     );
 }

@@ -12,7 +12,7 @@ import { messageIncludesType, removeSyncMessagePrefix, SyncMessageEnum } from '.
 import { useCustomReactMutation } from "../../hooks/useCustomReactMutation";
 import { useCustomReactQuery } from '../../hooks/useCustomReactQuery';
 import { SyncBatchLog } from '../../interfaces/SyncBatchLog';
-import { SafeOmitType } from '../../types/safeOmitType';
+import { SafeOmitType } from '@aq-fe/core-ui/shared/types/safeOmitType';
 import { CustomButton, CustomButtonProps } from "../button/CustomButton/CustomButton";
 import { CustomButtonModal, CustomButtonModalProps } from "../button/CustomButtonModal/CustomButtonModal";
 import CustomSyncDataTable from '../dataDisplay/CustomSyncDataTable';
@@ -190,6 +190,12 @@ export default function CustomButtonModalProcessSync({
                                 { label: "Đồng bộ", value: syncStatusQuery.data.syncCount },
                                 { label: "Trước đồng bộ", value: syncStatusQuery.data.existingCount },
                                 { label: "Sau đồng bộ", value: syncStatusQuery.data.finalCount },
+                                {
+                                    label: "Thông báo",
+                                    value: messageIncludesType(syncStatusQuery.data.message ?? "", SyncMessageEnum.Info)
+                                        ? removeSyncMessagePrefix(syncStatusQuery.data.message)
+                                        : undefined
+                                },
                             ]}
                         />
                     )}

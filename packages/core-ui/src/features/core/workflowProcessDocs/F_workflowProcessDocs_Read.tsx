@@ -36,7 +36,7 @@ export function F_workflowProcessDocs_Read({
 
   const documentAttributeQuery = useCustomReactQuery({
     queryKey: ["F_workflowProcessDocs_Read" + WorkflowTypeId],
-    axiosFn: () => documentAttributeService.GetByType(WorkflowTypeId)
+    axiosFn: () => documentAttributeService.getByType(WorkflowTypeId)
   })
   useEffect(() => {
     if (documentAttributeQuery.data && documentAttributeQuery.data.length > 0) {
@@ -101,7 +101,7 @@ function SubRead({
   // });
   const documentQuery = useCustomReactQuery({
     queryKey: ["F_workflowProcessDocs_Read" + id],
-    axiosFn: () => documentService.GetByDocumentAttribute(id)
+    axiosFn: () => documentService.getByDocumentAttribute(id)
   })
   const columns = useMemo<MRT_ColumnDef<I>[]>(
     () => [

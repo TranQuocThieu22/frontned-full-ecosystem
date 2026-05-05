@@ -4,7 +4,6 @@ import { Group } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useQueryClient } from "@tanstack/react-query";
 import AcademicYearViewModel from "./interfaces/IAcademicYearViewModel";
-import { CustomActionIconUpdate } from "@aq-fe/core-ui/shared/components/button/CustomActionIconUpdate";
 import { CustomDateInput } from "@aq-fe/core-ui/shared/components/input/CustomDateInput";
 import { CustomNumberInput } from "@aq-fe/core-ui/shared/components/input/CustomNumberInput";
 import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";

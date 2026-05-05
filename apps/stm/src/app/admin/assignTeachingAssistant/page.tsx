@@ -1,11 +1,11 @@
 "use client"
-import AssignTeachingAssistantRead from "@/modules-features/admin/assignTeachingAssistant/assignTeachingAssistantRead";
-import { MyPageContent } from "aq-fe-framework/components";
+import AssignTeachingAssistantRead from "@/features/admin/assignTeachingAssistant/assignTeachingAssistantRead";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <AssignTeachingAssistantRead />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

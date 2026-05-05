@@ -1,13 +1,13 @@
 "use client";
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_r1572aab77_CourseDetail from "@/modules-features/student/r1572aab77/F_r1572aab77_CourseDetail";
-import F_r1572aab77_CourseList from "@/modules-features/student/r1572aab77/F_r1572aab77_CourseList";
+import F_r1572aab77_CourseDetail from "@/features/student/r1572aab77/F_r1572aab77_CourseDetail";
+import F_r1572aab77_CourseList from "@/features/student/r1572aab77/F_r1572aab77_CourseList";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 import { Grid } from "@mantine/core";
 
 //r1572aab77
 export default function Page() {
   return (
-    <MyPageContent>
+    <CustomPageContent>
       <Grid w={"100%"}>
         <Grid.Col span={4}>
           <F_r1572aab77_CourseList />
@@ -17,6 +17,6 @@ export default function Page() {
         </Grid.Col>
       </Grid>
       {/* <F_r1572aab77_Read /> */}
-    </MyPageContent>
+    </CustomPageContent>
   );
 }

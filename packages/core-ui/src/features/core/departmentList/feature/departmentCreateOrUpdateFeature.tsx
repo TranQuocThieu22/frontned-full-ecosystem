@@ -21,7 +21,8 @@ interface IProps {
     mode: 'create' | 'update';
     data?: Department;
 }
-export default function DepartmentCreateOrUpdateFeature({ mode, data }: IProps) {
+
+export function DepartmentCreateOrUpdateFeature({ mode, data }: IProps) {
     const [fileData, setFileData] = useState<any[]>([]);
     const isCreateMode = mode === 'create';
     const isUpdateMode = mode === 'update';
@@ -45,8 +46,12 @@ export default function DepartmentCreateOrUpdateFeature({ mode, data }: IProps) 
 
     const { data: units, isLoading, isError } = useCustomReactQuery({
         queryKey: ["UnitRead"],
-        axiosFn: () => departmentService.getAll()
-    })
+        axiosFn: () => departmentService.getAll(),
+        options: {
+            refetchOnWindowFocus: false,
+        }
+    });
+
     useEffect(() => {
         if (isCreateMode) {
             form_multiple.setValues({ importedData: fileData });
@@ -110,9 +115,7 @@ export default function DepartmentCreateOrUpdateFeature({ mode, data }: IProps) 
                 ...form.values,
                 isWorkingUnit: form.values.isWorkingUnit
             });
-
         }
-
     };
 
     return (

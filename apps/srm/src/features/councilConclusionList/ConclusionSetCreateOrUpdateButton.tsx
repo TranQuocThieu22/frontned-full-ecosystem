@@ -5,7 +5,8 @@ import { SRMConclusion } from "@/shared/interfaces/SRMConclusion";
 import { SRMConclusionSet } from "@/shared/interfaces/SRMConclusionSet";
 import { CustomActionIcon } from "@aq-fe/core-ui/shared/components/button/CustomActionIcon/CustomActionIcon";
 import { CustomButton } from "@aq-fe/core-ui/shared/components/button/CustomButton/CustomButton";
-import { Modal, Tabs } from "@mantine/core";
+import { CustomTabs } from "@aq-fe/core-ui/shared/components/navigation/CustomTabs/CustomTabs";
+import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconInfoCircle, IconList } from "@tabler/icons-react";
@@ -38,54 +39,61 @@ export default function ConclusionSetCreateOrUpdateButton({ conclusionSet, loadi
         conclusionToDeleteList.current.length = 0;
     }
 
-    // handle request to server
+    const buildRequestDataOrThrow = () => {
+        const validateResult = conclusionSetGenralFormRef.current?.validate();
+        const data = conclusionSetGenralFormRef.current?.getValues();
+        if (validateResult?.hasErrors || !data) {
+            throw new Error("ValidationFailedTabGenaral");
+        }
+        return {
+            ...data,
+            srmConclusions: conclusionList.concat(conclusionToDeleteList.current),
+        };
+    };
+
     const mutation = useMutation({
         mutationFn: async () => {
-            // validate form tab general
-            const validateResult = conclusionSetGenralFormRef.current?.validate();
-            // lấy menuData từ tab general
-            const data = conclusionSetGenralFormRef.current?.getValues();
-            // validate form tab genaral
-            if (validateResult?.hasErrors || !data) {
-                throw new Error("ValidationFailedTabGenaral");
-            }
-            data.srmConclusions = conclusionList.concat(conclusionToDeleteList.current);
-            if (conclusionSet) {
-                return await conclusionService.update(data);
-            }
-            return await conclusionService.create(data);
+            const payload = buildRequestDataOrThrow();
+            return conclusionSet
+                ? conclusionService.update(payload)
+                : conclusionService.create(payload);
         },
         onSuccess: (response) => {
-            if (response.data.isSuccess === 0) { // validate trùng mã
-                const dataMessage = (response.data.data as any);
-                // message trùng mã bộ kết luận
-                dataMessage.Code && conclusionSetGenralFormRef.current?.setErrors({
-                    code: dataMessage.Code,
-                })
-                // message trùng mã kết luận
-                dataMessage[""] && notifications.show({
-                    color: "red",
-                    message: dataMessage[""],
-                });
-            } else {
-                queryClient.invalidateQueries({ queryKey: ['ConclusionSetList'] });
-                disc[1].close();
-                notifications.show({
-                    color: "green",
-                    message: conclusionSet ? "Cập nhật bộ kết luận thành công" : "Thêm bộ kết luận thành công",
-                });
-                resetAllData();
+            if (response.data.isSuccess === 0) {
+                const dataMessage = response.data.data as any;
+
+                if (dataMessage?.Code) {
+                    conclusionSetGenralFormRef.current?.setErrors({
+                        code: dataMessage.Code,
+                    });
+                }
+
+                if (dataMessage?.[""]) {
+                    notifications.show({
+                        color: "red",
+                        message: dataMessage[""],
+                    });
+                }
+                return;
             }
+
+            queryClient.invalidateQueries({ queryKey: ['ConclusionSetList'] });
+            disc[1].close();
+            notifications.show({
+                color: "green",
+                message: conclusionSet ? "Cập nhật bộ kết luận thành công" : "Thêm bộ kết luận thành công",
+            });
+            resetAllData();
         },
         onError: (error) => {
             if (error.message === "ValidationFailedTabGenaral") {
                 generalTabRef.current?.click();
-            } else {
-                notifications.show({
-                    color: "red",
-                    message: "Đã xảy ra lỗi",
-                });
+                return;
             }
+            notifications.show({
+                color: "red",
+                message: "Đã xảy ra lỗi",
+            });
         },
     });
 
@@ -116,56 +124,35 @@ export default function ConclusionSetCreateOrUpdateButton({ conclusionSet, loadi
                     hasChange.current || conclusionSetGenralFormRef.current?.isDirty() ? disclosureConfirrm[1].open() : disc[1].close()
                 }}
             >
-                <Tabs
-                    defaultValue="general"
-                    styles={{
-                        tab: {
-                            fontWeight: 500,
-                            padding: '8px 12px',
+                <CustomTabs
+                    tabs={[
+                        {
+                            label: "Thông tin chung",
+                            ref: generalTabRef,
+                            leftSection: <IconInfoCircle size={16} />,
+                            children: (
+                                <GenralInfoForm
+                                    ref={conclusionSetGenralFormRef}
+                                    conclusionSet={conclusionSet}
+                                />
+                            ),
                         },
-                        tabLabel: {
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 6,
+                        {
+                            label: "Danh sách lựa chọn",
+                            leftSection: <IconList size={16} />,
+                            children: (
+                                <ConclusionTable
+                                    hasChange={hasChange}
+                                    listConclusion={conclusionList}
+                                    setConclusionList={setConclusionList}
+                                    listConclusionToDelete={conclusionToDeleteList}
+                                    conclusionSetCode={conclusionSet?.code}
+                                    conclusionSetId={conclusionSet?.id}
+                                />
+                            ),
                         },
-                    }}>
-                    <Tabs.List mb={10} grow justify="space-between">
-                        <Tabs.Tab
-                            ref={generalTabRef}
-                            value="general"
-                            leftSection={<IconInfoCircle size={16} />}
-                            style={{ backgroundColor: '#e3f2fd', color: '#1565c0' }}
-                        >
-                            Thông tin chung
-                        </Tabs.Tab>
-
-                        <Tabs.Tab
-                            value="conclusion"
-                            leftSection={<IconList size={16} />}
-                            style={{ backgroundColor: '#fff9c4', color: '#795548' }}
-                        >
-                            Danh sách lựa chọn
-                        </Tabs.Tab>
-                    </Tabs.List>
-
-                    <Tabs.Panel value="general" mih="65vh">
-                        <GenralInfoForm
-                            ref={conclusionSetGenralFormRef}
-                            conclusionSet={conclusionSet}
-                        />
-                    </Tabs.Panel>
-
-                    <Tabs.Panel value="conclusion" mih="65vh">
-                        <ConclusionTable
-                            hasChange={hasChange}
-                            listConclusion={conclusionList}
-                            setConclusionList={setConclusionList}
-                            listConclusionToDelete={conclusionToDeleteList}
-                            conclusionSetCode={conclusionSet?.code}
-                            conclusionSetId={conclusionSet?.id}
-                        />
-                    </Tabs.Panel>
-                </Tabs>
+                    ]}
+                />
                 <CustomButton
                     mt="md"
                     fullWidth

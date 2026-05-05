@@ -1,12 +1,12 @@
 'use client'
 
-import LessonReviewsApprovalTable from "@/modules-features/admin/MELessonReviewsApproval/LessonReviewsApprovalTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import LessonReviewsApprovalTable from "@/features/admin/MELessonReviewsApproval/LessonReviewsApprovalTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <LessonReviewsApprovalTable />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

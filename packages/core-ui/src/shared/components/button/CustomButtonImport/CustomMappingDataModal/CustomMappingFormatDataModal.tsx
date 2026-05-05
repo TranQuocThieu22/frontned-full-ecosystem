@@ -97,9 +97,11 @@ export default function CustomMappingFormatDataModal<T>({
             selectedFields.forEach(field => {
                 const rawValue = row[field.excelColumKey as string];
                 rawObj[field.fieldKey as string] = rawValue;
+                const rawStr = rawValue != null ? String(rawValue).trim() : "";
+                const isBlank = rawValue === null || rawValue === undefined || rawValue === "" || rawStr === "";
                 let parsedValue: any = rawValue;
                 try {
-                    if (field.isRequired && (parsedValue === null || parsedValue === undefined || parsedValue === "")) {
+                    if (field.isRequired && isBlank) {
                         errors.push({
                             fieldKey: String(field.fieldKey),
                             rawValue,
@@ -110,32 +112,32 @@ export default function CustomMappingFormatDataModal<T>({
                     }
                     switch (field.parseType) {
                         case "number":
-                            if (!rawValue) return undefined
-                            if (rawValue === null || rawValue === undefined || rawValue === "")
+                            if (isBlank) return undefined
+                            if (rawStr === "")
                                 parsedValue = null;
-                            else if (isNaN(Number(rawValue.replaceAll(",", ""))))
+                            else if (isNaN(Number(rawStr.replaceAll(",", ""))))
                                 throw new Error(`Không thể ép "${rawValue}" sang number`);
-                            else parsedValue = Number(rawValue.replaceAll(",", ""));
+                            else parsedValue = Number(rawStr.replaceAll(",", ""));
                             break;
 
                         case "boolean":
-                            if (!rawValue) return undefined
+                            if (isBlank) return undefined
                             if (typeof rawValue === "boolean") parsedValue = rawValue;
-                            else if (["true", "1"].includes(String(rawValue).toLowerCase()))
+                            else if (["true", "1"].includes(rawStr.toLowerCase()))
                                 parsedValue = true;
-                            else if (["false", "0"].includes(String(rawValue).toLowerCase()))
+                            else if (["false", "0"].includes(rawStr.toLowerCase()))
                                 parsedValue = false;
                             else throw new Error(`Không thể ép "${rawValue}" sang boolean`);
                             break;
                         case "date":
-                            if (!rawValue) return undefined
-                            if (!CustomMappingDataModalUtils.isDDMMYYYYFormat(rawValue))
+                            if (isBlank) return undefined
+                            if (!CustomMappingDataModalUtils.isDDMMYYYYFormat(rawStr))
                                 throw new Error(`Không thể ép "${rawValue}" sang date`);
-                            parsedValue = CustomMappingDataModalUtils.convertToYYYYMMDD(rawValue);
+                            parsedValue = CustomMappingDataModalUtils.convertToYYYYMMDD(rawStr);
                             break;
                         // mặc định không truyền type thì là string
                         default:
-                            parsedValue = rawValue != null ? String(rawValue) : "";
+                            parsedValue = rawStr;
                             break;
                     }
                     obj[field.fieldKey as string] = parsedValue;
@@ -146,7 +148,7 @@ export default function CustomMappingFormatDataModal<T>({
                         type: "format",
                         description: err.message,
                     });
-                    obj[field.fieldKey as string] = rawValue;
+                    obj[field.fieldKey as string] = typeof rawValue === "string" ? rawValue.trim() : rawValue;
                 }
             });
             validationResult.push({

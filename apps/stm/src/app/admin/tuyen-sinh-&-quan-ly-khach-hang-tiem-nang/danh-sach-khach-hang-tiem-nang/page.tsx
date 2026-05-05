@@ -1,11 +1,11 @@
 "use client";
-import ListPotentialCustomerTable from "@/modules-features/admin/MEListPotentialCustomer/ListPotentialCustomerTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import ListPotentialCustomerTable from "@/features/admin/MEListPotentialCustomer/ListPotentialCustomerTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <ListPotentialCustomerTable/>
-        </MyPageContent>
+        <CustomPageContent>
+            <ListPotentialCustomerTable />
+        </CustomPageContent>
     );
 }

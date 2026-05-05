@@ -1,7 +1,7 @@
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
 import { BaseEntity } from "@aq-fe/core-ui/shared/interfaces/BaseEntity";
 import { MultiSelect, MultiSelectProps } from "@mantine/core";
-import { SafeOmitType } from "../../types/safeOmitType";
+import { SafeOmitType } from "@aq-fe/core-ui/shared/types/safeOmitType";
 
 export interface CustomSelectMultipleAPIProps<IRes extends BaseEntity>
     extends SafeOmitType<MultiSelectProps, "onChange" | "data" | "value" | "defaultValue" | "label"> {

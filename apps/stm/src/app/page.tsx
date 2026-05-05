@@ -1,12 +1,12 @@
 'use client'
-import { MyBoxesBackground } from "aq-fe-framework/components";
-import { useStore_Authenticate } from "aq-fe-framework/modules-features";
+import { useAuthenticateStore } from "@aq-fe/core-ui/features/authenticate/useAuthenticateStore";
+import { CustomBoxesBackground } from "@aq-fe/core-ui/shared/components/layout/CustomBoxesBackground";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Page() {
   const router = useRouter()
-  const S0Auth = useStore_Authenticate()
+  const S0Auth = useAuthenticateStore()
   useEffect(() => {
     if (S0Auth.state.token == "") {
       router.push("/auth/login")
@@ -16,6 +16,6 @@ export default function Page() {
 
   }, [S0Auth.state.token])
   return (
-    <MyBoxesBackground title="Hệ thống thông tin quản lí đào tạo ngắn hạn" />
+    <CustomBoxesBackground title="Hệ thống thông tin quản lí đào tạo ngắn hạn" />
   );
 }

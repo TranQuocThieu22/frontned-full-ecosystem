@@ -1,14 +1,15 @@
 "use client";
 import { academicYearService } from "@aq-fe/core-ui/shared/APIs/academicYearService";
-import { CustomActionIconDelete } from "@aq-fe/core-ui/shared/components/button/CustomActionIconDelete";
+import { CustomActionIconSafeDelete } from "@aq-fe/core-ui/shared/components/button/CustomActionIconSafeDelete";
+import { AcademicYear } from "@aq-fe/core-ui/shared/interfaces/AcademicYear";
 
-export function AcademicYearsDelete({ values }: { values: any }) {
+export function AcademicYearsDelete({ value }: { value: AcademicYear }) {
   return (
-    <CustomActionIconDelete
-      contextData={values.code}
+    <CustomActionIconSafeDelete
+      contextData={value.code}
       onSubmit={() => {
-        return academicYearService.delete(values.id)
+        return academicYearService.safeDelete(value)
       }}
-    ></CustomActionIconDelete>
+    />
   );
 }

@@ -1,6 +1,6 @@
 import { Drawer, DrawerProps } from '@mantine/core'
 import { UseDisclosureReturnValue } from '@mantine/hooks'
-import { SafeOmitType } from '../../types/safeOmitType'
+import { SafeOmitType } from '@aq-fe/core-ui/shared/types/safeOmitType'
 
 export interface CustomDrawerProps extends SafeOmitType<DrawerProps, "opened" | "onClose"> {
     disclosure: UseDisclosureReturnValue

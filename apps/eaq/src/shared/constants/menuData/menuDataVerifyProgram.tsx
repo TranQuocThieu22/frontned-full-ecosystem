@@ -138,7 +138,9 @@ export const menuDataVerifyProgram: I_BasicAppShell_LinkItem[] = [
         icon: <Library />,
         label: "Kho minh chứng",
         links: [
+            { pageId: 2576, name: "Evidence type Management", label: "Quản lý loại minh chứng", link: "evidenceTypeManagement", status: 'New' },
             { pageId: 2541, name: "Evidence Management", label: "Quản lý minh chứng", link: "evidenceManagement" },
+            { pageId: 2577, name: "Evidence Dashboard", label: "Dashboard giám sát sức khỏe minh chứng", link: "evidenceDashboard", status: 'New' },
         ],
     },
     {

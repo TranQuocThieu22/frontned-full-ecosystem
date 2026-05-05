@@ -1,12 +1,12 @@
 "use client"
+import { APP_CONFIG } from '@/shared/configs/appConfig';
+import { aqModuleIdEnum } from "@aq-fe/core-ui/shared/consts/enum/aqModuleIdEnum";
 import { useLoadAxiosConfig } from '@aq-fe/core-ui/shared/hooks/useLoadAxiosConfig';
+import { useProjectInfoStore } from "@aq-fe/core-ui/shared/stores/useProjectInfoStore";
 import { DotWave } from 'ldrs/react';
 import { ReactNode, useEffect } from 'react';
-import { aqModuleIdEnum } from "@aq-fe/core-ui/shared/consts/enum/aqModuleIdEnum";
-import { useProjectInfoStore } from "@aq-fe/core-ui/shared/stores/useProjectInfoStore";
-import CustomReactQueryProvider from '@aq-fe/core-ui/shared/providers/CustomReactQueryProvider';
-import CustomMantineProvider from '@aq-fe/core-ui/shared/providers/CustomMantineProvider';
-import { APP_CONFIG } from '@/shared/configs/appConfig';
+import MyMantineProvider from './MyMantineProvider';
+import MyReactQueryProvider from './MyReactQueryProvider';
 
 export default function Provider({ children }: { children?: ReactNode }) {
     const projectInfoStore = useProjectInfoStore()
@@ -35,12 +35,12 @@ export default function Provider({ children }: { children?: ReactNode }) {
     )
 
     return (
-        <CustomReactQueryProvider>
+        <MyReactQueryProvider>
             {/* <MyDateProvider> */}
-            <CustomMantineProvider>
+            <MyMantineProvider>
                 {children}
-            </CustomMantineProvider>
+            </MyMantineProvider>
             {/* </MyDateProvider> */}
-        </CustomReactQueryProvider>
+        </MyReactQueryProvider>
     )
 }

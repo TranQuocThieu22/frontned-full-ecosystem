@@ -64,6 +64,7 @@ export default function SelectionResultTable({ type }: { type: EnumProposalNotif
         {
             header: "Nội dung chính",
             accessorKey: "description",
+            type: "html",
             importFieldProps: {}
         }
     ], [])

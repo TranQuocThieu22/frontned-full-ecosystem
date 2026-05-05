@@ -1,12 +1,12 @@
 'use client'
 
-import PointChangeHistoryRead from "@/modules-features/admin/ModulePointChangeHistory/PointChangeHistoryRead";
-import { MyPageContent } from "aq-fe-framework/components";
+import PointChangeHistoryRead from "@/features/admin/ModulePointChangeHistory/PointChangeHistoryRead";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <PointChangeHistoryRead />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

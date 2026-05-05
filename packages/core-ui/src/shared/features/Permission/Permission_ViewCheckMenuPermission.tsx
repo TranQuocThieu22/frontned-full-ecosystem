@@ -65,8 +65,8 @@ export default function Permission_ViewCheckMenuPermission({
                 result.push(...children);
             }
 
-            // Nếu là menu thực sự (có link và pageId)
-            if (item.link && item.pageId !== undefined) {
+            // Nếu là menu thực sự (có link và pageId) và KHÔNG khai báo parentPageId
+            if (item.link && item.pageId !== undefined && item.parentPageId === undefined) {
                 result.push({
                     id: item.pageId.toString(),
                     name: item.label,

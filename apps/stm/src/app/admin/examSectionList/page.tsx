@@ -1,12 +1,12 @@
 'use client'
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_akiydtpxjo_ReadExam from "@/modules-features/admin/akiydtpxjo/F_akiydtpxjo_ReadExam";
+import F_akiydtpxjo_ReadExam from "@/features/admin/akiydtpxjo/F_akiydtpxjo_ReadExam";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <F_akiydtpxjo_ReadExam />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }
 

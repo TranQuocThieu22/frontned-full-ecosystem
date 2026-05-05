@@ -1,44 +1,21 @@
 
 import { CustomReactMutationProps, useCustomReactMutation } from "@aq-fe/core-ui/shared/hooks/useCustomReactMutation"
+import { applyReadOnlyToChildren } from "@aq-fe/core-ui/shared/libs/applyReadOnlyToChildren"
 import { CustomApiResponse } from "@aq-fe/core-ui/shared/libs/createBaseApi"
-import { ModalProps, ScrollArea, ScrollAreaAutosizeProps, Space, useMantineColorScheme } from "@mantine/core"
+import { SafeOmitType } from "@aq-fe/core-ui/shared/types/safeOmitType"
+import { ScrollAreaAutosizeProps, Space, Stack } from "@mantine/core"
 import { UseFormReturnType } from "@mantine/form"
 import { useDisclosure } from "@mantine/hooks"
 import { notifications } from "@mantine/notifications"
 import { AxiosResponse } from "axios"
-import React, { ReactNode } from "react"
-import { CustomFlexColumn } from "../../layout/CustomFlexColumn"
+import { ReactNode } from "react"
+import { CustomModalProps } from "../../overlays/CustomModal"
 import { CustomActionIconProps } from "../CustomActionIcon/CustomActionIcon"
 import { CustomButton, CustomButtonProps } from "../CustomButton/CustomButton"
 import { CustomButtonModal } from "../CustomButtonModal/CustomButtonModal"
 
-export function applyReadOnlyToChildren(children: ReactNode, readOnlyState?: boolean): ReactNode {
-    return React.Children.map(children, (child) => {
-        if (!child || typeof child !== "object") return child;
-        if (!("props" in child)) return child;
-
-        const element: any = child;
-        const props = element.props;
-
-        const newProps: any = { ...props };
-
-        // --- RULE 1: Nếu input tự đặt readOnly → tôn trọng, KHÔNG override
-        if (!("readOnly" in props)) {
-            newProps.readOnly = readOnlyState;     // chỉ auto-apply nếu không có readOnly trong props
-        }
-
-        // --- RULE 2: Đệ quy vào children lồng nhau ---
-        if (props.children) {
-            newProps.children = applyReadOnlyToChildren(props.children, readOnlyState);
-        }
-
-        return React.cloneElement(element, newProps);
-    });
-}
-
-
 export interface CustomButtonCreateUpdateProps<IReq, IRes> {
-    modalProps?: Omit<ModalProps, "opened" | "onClose">
+    modalProps?: SafeOmitType<CustomModalProps, "disclosure">
     actionIconProps?: CustomActionIconProps,
     buttonProps?: CustomButtonProps,
     submitButtonProps?: CustomButtonProps
@@ -69,11 +46,9 @@ export function CustomButtonCreateUpdate<IReq, IRes>({
     children,
     disclosure: externalDisclosure,
     isUpdate = false,
-    scrollAreaAutosizeProps,
     useCustomReactMutationProps: useMyReactMutationProps,
     readOnlyAllInput,
 }: CustomButtonCreateUpdateProps<IReq, IRes>) {
-    const theme = useMantineColorScheme();
     const defaultDisclosure = useDisclosure();
     const disclosure = externalDisclosure ?? defaultDisclosure;
     const mutation = useCustomReactMutation({
@@ -128,13 +103,6 @@ export function CustomButtonCreateUpdate<IReq, IRes>({
             }}
             modalProps={{
                 title: isUpdate ? "Sửa dữ liệu" : "Thêm dữ liệu",
-                styles: {
-                    content: {
-                        backgroundColor: theme.colorScheme === "dark"
-                            ? "var(--mantine-color-dark-8)"
-                            : "var(--mantine-color-gray-1)",
-                    },
-                },
                 ...modalProps
             }}
             disclosure={disclosure}
@@ -164,15 +132,10 @@ export function CustomButtonCreateUpdate<IReq, IRes>({
                     mutation.mutate(axiosPromise);
                 })}
             >
-                <ScrollArea
-                    h={modalProps?.fullScreen ? "calc(100vh - 140px)" : "auto"}
-                    {...scrollAreaAutosizeProps}
-                >
-                    <CustomFlexColumn p={'md'}>
-                        {applyReadOnlyToChildren(children, readOnlyAllInput)}
-                    </CustomFlexColumn>
-                </ScrollArea>
-                <Space />
+                <Stack>
+                    {applyReadOnlyToChildren(children, readOnlyAllInput)}
+                </Stack>
+                <Space my={"md"} />
                 <CustomButton
                     hidden={actionIconProps?.actionType == "view"} // Nếu actionType là view thì ẩn nút lưu
                     fullWidth

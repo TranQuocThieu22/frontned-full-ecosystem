@@ -1,12 +1,12 @@
 'use client'
 
-import EnterClassScoreTable from "@/modules-features/admin/MEEnterClassScore/EnterClassScoreTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import EnterClassScoreTable from "@/features/admin/MEEnterClassScore/EnterClassScoreTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <EnterClassScoreTable />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

@@ -1,11 +1,11 @@
 "use client";
-import ScheduleTestTable from "@/modules-features/admin/MEScheduleTest/ScheduleTestTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import ScheduleTestTable from "@/features/admin/MEScheduleTest/ScheduleTestTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <ScheduleTestTable/>
-        </MyPageContent>
+        <CustomPageContent>
+            <ScheduleTestTable />
+        </CustomPageContent>
     );
 }

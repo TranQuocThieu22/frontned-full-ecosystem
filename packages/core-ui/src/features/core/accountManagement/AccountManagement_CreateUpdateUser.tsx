@@ -50,7 +50,6 @@ export default function AccountManagement_CreateUpdateUser({ values }: { values?
         <CustomButtonCreateUpdate
             isUpdate={!!values}
             modalProps={{ size: "xl" }}
-            scrollAreaAutosizeProps={{ h: "auto" }}
             form={form} onSubmit={(formValues) => {
                 const { accountStatus, ...finalFormValues } = formValues
                 const finalValues = {

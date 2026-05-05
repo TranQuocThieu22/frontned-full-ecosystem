@@ -1,10 +1,10 @@
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F3_2Read from "@/modules-features/(3)/3-2/F3_2Read";
+import ProgramListTable from "@/features/admin/programList/ProgramListTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <F3_2Read />
-        </MyPageContent>
+        <CustomPageContent>
+            <ProgramListTable />
+        </CustomPageContent>
     )
 }

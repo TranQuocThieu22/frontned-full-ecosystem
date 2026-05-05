@@ -8,6 +8,12 @@
       ],
       "@aq-fe/core-ui/*": [
         "../../packages/core-ui/src/*"
+      ],
+      "@aq-fe/aq-core-framework/*": [
+        "../../packages/aq-core-framework/src/*"
+      ],
+      "@shared/*": [
+        "../../packages/aq-core-framework/src/shared/*"
       ]
     },
     "plugins": [
@@ -20,6 +26,7 @@
     "**/*.ts",
     "**/*.tsx",
     "../../packages/core-ui/src",
+    "../../packages/aq-core-framework/src",
     ".next/types/**/*.ts",
     "next-env.d.ts",
     "next.config.js",

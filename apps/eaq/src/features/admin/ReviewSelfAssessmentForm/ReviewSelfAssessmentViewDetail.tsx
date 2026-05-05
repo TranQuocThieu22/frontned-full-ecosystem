@@ -30,30 +30,17 @@ export default function SelfAssessmentViewDetail({ phaseId, taskDetailId }: Prop
                 closeButtonProps: {
                     color: "var(--mantine-color-text)"
                 },
+                title: "Chi tiết phiếu tự đánh giá",
                 fullScreen: fullscreen
             }}
+
             isActionIcon
             actionIconProps={{
                 actionType: 'view'
             }}
             disclosure={disclosure}
         >
-            <Modal.Header mih={25} p={0}>
-                <Group justify="space-between" align="center" w="100%">
-                    <Text fw={500}>Chi tiết phiếu tự đánh giá</Text>
-                    <Group>
-                        <ActionIcon
-                            size="sm"
-                            c="var(--mantine-color-text)"
-                            variant="transparent"
-                            onClick={() => { setFullScreen(!fullscreen) }}
-                        >
-                            {fullscreen ? <IconMinimize /> : <IconMaximize />}
-                        </ActionIcon>
-                        <Modal.CloseButton />
-                    </Group>
-                </Group>
-            </Modal.Header>
+
 
             <Modal.Body pl={0}>
                 <Group wrap="nowrap" align="start">

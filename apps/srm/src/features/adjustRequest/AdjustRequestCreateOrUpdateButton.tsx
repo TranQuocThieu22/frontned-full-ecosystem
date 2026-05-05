@@ -14,7 +14,7 @@ import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import ChoseContractButton from "./ChoseContractButton";
+import AdjustRequestChoseContract from "./AdjustRequestChoseContract";
 
 interface IProps {
     initValues?: SRMContractDetail;
@@ -52,9 +52,6 @@ export default function AdjustRequestCreateOrUpdateButton({ initValues, actionTy
         <CustomButtonCreateUpdate
             modalProps={{
                 size: "60vw",
-            }}
-            scrollAreaAutosizeProps={{
-                h: "auto"
             }}
             onSubmit={(formValues) => {
                 if (actionType === "update" && initValues) {
@@ -101,7 +98,7 @@ export default function AdjustRequestCreateOrUpdateButton({ initValues, actionTy
                     error={form.errors.srmContractId}
                 />
                 <Box display="none">
-                    <ChoseContractButton
+                    <AdjustRequestChoseContract
                         form={form}
                         disclosure={disc}
                         onSelect={handleContractSelected}
@@ -172,7 +169,6 @@ export default function AdjustRequestCreateOrUpdateButton({ initValues, actionTy
             />
             <CustomFileInput
                 label="File phiếu điều chỉnh"
-                accept=".pdf"
                 placeholder={form.values.attachmentDetail?.fileName || "Chọn file"}
                 defaultValue={new File([], initValues?.attachmentPath?.split("/").at(-1) || "")}
                 onChange={async (file) => {

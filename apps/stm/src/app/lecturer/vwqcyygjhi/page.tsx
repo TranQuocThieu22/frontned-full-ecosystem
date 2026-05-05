@@ -1,13 +1,13 @@
 'use client'
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_vwqcyygjhi_read from "@/modules-features/lecturer/vwqcyygjhi/F_vwqcyygjhi_read";
+import F_vwqcyygjhi_read from "@/features/lecturer/vwqcyygjhi/F_vwqcyygjhi_read";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 //scheduleConfig
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <F_vwqcyygjhi_read />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }
 

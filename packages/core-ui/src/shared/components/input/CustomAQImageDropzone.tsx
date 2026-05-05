@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { aqService } from "../../APIs/aqService";
 import { useCustomReactQuery } from "../../hooks/useCustomReactQuery";
 import { AQFileDetail } from "../../interfaces/AQFileDetail";
-import { SafeOmitType } from "../../types/safeOmitType";
+import { SafeOmitType } from "@aq-fe/core-ui/shared/types/safeOmitType";
 import { fileUtils } from "../../utils/fileUtils";
 import CustomImageDropzone, { CustomImageDropzoneProps } from "./CustomImageDropzone";
 

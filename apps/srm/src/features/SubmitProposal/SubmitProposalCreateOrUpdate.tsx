@@ -110,9 +110,7 @@ export default function SubmitProposalCreateOrUpdate({ initValues, disabled }: {
 
     return (
         <CustomButtonCreateUpdate
-            scrollAreaAutosizeProps={{
-                h: "auto",
-            }}
+        
             modalProps={{
                 size: "70vw",
                 title: initValues
@@ -140,7 +138,7 @@ export default function SubmitProposalCreateOrUpdate({ initValues, disabled }: {
                 }
             })}
         >
-            <Grid columns={12} className="w-[80vw]">
+            <Grid columns={12}>
                 <GridCol span={6}>
                     {/* FIXME: Chưa có bộ đếm */}
                     <CustomTextInput

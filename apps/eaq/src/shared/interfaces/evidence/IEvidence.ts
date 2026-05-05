@@ -8,6 +8,12 @@ export interface IEvidence extends BaseEntity {
   eaqEvidenceCurrentVersion?: IEnvidenceVersion
   eaqCriteriaId?: number;
   note?: string;
+  evidenceTypeId?: number;
+  evidenceType?: {
+    id: number;
+    code: string;
+    name: string;
+  };
 
   /* Dùng để lấy id thực sự, khi id chính bị thay đổi */
   eaqEvidenceId?: number;

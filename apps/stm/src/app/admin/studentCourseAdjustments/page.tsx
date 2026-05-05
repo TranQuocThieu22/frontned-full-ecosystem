@@ -1,13 +1,13 @@
 'use client'
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_pcsestxdlb_Read from "@/modules-features/admin/pcsestxdlb/F_pcsestxdlb_Read";
+import F_pcsestxdlb_Read from "@/features/admin/pcsestxdlb/F_pcsestxdlb_Read";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 //Cấu hình thông số xếp lịch học
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <F_pcsestxdlb_Read />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }
 

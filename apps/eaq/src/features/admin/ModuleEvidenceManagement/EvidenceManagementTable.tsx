@@ -10,7 +10,7 @@ import EvidenceManagementCreate from "./EvidenceManagementCreate";
 import EvidenceManagementDelete from "./EvidenceManagementDelete";
 import EvidenceManagementExportButton from "./EvidenceManagementExportButton";
 import EvidenceManagementImportButton from "./EvidenceManagementImportButton";
-import EvidenceManagementViewOrUpdate from "./EvidenceManagementViewOrUpdate";
+import EvidenceActionViewOrUpdate from "@/shared/components/evidence/EvidenceActionViewOrUpdate";
 import { CustomButtonViewFileAPI } from "@aq-fe/core-ui/shared/components/withAPI/CustomButtonViewFileAPI";
 import { CustomButtonDeleteList } from "@aq-fe/core-ui/shared/components/button/CustomButtonDeleteList";
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
@@ -18,12 +18,18 @@ import { CustomCenterFull } from "@aq-fe/core-ui/shared/components/layout/Custom
 import { CustomFieldset } from "@aq-fe/core-ui/shared/components/layout/CustomFieldset";
 import { CustomDataTable } from "@aq-fe/core-ui/shared/components/dataDisplay/CustomDataTable";
 import { dateUtils } from "@aq-fe/core-ui/shared/utils/dateUtils";
+import { service_EvidenceType } from "@/shared/APIs/service_EvidenceType";
 
 export default function EvidenceManagementTable() {
   const Evidence_GetAll = useCustomReactQuery({
     queryKey: ["EvidenceManagementTable_GetAllEvidences"],
     axiosFn: () => service_EAQEvidence.GetAllEvidences(),
   });
+  const EvidenceType_GetAll = useCustomReactQuery({
+    queryKey: ["EvidenceManagementTable_GetEvidenceTypeByDepartment"],
+    axiosFn: () => service_EvidenceType.GetEvidenceTypeByDepartment(),
+  });
+  console.log(EvidenceType_GetAll);
 
   const columns = useMemo<MRT_ColumnDef<IEvidence>[]>(
     () => [
@@ -172,12 +178,12 @@ export default function EvidenceManagementTable() {
             [];
           return (
             <CustomCenterFull >
-              <EvidenceManagementViewOrUpdate
+              <EvidenceActionViewOrUpdate
                 editMode={false}
                 listEvidence={filteredEvidenceList}
                 values={row.original}
               />
-              <EvidenceManagementViewOrUpdate
+              <EvidenceActionViewOrUpdate
                 listEvidence={filteredEvidenceList}
                 values={row.original}
               />

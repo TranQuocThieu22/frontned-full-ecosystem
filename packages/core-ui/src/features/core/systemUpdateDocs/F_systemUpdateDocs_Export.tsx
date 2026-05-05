@@ -1,6 +1,7 @@
 import { CustomButtonExportData } from "@aq-fe/core-ui/shared/components/button/CustomButtonExportData";
 import { useExportData } from "@aq-fe/core-ui/shared/hooks/useExportData";
 import { Document } from "@aq-fe/core-ui/shared/interfaces/Document";
+import { dateUtils } from "@aq-fe/core-ui/shared/utils/dateUtils";
 import { MRT_TableInstance } from "mantine-react-table";
 
 export default function F_systemUpdateDocs_Export({
@@ -12,10 +13,24 @@ export default function F_systemUpdateDocs_Export({
 
   const exportConfig = {
     fields: [
+      {
+        fieldName: "meetingDate",
+        header: "Ngày họp",
+        formatFunction: (value: any) => (value ? dateUtils.toDDMMYYYY(new Date(value)) : ""),
+      },
       { fieldName: "departmentName", header: "Đơn vị yêu cầu" },
       { fieldName: "description", header: "Nội dung cải tiến" },
-      { fieldName: "startDate", header: "Ngày bắt đầu", type: "date" },
-      { fieldName: "endDate", header: "Ngày kết thúc", type: "date" },
+      { fieldName: "conclusion", header: "Kết luận" },
+      {
+        fieldName: "startDate",
+        header: "Ngày bắt đầu",
+        formatFunction: (value: any) => (value ? dateUtils.toDDMMYYYY(new Date(value)) : ""),
+      },
+      {
+        fieldName: "endDate",
+        header: "Ngày kết thúc",
+        formatFunction: (value: any) => (value ? dateUtils.toDDMMYYYY(new Date(value)) : ""),
+      },
       { fieldName: "note", header: "Ghi chú" },
     ],
   };

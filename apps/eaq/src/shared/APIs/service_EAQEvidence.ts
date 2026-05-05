@@ -5,6 +5,7 @@ import { ITaskDetailEvidence } from "@/shared/interfaces/evidence/ITaskDetailEvi
 import { createBaseApi, CustomApiResponse } from "@aq-fe/core-ui/shared/libs/createBaseApi";
 import { BaseEntity } from "@aq-fe/core-ui/shared/interfaces/BaseEntity";
 import axiosInstance from "@aq-fe/core-ui/shared/configs/axiosInstance";
+import { IEvidenceDashboardData } from "../interfaces/evidence/IEvidenceDashboard";
 
 // Ví dụ tạo service
 const CONTROLLER = "eaq/EAQEvidence";
@@ -88,5 +89,15 @@ export const service_EAQEvidence = {
 
     );
 
+  },
+  getData: (params: { type: number | null; departmentId?: number; pageNumber?: number; pageSize?: number }) => {
+    const queryParams: any = { ...params };
+    if (queryParams.type === null) {
+      delete queryParams.type;
+    }
+    return axiosInstance.get<CustomApiResponse<IEvidenceDashboardData>>(
+      CONTROLLER + "/dashboard",
+      { params: queryParams }
+    );
   },
 };

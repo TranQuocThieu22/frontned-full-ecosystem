@@ -7,7 +7,7 @@ import { CustomReactMutationProps, useCustomReactMutation } from "../../hooks/us
 import { CustomApiResponse } from "../../libs/createBaseApi";
 import { CustomActionIconProps } from "../button/CustomActionIcon/CustomActionIcon";
 import { CustomButton, CustomButtonProps } from "../button/CustomButton/CustomButton";
-import { applyReadOnlyToChildren } from "../button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
+import { applyReadOnlyToChildren } from "@aq-fe/core-ui/shared/libs/applyReadOnlyToChildren";
 import { CustomFlexColumn } from "../layout/CustomFlexColumn";
 
 type MutationSuccess<IRes> = (

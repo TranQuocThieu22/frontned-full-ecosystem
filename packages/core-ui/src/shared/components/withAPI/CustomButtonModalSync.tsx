@@ -2,7 +2,7 @@ import { CustomApiResponse } from '@aq-fe/core-ui/shared/libs/createBaseApi';
 import { useDisclosure } from "@mantine/hooks";
 import { AxiosResponse } from "axios";
 import { useCustomReactMutation } from "../../hooks/useCustomReactMutation";
-import { SafeOmitType } from '../../types/safeOmitType';
+import { SafeOmitType } from '@aq-fe/core-ui/shared/types/safeOmitType';
 import { CustomButton, CustomButtonProps } from "../button/CustomButton/CustomButton";
 import { CustomButtonModal, CustomButtonModalProps } from "../button/CustomButtonModal/CustomButtonModal";
 export interface CustomButtonModalSyncProps<IRes> extends SafeOmitType<CustomButtonModalProps, "disclosure"> {
@@ -10,7 +10,7 @@ export interface CustomButtonModalSyncProps<IRes> extends SafeOmitType<CustomBut
     submitButtonProps?: CustomButtonProps
 }
 
-export default function CustomButtonModalSync<IRes>({
+export function CustomButtonModalSync<IRes>({
     axiosFn,
     submitButtonProps,
     ...rest

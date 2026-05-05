@@ -63,7 +63,6 @@ export default function CouncilRoleListCreateUpdateModal({ values }: Props) {
                 title: isUpdate
                     ? "Cập nhật vai trò thực hiện đề tài" : "Tạo vai trò thực hiện đề tài mới",
             }}
-            scrollAreaAutosizeProps={{ h: "auto" }}
         >
             <CustomTextInput withAsterisk label="Mã vai trò" {...form.getInputProps("code")} readOnly={isUpdate} />
             <CustomTextInput withAsterisk label="Tên vai trò" {...form.getInputProps("name")} />

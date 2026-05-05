@@ -1,7 +1,8 @@
 import { CustomFlexColumn } from "@aq-fe/core-ui/shared/components/layout/CustomFlexColumn";
-import { Modal, ModalProps, TooltipProps, useMantineColorScheme } from "@mantine/core";
+import { SafeOmitType } from "@aq-fe/core-ui/shared/types/safeOmitType";
 import { useDisclosure } from "@mantine/hooks";
 import { ReactNode } from "react";
+import CustomModal, { CustomModalProps } from "../../overlays/CustomModal";
 import { CustomActionIcon, CustomActionIconProps } from "../CustomActionIcon/CustomActionIcon";
 import { CustomButton, CustomButtonProps } from "../CustomButton/CustomButton";
 
@@ -10,13 +11,8 @@ export interface CustomButtonModalProps {
     disclosure: ReturnType<typeof useDisclosure>;
     buttonProps?: CustomButtonProps
     actionIconProps?: CustomActionIconProps
-    modalProps?: Omit<ModalProps, "opened" | "onClose">
+    modalProps?: SafeOmitType<CustomModalProps, "disclosure">
     isActionIcon?: boolean
-    /**
-   * @deprecated 
-   * Xài actionIconProps trong đó có tooltipProps xài trong đó nhé.
-   */
-    toolTipProps?: Omit<TooltipProps, "children">,
 }
 
 
@@ -27,9 +23,7 @@ export function CustomButtonModal({
     actionIconProps,
     modalProps,
     isActionIcon = false,
-    toolTipProps,
 }: CustomButtonModalProps) {
-    const theme = useMantineColorScheme();
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         // nếu props gốc có onClick thì chạy trước
         if (isActionIcon) {
@@ -44,7 +38,6 @@ export function CustomButtonModal({
         <>
             {isActionIcon ? (
                 <CustomActionIcon
-                    toolTipProps={toolTipProps}
                     {...actionIconProps}
                     onClick={handleClick}
                 />
@@ -55,29 +48,14 @@ export function CustomButtonModal({
                 />
             )}
 
-            <Modal
-                opened={disclosure?.[0]}
-                onClose={disclosure[1].close}
-                //  styles: {
-                //     content: {
-                //         backgroundColor: theme.colorScheme === "dark"
-                //             ? "var(--mantine-color-dark-8)"
-                //             : "var(--mantine-color-gray-1)",
-                //     },
-                // },
-                styles={{
-                    content: {
-                        backgroundColor: theme.colorScheme === "dark"
-                            ? "var(--mantine-color-dark-8)"
-                            : "var(--mantine-color-gray-1)",
-                    }
-                }}
+            <CustomModal
+                disclosure={disclosure}
                 {...modalProps}
             >
-                <CustomFlexColumn mt={'md'}>
+                <CustomFlexColumn >
                     {children}
                 </CustomFlexColumn>
-            </Modal>
+            </CustomModal>
         </>
     );
 }

@@ -97,7 +97,7 @@ export default function ViewDetailResultRow({ data, reportKey }: IProps) {
           }}
         />
 
-        <ViewDetailResultTableEvidenceUsed data={data} />
+        {/* <ViewDetailResultTableEvidenceUsed data={data} /> */}
       </Accordion.Panel>
     </Accordion.Item>
   );

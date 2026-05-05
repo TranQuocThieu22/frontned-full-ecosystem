@@ -1,11 +1,11 @@
 "use client"
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import { F_moduleConfig } from "aq-fe-framework/modules-features";
+import { ModuleConfigFeature } from "@aq-fe/core-ui/features/core/moduleConfig/ModuleConfigFeature";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <F_moduleConfig AQModuleId={3} />
-        </MyPageContent>
+        <CustomPageContent>
+            <ModuleConfigFeature AQModuleId={3} />
+        </CustomPageContent>
     )
 }

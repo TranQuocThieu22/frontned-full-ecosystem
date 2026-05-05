@@ -1,4 +1,4 @@
-import baseAxios from "@/api/config/baseAxios";
+import baseAxios from "@aq-fe/core-ui/shared/configs/axiosInstance";
 import { Select, SelectProps } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 

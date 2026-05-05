@@ -1,6 +1,6 @@
 import { Table, TableProps } from "@mantine/core";
 import { ReactNode } from "react";
-import { SafeOmitType } from "../../types/safeOmitType";
+import { SafeOmitType } from "@aq-fe/core-ui/shared/types/safeOmitType";
 
 interface Data {
     title?: ReactNode

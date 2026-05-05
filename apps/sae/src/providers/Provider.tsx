@@ -1,13 +1,12 @@
 "use client"
+import { APP_CONFIG } from '@/shared/configs/appConfig';
 import { aqModuleIdEnum } from '@aq-fe/core-ui/shared/consts/enum/aqModuleIdEnum';
 import { useLoadAxiosConfig } from '@aq-fe/core-ui/shared/hooks/useLoadAxiosConfig';
+import CustomProvider from '@aq-fe/core-ui/shared/providers/CustomProvider';
 import { useProjectInfoStore } from '@aq-fe/core-ui/shared/stores/useProjectInfoStore';
 import { DotWave } from 'ldrs/react';
 import 'ldrs/react/DotWave.css';
 import { ReactNode, useEffect } from 'react';
-import { APP_CONFIG } from '@/shared/configs/appConfig';
-import CustomMantineProvider from '@aq-fe/core-ui/shared/providers/CustomMantineProvider';
-import CustomReactQueryProvider from '@aq-fe/core-ui/shared/providers/CustomReactQueryProvider';
 
 export default function Provider({ children }: { children?: ReactNode }) {
     const projectInfoStore = useProjectInfoStore()
@@ -36,13 +35,9 @@ export default function Provider({ children }: { children?: ReactNode }) {
     )
 
     return (
-        <CustomReactQueryProvider>
-            {/* <CustomDateProvider> */}
-            <CustomMantineProvider>
-                {children}
-            </CustomMantineProvider>
-            {/* </CustomDateProvider> */}
-        </CustomReactQueryProvider>
+        <CustomProvider>
+            {children}
+        </CustomProvider>
     )
 }
 

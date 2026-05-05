@@ -1,0 +1,1 @@
+export const MAIN_TENANT_ID = "019d4d05-e1df-7130-8dbf-31f431e3cebc";

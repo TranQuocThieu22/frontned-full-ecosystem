@@ -8,7 +8,7 @@ export default function TickerRepositoryCreateOrUpdate({ data }: { data?: any })
         
     )
     return (
-        <MyButtonCreateUpdate onSubmit={() => { }} form={form} isUpdate={!!data} scrollAreaAutosizeProps={{h:"auto"}} >
+        <MyButtonCreateUpdate onSubmit={() => { }} form={form} isUpdate={!!data} >
             
             <MyTextInput label="Số lượng ticker nạp vào" {...form.getInputProps("quantity")} />
         </MyButtonCreateUpdate>

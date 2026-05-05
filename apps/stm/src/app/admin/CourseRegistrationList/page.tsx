@@ -1,10 +1,10 @@
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_s5dibenvwp_Read from "@/modules-features/admin/s5dibenvwp/F_s5dibenvwp_Read";
+import CourseRegistrationListTable from "@/features/admin/courseRegistrationList/CourseRegistrationListTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <F_s5dibenvwp_Read />
-        </MyPageContent>
-    )
+        <CustomPageContent>
+            <CourseRegistrationListTable />
+        </CustomPageContent>
+    );
 }

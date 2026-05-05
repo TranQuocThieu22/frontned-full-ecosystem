@@ -1,12 +1,12 @@
 'use client';
 
-import MonthlyParentFeedbackTable from "@/modules-features/admin/ModuleMEMonthlyParentFeedback/MonthlyParentFeedbackTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import MonthlyParentFeedbackTable from "@/features/admin/ModuleMEMonthlyParentFeedback/MonthlyParentFeedbackTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function page() {
     return (
-        <MyPageContent>
-            <MonthlyParentFeedbackTable/>
-        </MyPageContent>
+        <CustomPageContent>
+            <MonthlyParentFeedbackTable />
+        </CustomPageContent>
     )
 }

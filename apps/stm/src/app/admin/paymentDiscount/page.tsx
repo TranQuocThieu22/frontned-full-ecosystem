@@ -1,10 +1,11 @@
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F6_1Read from "@/modules-features/(6)/6-1/F6_1Read";
+"use client"
+import PaymentDiscountTable from "@/features/paymentDiscount/PaymentDiscountTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
   return (
-    <MyPageContent>
-      <F6_1Read />
-    </MyPageContent>
+    <CustomPageContent>
+      <PaymentDiscountTable />
+    </CustomPageContent>
   )
 }

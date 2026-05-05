@@ -1,4 +1,4 @@
-import { I_BasicAppShell_LinkItem } from "aq-fe-framework/components";
+import { I_BasicAppShell_LinkItem } from "@aq-fe/core-ui/shared/components/layout/CustomBasicAppShell/types";
 
 export const adminMenuData: I_BasicAppShell_LinkItem[] = [
     { pageId: 200, name: "Dashboard", label: "Dashboard", link: "dashboard" },
@@ -28,23 +28,22 @@ export const adminMenuData: I_BasicAppShell_LinkItem[] = [
         label: "Chương trình học",
         name: "Study Programs",
         links: [
-            { pageId: 800, label: "Danh mục môn học", name: "Module List", link: "subject/subjectList" },
+            { pageId: 800, label: "Danh mục môn học", name: "Subject List", link: "subjectList" },
             { pageId: 801, label: "Danh mục chương trình học", name: "Program List", link: "programList" },
             { pageId: 802, label: "Cấu hình điểm của chương trình học", name: "Score Config", link: "scoreConfig" }
         ]
     },
     {
-        label: "Khóa học",
-        name: "Courses",
-        links: [
-            { pageId: 803, label: "Danh sách khóa học", name: "Course List", link: "course/courseList" }
-        ]
+        pageId: 803,
+        label: "Danh sách khóa học",
+        name: "Course List",
+        link: "courseList",
     },
     {
         label: "Khóa thi",
         name: "Exams",
         links: [
-            { pageId: 804, label: "Danh sách khóa thi", name: "Exam List", link: "exam/examList" }
+            { pageId: 804, label: "Danh sách khóa thi", name: "Exam List", link: "examList" }
         ]
     },
     {
@@ -72,7 +71,7 @@ export const adminMenuData: I_BasicAppShell_LinkItem[] = [
             { pageId: 808, label: "Ghi danh và Thu phí", name: "Registration and payment", link: "registration/registrationAndPayment" },
             { pageId: 8501, label: "Công nợ học viên", name: "", link: "studentDebtList", status: "Prototype" },
             { pageId: 850, label: "Danh sách phiếu thu", name: "Receipt", link: "receiptList", status: "Prototype" },
-            { pageId: 809, label: "Danh sách đăng ký khóa học", name: "Course Reg", link: "CourseRegistrationList" },
+            { pageId: 809, label: "Danh sách đăng ký khóa học", name: "Course Reg", link: "courseRegistrationList" },
             {
                 label: "Quản lý tình trạng đăng ký học",
                 name: "",
@@ -114,7 +113,7 @@ export const adminMenuData: I_BasicAppShell_LinkItem[] = [
         name: "Class Scheduling",
         links: [
             { pageId: 814, label: "Xếp lớp cho học viên", name: "Class Arrangement", link: "assignStudentToCourseSection", },
-            { pageId: 815, label: "Danh sách lớp", name: "View Classes", link: "courseSection/courseSectionList" },
+            { pageId: 815, label: "Danh sách lớp", name: "View Classes", link: "courseSectionList" },
             { pageId: 816, label: "Phân công giảng dạy cho lớp", name: "Teaching Assignment", link: "teachingAssignment", },
             { pageId: 817, label: "Gán phòng học ưu tiên cho lớp", name: "Assign Classroom", link: "assignPreferredRoom" },
             { pageId: 818, label: "Xếp lịch học", name: "Schedule Classes", link: "scheduleCourseSection" },
@@ -126,11 +125,11 @@ export const adminMenuData: I_BasicAppShell_LinkItem[] = [
         name: "Study Supervision",
         links: [
             { pageId: 820, label: "Xem lịch tuần học", name: "Weekly Schedule", link: "weeklySchedule" },
-            { pageId: 821, label: "Điểm danh buổi học", name: "Check Attendance", link: "courseSectionSchedule/checkAttendance" },
+            { pageId: 821, label: "Điểm danh buổi học", name: "Check Attendance", link: "checkAttendance" },
             { pageId: 822, label: "Duyệt nghỉ dạy", name: "Approve Absence", link: "approveAbsence" },
             { pageId: 823, label: "Xử lý lịch nghỉ dạy", name: "Handle Absence Schedule", link: "handleAbsenceSchedule" },
             { pageId: 824, label: "Nhập điểm thành phần", name: "Enter Component Scores", link: "enterComponentScores" },
-            { pageId: 825, label: "Hoàn thành giảng dạy", name: "Complete Teaching", link: "courseSection/completeCourseSection" },
+            { pageId: 825, label: "Hoàn thành giảng dạy", name: "Complete Teaching", link: "completeCourseSection" },
         ]
     },
     {
@@ -138,7 +137,7 @@ export const adminMenuData: I_BasicAppShell_LinkItem[] = [
         name: "Exam Organization",
         links: [
             { pageId: 826, label: "Danh sách thí sinh đăng ký", name: "Candidate List", link: "candidateList", status: "Prototype" },
-            { pageId: 827, label: "Ngày thi chính thức", name: "Official exam date", link: "exam/officialExamDate" },
+            { pageId: 827, label: "Ngày thi chính thức", name: "Official exam date", link: "officialExamDate" },
             { pageId: 828, label: "Phòng tổ chức thi", name: "Exam Organization Department", link: "examOrganizationDepartment" },
             { pageId: 829, label: "Tiết bắt đầu xếp lịch thi", name: "Exam Start Slot", link: "examStartSlot" },
             { pageId: 830, label: "Chia nhóm thi", name: "Divide Groups", link: "splitExamSection" },
@@ -154,8 +153,8 @@ export const adminMenuData: I_BasicAppShell_LinkItem[] = [
         links: [
             // { label: "Cấu hình định dạng chứng chỉ", name: "Create Batch", link: "2wk7hz676c" },
             { pageId: 835, label: "Tạo đợt xét chứng chỉ", name: "Create Batch", link: "createCertificateReviewBatch" },
-            { pageId: 836, label: "Kết quả xét chứng chỉ", name: "Certificate Result", link: "certificate/certificateResult" },
-            { pageId: 837, label: "Quyết định cấp chứng chỉ", name: "Certificate Decision", link: "certificate/certificateDecision" },
+            { pageId: 836, label: "Kết quả xét chứng chỉ", name: "Certificate Result", link: "certificateResult" },
+            { pageId: 837, label: "Quyết định cấp chứng chỉ", name: "Certificate Decision", link: "certificateDecision" },
             { pageId: 838, label: "Hồ sơ cấp chứng chỉ", name: "Issuance Records", link: "certificateIssuanceFiles" }
         ]
     },

@@ -14,12 +14,12 @@ import { CustomCenterFull } from '@aq-fe/core-ui/shared/components/layout/Custom
 import axiosInstance from '@aq-fe/core-ui/shared/configs/axiosInstance';
 import { useCustomReactQuery } from '@aq-fe/core-ui/shared/hooks/useCustomReactQuery';
 import { usePermissionStore } from '@aq-fe/core-ui/shared/stores/usePermissionStore';
-import { Flex, Grid, Group, Text } from '@mantine/core';
+import { Grid, Group, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { IconUserPlus, IconUsersPlus } from '@tabler/icons-react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
 import StudentAffairsParticipationButtonDelete from './StudentAffairsButtonDelete';
 import { useCustomReactMutation } from '@aq-fe/core-ui/shared/hooks/useCustomReactMutation';
@@ -59,6 +59,16 @@ export default function StudentAffairsButtonUpdate({
 
     const [isDuplicate, setIsDuplicate] = useState(false);
 
+    const { state: permissionState } = permissionStore;
+    const canAddStudent = () => {
+        const hasPermission = permissionState.currentPermissionPage?.isCreate
+        return hasPermission &&
+            (reviewedByUserId !== null &&
+                userWorkingUnitId !== null &&
+                reviewedByUserId === userWorkingUnitId) ||
+            (userRoleIds?.some(item => item === 2)) ||
+            currentLoginUser.state.userId?.toString() === '1';
+    };
     const studentEventQuery = useCustomReactQuery({
         queryKey: ["StudentAffairsParticipationButtonUpdate_GetBy", eventValue.id],
         axiosFn: () => service_studentsActivityParticipation.getBy(
@@ -116,8 +126,6 @@ export default function StudentAffairsButtonUpdate({
         }
     })
 
-
-
     const ENDPOINT = "StudentsActivityParticipation/Create"
 
     const mutation = useCustomReactMutation({
@@ -136,9 +144,7 @@ export default function StudentAffairsButtonUpdate({
                 return;
             }
             const validationResult = form.validate()
-            if (validationResult.hasErrors) {
-                return
-            };
+            if (validationResult.hasErrors) return
 
             mutation.mutate({
                 StudentId: selectedStudent?.id,
@@ -206,57 +212,51 @@ export default function StudentAffairsButtonUpdate({
                 }}
                 disclosure={disc}
             >
-                {(permissionStore.state.currentPermissionPage?.isCreate) &&
-                    ((reviewedByUserId !== null && userWorkingUnitId !== null &&
-                        reviewedByUserId === userWorkingUnitId) || (userRoleIds?.some(item => item === 2)) || currentLoginUser.state.userId?.toString() === '1') ?
-                    <>
-                        <Grid align="flex-end" >
-                            <Grid.Col span={{ base: 12, md: 7 }}>
-                                <CustomSearchableSelect
-                                    description={'Mã hoặc tên sinh viên'}
-                                    query={studentQuery}
-                                    value={selectedStudent}
-                                    onChange={setSelectedStudent}
-                                    searchValue={studentSearchInput}
-                                    onSearchChange={setStudentSearchInput}
-                                    scrollThreshold={scrollThreshold}
-                                    config={{
-                                        getValue: (account) => account.id?.toString() ?? '',
-                                        getLabel: (account) => `${account.code} - ${account.fullName}`,
-                                        minSearchLength: minSearchLength,
-                                        currentPage: currentPage,
-                                        setCurrentPage: setCurrentPage,
-                                        debouncedSearch: debouncedStudentSearch,
-                                        searchInput: studentSearchInput,
-                                        setSearchInput: setStudentSearchInput
-                                    }}
-                                    error={isDuplicate ? "Sinh viên này đã được thêm vào hoạt động" : undefined}
-                                    label="Sinh viên"
-                                    placeholder="Nhập ít nhất 2 ký tự để tìm kiếm..."
-                                />
-                            </Grid.Col>
-                            <Grid.Col span={{ base: 12, md: 3 }}>
-                                <CustomNumberInput
-                                    label="Điểm"
-                                    description={`Điểm tối thiểu ${eventValue.minPoint} - Điểm tối đa ${eventValue.maxPoint}`}
-                                    hideControls
-                                    min={eventValue.minPoint}
-                                    {...form.getInputProps('point')}
-                                />
-                            </Grid.Col>
-                            <Grid.Col span={{ base: 12, md: 2 }}>
-                                <Flex direction="column" justify="flex-end" align="center" h={60}>
-                                    <CustomButton
-                                        hidden={!permissionStore.state.currentPermissionPage?.isCreate}
-                                        onClick={handleSubmit}
-                                        leftSection={<IconUsersPlus />}
-                                        color='blue'>
-                                        Thêm
-                                    </CustomButton>
-                                </Flex>
-                            </Grid.Col>
-                        </Grid>
-                    </>
+                {canAddStudent() ?
+                    <Grid align="center" >
+                        <Grid.Col span={{ base: 12, md: 7 }}>
+                            <CustomSearchableSelect
+                                description={'Mã hoặc tên sinh viên'}
+                                query={studentQuery}
+                                value={selectedStudent}
+                                onChange={setSelectedStudent}
+                                searchValue={studentSearchInput}
+                                onSearchChange={setStudentSearchInput}
+                                scrollThreshold={scrollThreshold}
+                                config={{
+                                    getValue: (account) => account.id?.toString() ?? '',
+                                    getLabel: (account) => `${account.code} - ${account.fullName}`,
+                                    minSearchLength: minSearchLength,
+                                    currentPage: currentPage,
+                                    setCurrentPage: setCurrentPage,
+                                    debouncedSearch: debouncedStudentSearch,
+                                    searchInput: studentSearchInput,
+                                    setSearchInput: setStudentSearchInput
+                                }}
+                                error={isDuplicate ? "Sinh viên này đã được thêm vào hoạt động" : undefined}
+                                label="Sinh viên"
+                                placeholder="Nhập ít nhất 2 ký tự để tìm kiếm..."
+                            />
+                        </Grid.Col>
+                        <Grid.Col span={{ base: 12, md: 3 }}>
+                            <CustomNumberInput
+                                label="Điểm"
+                                description={`Điểm tối thiểu ${eventValue.minPoint} - Điểm tối đa ${eventValue.maxPoint}`}
+                                hideControls
+                                min={eventValue.minPoint}
+                                {...form.getInputProps('point')}
+                            />
+                        </Grid.Col>
+                        <Grid.Col span={{ base: 12, md: 2 }} mt={5}>
+                            <CustomButton
+                                hidden={!permissionStore.state.currentPermissionPage?.isCreate}
+                                onClick={handleSubmit}
+                                leftSection={<IconUsersPlus />}
+                                color='blue'>
+                                Thêm
+                            </CustomButton>
+                        </Grid.Col>
+                    </Grid>
                     :
                     <Text c="dimmed" fz={"sm"}>Đơn vị của bạn không có quyền cập nhật điểm cho hoạt động này</Text>
                 }
@@ -271,12 +271,10 @@ export default function StudentAffairsButtonUpdate({
                     renderRowActions={({ row }) => {
                         return (
                             <CustomCenterFull>
-                                {(permissionStore.state.currentPermissionPage?.isDelete) &&
-                                    ((reviewedByUserId !== null && userWorkingUnitId !== null &&
-                                        reviewedByUserId === userWorkingUnitId) || (userRoleIds?.some(item => item === 2)) || currentLoginUser.state.userId?.toString() === '1') ?
-                                    <>
-                                        <StudentAffairsParticipationButtonDelete id={row.original.id!} name={row.original.studentName!} />
-                                    </>
+                                {canAddStudent() ?
+                                    <StudentAffairsParticipationButtonDelete
+                                        id={row.original.id!}
+                                        name={row.original.studentName!} />
                                     :
                                     <></>
                                 }
@@ -286,6 +284,6 @@ export default function StudentAffairsButtonUpdate({
                 >
                 </CustomDataTable>
             </CustomButtonModal>
-        </Group>
+        </Group >
     )
 }

@@ -69,9 +69,6 @@ export default function CouncilCriteriaListCreateOrUpdate({ initValues }: { init
 
     return (
         <CustomButtonCreateUpdate
-            scrollAreaAutosizeProps={{
-                h: "auto"
-            }}
             modalProps={{
                 size: "70%",
                 title: initValues

@@ -1,5 +1,7 @@
 import { BaseEntity } from "@aq-fe/core-ui/shared/interfaces/BaseEntity";
+import { ConstraintCheckingResponse } from "@aq-fe/core-ui/shared/interfaces/SafeDeleteResponse/ConstraintCheckingResponse";
 import { AxiosInstance } from "axios";
+import { SafeDeleteListResponse } from "../interfaces/SafeDeleteResponse/SafeDeleteListResponse";
 
 export interface PagingParams {
     pageNumber?: number;
@@ -45,10 +47,6 @@ export function createBaseApi<T>(baseUrl: string, axiosInstance: AxiosInstance) 
         create: (data: Partial<T>) => {
             return axiosInstance.post<CustomApiResponse<T>>(`${baseUrl}/create`, {
                 ...data,
-                // 18/07/2025 cái nào lỗi không thêm được thì nhờ backend sửa
-                // id: 0,
-                // concurrencyStamp: "string",
-                // isEnabled: true
             });
         },
         update: (data: Partial<T>) => {
@@ -77,6 +75,14 @@ export function createBaseApi<T>(baseUrl: string, axiosInstance: AxiosInstance) 
             return axiosInstance.post(`${baseUrl}/deleteList`, ids.map(id => ({
                 id: id,
                 isEnabled: false
+            })));
+        },
+        safeDelete: (value: BaseEntity) => {
+            return axiosInstance.post<CustomApiResponse<ConstraintCheckingResponse>>(`${baseUrl}/safe-delete`, value);
+        },
+        safeDeleteList: (values: BaseEntity[]) => {
+            return axiosInstance.post<CustomApiResponse<SafeDeleteListResponse>>(`${baseUrl}/safe-delete-list`, values.map(item => ({
+                id: item.id
             })));
         },
     };

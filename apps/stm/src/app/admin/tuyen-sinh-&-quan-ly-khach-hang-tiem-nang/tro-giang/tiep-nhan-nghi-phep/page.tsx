@@ -1,12 +1,12 @@
 'use client'
 
-import ReceiveLeaveRead from "@/modules-features/admin/ModuleReceiveLeave/ReceiveLeaveRead";
-import { MyPageContent } from "aq-fe-framework/components";
+import ReceiveLeaveRead from "@/features/admin/ModuleReceiveLeave/ReceiveLeaveRead";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <ReceiveLeaveRead />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

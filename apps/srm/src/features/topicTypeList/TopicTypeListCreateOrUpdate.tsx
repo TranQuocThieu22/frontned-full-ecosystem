@@ -52,9 +52,6 @@ export default function TopicTypeListCreateOrUpdate({ initValues }: { initValues
 
     return (
         <CustomButtonCreateUpdate
-            scrollAreaAutosizeProps={{
-                h: "auto"
-            }}
             onSubmit={handleSubmit}
             form={form}
             isUpdate={!!initValues}

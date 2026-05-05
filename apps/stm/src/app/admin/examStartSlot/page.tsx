@@ -1,10 +1,10 @@
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_hlpun7jl0c_Read from "@/modules-features/admin/hlpun7jl0c/F_hlpun7jl0c_Read";
+import F_hlpun7jl0c_Read from "@/features/admin/hlpun7jl0c/F_hlpun7jl0c_Read";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <F_hlpun7jl0c_Read />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

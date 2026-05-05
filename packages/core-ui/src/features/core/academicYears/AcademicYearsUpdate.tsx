@@ -1,12 +1,11 @@
 'use client';
 
 import { academicYearService } from '@aq-fe/core-ui/shared/APIs/academicYearService';
-import { CustomActionIconUpdate } from '@aq-fe/core-ui/shared/components/button/CustomActionIconUpdate';
 import { CustomButtonCreateUpdate } from '@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate';
 import { CustomTextArea } from '@aq-fe/core-ui/shared/components/input/CustomTextArea';
 import { CustomTextInput } from '@aq-fe/core-ui/shared/components/input/CustomTextInput';
 import { AcademicYear } from '@aq-fe/core-ui/shared/interfaces/AcademicYear';
-import { Checkbox, Grid, Group } from '@mantine/core';
+import { Checkbox, Grid, Group, SimpleGrid } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm, UseFormReturnType } from '@mantine/form';
 import { IconCalendar } from '@tabler/icons-react';
@@ -159,91 +158,65 @@ export function AcademicYearsUpdate({
             }}
 
         >
-            <Grid>
-                <Grid.Col span={{ base: 12, md: 6 }} py={0}>
-                    <Group pb={10}>
-                        <CustomTextInput
-                            readOnly
-                            withAsterisk
-                            flex={1}
-                            label="Mã Năm học"
-                            {...form.getInputProps('code')}
-                        />
-                    </Group>
-                    <Group pb={10}>
-                        <DateInput
-                            withAsterisk
-                            flex={1}
-                            placeholder="Chọn ngày bắt đầu năm học"
-                            label="Ngày bắt đầu năm học"
-                            rightSection={<IconCalendar />}
-                            {...form.getInputProps('academicYearStart')}
-                            minDate={form.values.administrativeYearStart}
-                            maxDate={form.values.administrativeYearEnd}
-                        />
-                    </Group>
-                    <Group pb={10}>
-                        <DateInput
-                            flex={1}
-                            label="Ngày bắt đầu hành chính"
-                            value={form.values.administrativeYearStart}
-                            onChange={(value) => {
-                                form.setFieldValue('administrativeYearStart', new Date(value || ''))
-                            }}
-                            clearable={false}
+            <SimpleGrid cols={2}>
+                <CustomTextInput
+                    readOnly
+                    withAsterisk
+                    flex={1}
+                    label="Mã Năm học"
+                    {...form.getInputProps('code')}
+                />
+                <DateInput
+                    withAsterisk
+                    flex={1}
+                    placeholder="Chọn ngày bắt đầu năm học"
+                    label="Ngày bắt đầu năm học"
+                    rightSection={<IconCalendar />}
+                    {...form.getInputProps('academicYearStart')}
+                    minDate={form.values.administrativeYearStart}
+                    maxDate={form.values.administrativeYearEnd}
+                />
+                <DateInput
+                    flex={1}
+                    label="Ngày bắt đầu hành chính"
+                    value={form.values.administrativeYearStart}
+                    onChange={(value) => {
+                        form.setFieldValue('administrativeYearStart', new Date(value || ''))
+                    }}
+                    clearable={false}
 
-                        />
-                    </Group>
-                </Grid.Col>
+                />
+                <CustomTextInput
+                    withAsterisk
+                    flex={1}
+                    label="Tên năm học"
+                    {...form.getInputProps('name')}
+                />
+                <DateInput
+                    withAsterisk
+                    flex={1}
+                    label="Ngày kết thúc năm học"
+                    placeholder="Chọn ngày kết thúc năm học"
+                    rightSection={<IconCalendar />}
+                    {...form.getInputProps('academicYearEnd')}
+                    minDate={form.values.academicYearStart}
+                />
+                <DateInput
+                    flex={1}
+                    label="Ngày kết thúc hành chính"
+                    value={form.values.administrativeYearEnd}
+                    onChange={(value) => {
+                        form.setFieldValue('administrativeYearEnd', new Date(value || ''))
+                    }}
+                    clearable={false}
 
-                <Grid.Col span={{ base: 12, md: 6 }} py={0}>
-                    <Group pb={10}>
-                        <CustomTextInput
-                            withAsterisk
-                            flex={1}
-                            label="Tên năm học"
-                            {...form.getInputProps('name')}
-                        />
-                    </Group>
-                    <Group pb={10}>
-                        <DateInput
-                            withAsterisk
-                            flex={1}
-                            label="Ngày kết thúc năm học"
-                            placeholder="Chọn ngày kết thúc năm học"
-                            rightSection={<IconCalendar />}
-                            {...form.getInputProps('academicYearEnd')}
-                            minDate={form.values.academicYearStart}
-                        />
-                    </Group>
-                    <Group pb={10}>
-                        <DateInput
-                            flex={1}
-                            label="Ngày kết thúc hành chính"
-                            value={form.values.administrativeYearEnd}
-                            onChange={(value) => {
-                                form.setFieldValue('administrativeYearEnd', new Date(value || ''))
-                            }}
-                            clearable={false}
-
-                        />
-                    </Group>
-                </Grid.Col>
-                <Grid.Col span={12} py={0}>
-                    <Group pb={10}>
-                        <CustomTextArea label="Ghi chú" flex={1} {...form.getInputProps('note')} />
-                    </Group>
-                </Grid.Col>
-
-                <Grid.Col span={12} py={0}>
-                    <Group pb={10}>
-                        <Checkbox
-                            label="Hiện hành"
-                            {...form.getInputProps('isCurrent', { type: 'checkbox' })}
-                        />
-                    </Group>
-                </Grid.Col>
-            </Grid>
-        </CustomButtonCreateUpdate>
+                />
+            </SimpleGrid>
+            <CustomTextArea label="Ghi chú" flex={1} {...form.getInputProps('note')} />
+            <Checkbox
+                label="Hiện hành"
+                {...form.getInputProps('isCurrent', { type: 'checkbox' })}
+            />
+        </CustomButtonCreateUpdate >
     );
 }

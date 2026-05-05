@@ -42,13 +42,13 @@ export default function DeploymentDeployTable({ standardId }: { standardId: stri
                 header: "Hoạt động ngoại khóa",
                 accessorKey: "name",
                 size: 300,
-                accessorFn: (row) => (
+                Cell: ({ row }) => (
                     <Flex>
-                        <CustomHtmlWrapper html={row.name!} />
+                        <CustomHtmlWrapper html={row.original.name!} />
                         <Text>
                             <Tooltip label="Hoạt động cố định">
                                 <span
-                                    hidden={!(row as Event).isRequired}
+                                    hidden={!row.original.isRequired}
                                     style={{ color: "red" }}>(*)</span>
                             </Tooltip>
                         </Text>
@@ -114,7 +114,7 @@ export default function DeploymentDeployTable({ standardId }: { standardId: stri
                 columns={columns}
                 data={filteredData || []}
 
-                renderTopToolbarCustomActions={({ table }) => (
+                renderTopToolbarCustomActions={() => (
                     <Group>
                         <ActivityCreateUpdateButton />
                         <CustomCheckbox
@@ -131,12 +131,13 @@ export default function DeploymentDeployTable({ standardId }: { standardId: stri
                     </CustomCenterFull>
                 )}
             />
+
             <DeploymentDeployCalendar
                 data={query.data?.events || []}
                 isRequiredHidden={isRequiredHidden[0]}
+                skeleton={query.isLoading}
             />
         </>
-
     );
 }
 

@@ -1,14 +1,15 @@
 "use client"
-import F_timeType_CreateUpdateTimeType from '@/modules-features/admin/timeType/leftSection/F_timeType_CreateUpdateTimeType'
-import F_timeType_DeleteListTimeType from '@/modules-features/admin/timeType/leftSection/F_timeType_DeleteListTimeType'
-import F_timeType_DeleteTimeType from '@/modules-features/admin/timeType/leftSection/F_timeType_DeleteTimeType'
-import F_timeType_ReadTimeTypes from '@/modules-features/admin/timeType/leftSection/F_timeType_ReadTimeTypes'
-import F_timeType_ReadTimeTypeDetail from '@/modules-features/admin/timeType/rightSection/F_timeType_ReadTimeTypeDetail'
+import F_timeType_CreateUpdateTimeType from '@/features/admin/timeType/leftSection/F_timeType_CreateUpdateTimeType'
+import F_timeType_DeleteListTimeType from '@/features/admin/timeType/leftSection/F_timeType_DeleteListTimeType'
+import F_timeType_DeleteTimeType from '@/features/admin/timeType/leftSection/F_timeType_DeleteTimeType'
+import F_timeType_ReadTimeTypes from '@/features/admin/timeType/leftSection/F_timeType_ReadTimeTypes'
+import F_timeType_ReadTimeTypeDetail from '@/features/admin/timeType/rightSection/F_timeType_ReadTimeTypeDetail'
+import { CustomPageContent } from '@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent'
 import { Flex, Grid } from '@mantine/core'
-import { MyCenterFull, MyPageContent } from 'aq-fe-framework/components'
+import { MyCenterFull } from 'aq-fe-framework/components'
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <Grid>
                 <Grid.Col span={{ base: 12, sm: 7 }}>
                     <F_timeType_ReadTimeTypes
@@ -35,6 +36,6 @@ export default function Page() {
                     <F_timeType_ReadTimeTypeDetail />
                 </Grid.Col>
             </Grid>
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

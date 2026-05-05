@@ -1,16 +1,19 @@
 "use client";
 import MyFlexColumn from "@/components/Layouts/FlexColumn/MyFlexColumn";
+import { APP_CONFIG } from "@/shared/configs/appConfig";
+import { AuthenticateLogin } from "@aq-fe/core-ui/features/authenticate/AuthenticateLogin";
+import { useAuthenticateStore } from "@aq-fe/core-ui/features/authenticate/useAuthenticateStore";
+import { usePermissionStore } from "@aq-fe/core-ui/shared/stores/usePermissionStore";
 import { Button } from "@mantine/core";
-import { Feat_Authenticate_Login, useStore_Authenticate } from "aq-fe-framework/modules-features";
-import { useStore_Permission } from "aq-fe-framework/stores";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
   const router = useRouter();
-  const permissionStore = useStore_Permission()
-  const store = useStore_Authenticate();
+  const permissionStore = usePermissionStore()
+  const store = useAuthenticateStore();
   return (
-    <Feat_Authenticate_Login
+    <AuthenticateLogin
+      siteUrl={APP_CONFIG.alias}
       // redirectUrlAfterLogin="/admin/dashboard"
       additionalActions={
         <MyFlexColumn>

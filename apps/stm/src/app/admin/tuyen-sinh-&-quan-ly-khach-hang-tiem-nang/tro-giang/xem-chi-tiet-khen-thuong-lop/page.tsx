@@ -1,12 +1,12 @@
 'use client'
 
-import ViewClassRewardDetailTable from "@/modules-features/admin/MEViewClassRewardDetail/ViewClassRewardDetailTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import ViewClassRewardDetailTable from "@/features/admin/MEViewClassRewardDetail/ViewClassRewardDetailTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <ViewClassRewardDetailTable />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

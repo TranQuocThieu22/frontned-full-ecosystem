@@ -1,11 +1,10 @@
-"use client"
-import F_4rnlp1kp26_Read from "@/modules-features/admin/4rnlp1kp26/F_4rnlp1kp26_Read";
-import { MyPageContent } from "aq-fe-framework/components";
+import CertificateListTable from "@/features/admin/certificateList/CertificateListTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <F_4rnlp1kp26_Read />
-        </MyPageContent>
+        <CustomPageContent title="Danh mục chứng chỉ">
+            <CertificateListTable />
+        </CustomPageContent>
     )
 }

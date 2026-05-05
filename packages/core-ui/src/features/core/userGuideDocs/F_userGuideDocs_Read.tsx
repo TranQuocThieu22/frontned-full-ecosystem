@@ -17,7 +17,7 @@ import F_userGuideDocs_Import from "./F_userGuideDocs_Import";
 export function F_userGuideDocs_Read({ GuidelineTypeId }: { GuidelineTypeId: number }) {
   const query = useCustomReactQuery({
     queryKey: ["F_userGuideDocs_Read"],
-    axiosFn: () => documentService.GetByType(GuidelineTypeId),
+    axiosFn: () => documentService.getByType(GuidelineTypeId),
   });
   const columns = useMemo<CustomColumnDef<Document>[]>(
     () => [

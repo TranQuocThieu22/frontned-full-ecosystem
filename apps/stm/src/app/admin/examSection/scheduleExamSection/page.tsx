@@ -1,10 +1,10 @@
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import ExamSectionTable from "@/modules-features/admin/ModuleExamSectionSchedule/ScheduleExamSection/ExamSectionTable";
+import ExamSectionTable from "@/features/admin/ModuleExamSectionSchedule/ScheduleExamSection/ExamSectionTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <ExamSectionTable />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

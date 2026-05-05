@@ -3,6 +3,7 @@ import { classService } from "@aq-fe/core-ui/shared/APIs/classService";
 import { CustomButtonCreateUpdate } from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
 import { CustomDateInput } from "@aq-fe/core-ui/shared/components/input/CustomDateInput";
 import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
+import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
 import { CustomSelectAPI } from "@aq-fe/core-ui/shared/components/withAPI/CustomSelectAPI";
 import { GenderSelect } from "@aq-fe/core-ui/shared/features/GenderSelect";
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
@@ -24,23 +25,28 @@ export default function StudentListCreateUpdate({
   actionType?: actionType
 }) {
   const isUpdate = values != undefined
+
   const projectInfoStore = useProjectInfoStore()
-  const form = useForm<Student>({
+  const coeGradeState = useState<COEGrade>()
+
+  const studentCreateUpdateForm = useForm<Student>({
     mode: "uncontrolled",
     validate: {
       code: isNotEmpty("Không được để trống"),
       lastName: isNotEmpty("Không được để trống"),
       dateOfBirth: isNotEmpty("Không được để trống"),
       firstName: isNotEmpty("Không được để trống"),
+      status: isNotEmpty("Không được để trống"),
     }
   })
-  const coeGradeState = useState<COEGrade>()
+  
   const classQuery = useCustomReactQuery({
     queryKey: ['classes'],
     axiosFn: () => classService.getAll({
       cols: ['COEGrade'],
     })
   })
+
   useEffect(() => {
     if (!values) return
     const valueSetter: User & {
@@ -51,20 +57,22 @@ export default function StudentListCreateUpdate({
       lastName: textUtils.splitFullName(values.fullName).lastName,
       firstName: textUtils.splitFullName(values.fullName).firstName
     }
-    form.setValues(valueSetter)
-    form.setInitialValues(valueSetter)
+    studentCreateUpdateForm.setValues(valueSetter)
+    studentCreateUpdateForm.setInitialValues(valueSetter)
   }, [values])
+
   useEffect(() => {
     if (!classQuery.data) return
     if (!values) return
     const gradeSelected = classQuery.data?.find(item => item.id === values.classId)
     coeGradeState[1](gradeSelected?.coeGrade)
-  }, [classQuery.data])
+  }, 
+  [classQuery.data])
 
   return (
     <CustomButtonCreateUpdate
       isUpdate={!!values}
-      form={form}
+      form={studentCreateUpdateForm}
       readOnlyAllInput={actionType == "view"}
       modalProps={{
         title: "Chi tiết sinh viên",
@@ -75,32 +83,33 @@ export default function StudentListCreateUpdate({
       }
       onSubmit={(formValues, isUpdate) => {
         const { firstName, lastName, ...rest } = formValues
+
         const payLoad: Student = {
+          ...rest,
           id: isUpdate ? rest.id : 0,
           userName: rest.code,
           AQModuleId: projectInfoStore.state.aqModuleId,
           roleId: 1007, // Role sinh viên
           password: "123456",
           fullName: `${lastName} ${firstName}`,
-          ...rest
         }
+
         if (isUpdate) return accountService.update(payLoad)
         return accountService.create(payLoad)
-
       }}
     >
       <SimpleGrid cols={2}>
-        <CustomTextInput readOnly={actionType == "view" || isUpdate} withAsterisk label="Mã sinh viên" {...form.getInputProps("code")} />
-        <CustomDateInput withAsterisk label="Ngày sinh" {...form.getInputProps("dateOfBirth")} />
-        <CustomTextInput withAsterisk label="Họ lót" {...form.getInputProps("lastName")} />
-        <CustomTextInput withAsterisk label="Tên" {...form.getInputProps("firstName")} />
-        <GenderSelect value={form.getValues().gender?.toString()} onChange={e => form.setFieldValue("gender", parseInt(e!))} />
+        <CustomTextInput readOnly={actionType == "view" || isUpdate} withAsterisk label="Mã sinh viên" {...studentCreateUpdateForm.getInputProps("code")} />
+        <CustomDateInput withAsterisk label="Ngày sinh" {...studentCreateUpdateForm.getInputProps("dateOfBirth")} />
+        <CustomTextInput withAsterisk label="Họ lót" {...studentCreateUpdateForm.getInputProps("lastName")} />
+        <CustomTextInput withAsterisk label="Tên" {...studentCreateUpdateForm.getInputProps("firstName")} />
+        <GenderSelect value={studentCreateUpdateForm.getValues().gender?.toString()} onChange={e => studentCreateUpdateForm.setFieldValue("gender", parseInt(e!))} />
         <CustomSelectAPI
           label="Mã lớp"
           query={classQuery}
-          value={form.getValues().classId}
+          value={studentCreateUpdateForm.getValues().classId}
           onChange={(value, item) => {
-            form.setFieldValue("classId", value)
+            studentCreateUpdateForm.setFieldValue("classId", value)
             coeGradeState[1](item?.coeGrade)
           }}
         />

@@ -1,11 +1,10 @@
-"use client"
-import F_branchCatalog_Read from "@/modules-features/admin/branchCatalog/F_branchCatalog_Read";
-import { MyPageContent } from "aq-fe-framework/components";
+import BranchCatalogTable from "@/features/admin/branchCatalog/BranchCatalogTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <F_branchCatalog_Read />
-        </MyPageContent>
+        <CustomPageContent>
+            <BranchCatalogTable />
+        </CustomPageContent>
     )
 }

@@ -3,12 +3,10 @@ import { EnumContractExecutionStatus } from "@/shared/consts/enum/EnumContractEx
 import useAcademicYearStore from "@/shared/features/AcademicYear/useAcademicYearStore";
 import { SRMContract } from "@/shared/interfaces/SRMContract";
 import { CustomButtonCreateUpdate } from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
-import { useCustomReactMutation } from "@aq-fe/core-ui/shared/hooks/useCustomReactMutation";
 import { Tabs } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCash, IconInfoCircle } from "@tabler/icons-react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import TabCounterpartFunding from "./ExecuteContractCreateOrUpdate/TabCounterpartFunding";
 import TabGeneralInfo from "./ExecuteContractCreateOrUpdate/TabGeneralInfo";
@@ -22,7 +20,6 @@ export default function ExecuteContractCreateOrUpdate(
         loading?: boolean
     }
 ) {
-    const queryClient = useQueryClient();
     const store = useAcademicYearStore();
     const disclosure = useDisclosure();
 
@@ -67,48 +64,12 @@ export default function ExecuteContractCreateOrUpdate(
         },
     });
 
-    const mutateCreate = useCustomReactMutation({
-        axiosFn: () => contractService.create(form.getValues()),
-        enableDefaultSuccess: false,
-        enableDefaultError: false,
-        options: {
-            onSuccess: () => {
-                disclosure[1].close();
-                form.reset();
-                queryClient.invalidateQueries({ queryKey: ["executeContractQuery_GetAll"] });
-            },
-            onError: () => {
-            }
-        }
-    });
-    const mutateUpdate = useCustomReactMutation({
-        axiosFn: () => contractService.update(form.getValues()),
-        enableDefaultSuccess: false,
-        enableDefaultError: false,
-        options: {
-            onSuccess: () => {
-                disclosure[1].close();
-                form.reset();
-                queryClient.invalidateQueries({ queryKey: ["executeContractQuery_GetAll"] });
-            },
-            onError: () => {
-            }
-        }
-    });
-
-    const handleSubmit = () => {
-        if (mutateCreate.isPending || mutateUpdate.isPending) return;
+    const handleSubmit = (values: SRMContract, isUpdate?: boolean) => {
         const validationResult = form.validate();
-        if (validationResult.hasErrors) {
-            // utils_notification_show({ crudType: "error", message: "Vui lòng kiểm tra lại thông tin nhập vào!" });
-            return false;
-        }
-        if (!!data) {
-            return mutateUpdate.mutate();
-        } else {
-            return mutateCreate.mutate();
-        }
-    }
+        if (validationResult.hasErrors) return false;
+        if (isUpdate) return contractService.update(values);
+        return contractService.create(values);
+    };
 
     useEffect(() => {
         if (data && disclosure[0]) {
@@ -124,25 +85,16 @@ export default function ExecuteContractCreateOrUpdate(
     return (
         <CustomButtonCreateUpdate
             isUpdate={!!data}
-
             modalProps={{
                 title: "Chi tiết kiểm tra hồ sơ",
                 size: "100%",
-                // h: "800px",
             }}
             actionIconProps={{
                 loading: loading,
                 loaderProps: { color: "orange.5" },
-
             }}
             buttonProps={{
                 loading: loading,
-
-            }}
-
-            submitButtonProps={{
-                loading: mutateCreate.isPending || mutateUpdate.isPending
-
             }}
             disclosure={disclosure}
             onSubmit={handleSubmit}

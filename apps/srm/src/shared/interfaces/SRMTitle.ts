@@ -5,6 +5,6 @@ export interface SRMTitle extends BaseEntity {
     note?: string;
     isLeader?: boolean;
     type?: number;
-    isDeactivateValue?: number; // For import
-    isLeaderValue?: number; // For import
+    isDeactivateValue?: boolean; // For import
+    isLeaderValue?: boolean; // For import
 }

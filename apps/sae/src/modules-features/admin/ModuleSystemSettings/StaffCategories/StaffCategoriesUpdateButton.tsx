@@ -3,7 +3,6 @@ import { Grid, Group } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IStaffInfoViewModel } from "./interfaces/IStaffInfoViewModel";
 import { IStaffViewModel } from "./interfaces/IStaffViewModel";
-import { CustomActionIconUpdate } from "@aq-fe/core-ui/shared/components/button/CustomActionIconUpdate";
 import { CustomCheckbox } from "@aq-fe/core-ui/shared/components/input/CustomCheckbox";
 import { CustomDateInput } from "@aq-fe/core-ui/shared/components/input/CustomDateInput";
 import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
@@ -131,4 +130,3 @@ export default function StaffCategoriesUpdateButton({ data }: { data: IStaffInfo
         </CustomButtonCreateUpdate>
     );
 }
-

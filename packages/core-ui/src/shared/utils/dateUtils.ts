@@ -21,6 +21,14 @@ export const dateUtils = {
         const minute = String(date.getMinutes()).padStart(2, "0");
         return `${hour}:${minute}`;
     },
+    toHHmmss(date?: Date | string) {
+        const parsedDate = typeof date === "string" ? new Date(date) : date;
+        if (!(parsedDate instanceof Date) || isNaN(parsedDate.getTime())) return "";
+        const h = String(parsedDate.getHours()).padStart(2, "0");
+        const m = String(parsedDate.getMinutes()).padStart(2, "0");
+        const s = String(parsedDate.getSeconds()).padStart(2, "0");
+        return `${h}:${m}:${s}`;
+    },
     toDateTime(date?: Date | string, withSeconds: boolean = true): string {
         const parsedDate = typeof date === "string" ? new Date(date) : date;
         if (!(parsedDate instanceof Date) || isNaN(parsedDate.getTime())) return "";

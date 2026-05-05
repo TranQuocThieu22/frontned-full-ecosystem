@@ -1,11 +1,11 @@
+import { genderEnum, genderLabel } from "@aq-fe/core-ui/shared/consts/enum/genderEnum";
 import { Stack, Text } from "@mantine/core";
 import { MyDataTable } from "aq-fe-framework/components";
-import { IBaseEntity } from "aq-fe-framework/interfaces";
-import { genderEnum, genderLabel } from "aq-fe-framework/shared";
+import { BaseEntity } from "@aq-fe/core-ui/shared/interfaces/BaseEntity";
 import { MRT_ColumnDef } from "mantine-react-table";
 import { useMemo } from "react";
 
-export interface TeacherDomain extends IBaseEntity {
+export interface TeacherDomain extends BaseEntity {
     teacherCode?: string, // Mã giảng viên
     teacherName?: string, // Họ tên
     educationLevel?: string // Bậc học

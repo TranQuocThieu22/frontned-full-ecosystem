@@ -99,7 +99,7 @@ export default function SemesterUpdateButton({ data, academicYearList, currentAc
         <DatesProvider settings={{ locale: 'vi' }}>
             <Group>
                 <CustomButtonCreateUpdate
-                    useMyReactMutationProps={{
+                    useCustomReactMutationProps={{
                         successNotification: "Cập nhật thành công!",
                         options: {
                             onSuccess: (values: ISemesterViewModel) => {

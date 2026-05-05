@@ -145,9 +145,6 @@ export function EmailTemplateCreateUpdateButton({ initValue, emailTemplateEnum }
   return (
     <CustomButtonCreateUpdate
       disclosure={dics}
-      scrollAreaAutosizeProps={{
-        h: "auto",
-      }}
       modalProps={{
         size: '1640px',
         title: initValue ? "Cập nhật đề xuất" : "Chi tiết đề xuất",
@@ -229,10 +226,6 @@ export function EmailTemplateCreateUpdateButton({ initValue, emailTemplateEnum }
           <Grid.Col span={{ base: 5, md: 6, lg: 7, xl: 8 }}>
             <CustomRichTextEditor
               richTextEditorContentProps={{
-                h: "70vh",
-                mah: "70vh"
-              }}
-              scrollAreaAutosizeProps={{
                 h: "70vh",
                 mah: "70vh"
               }}

@@ -1,0 +1,75 @@
+{
+    "progressCheck": {
+        "viewDetail": "View Details",
+        "detailTopic": "Topic Details",
+        "title": "Progress Tracking",
+        "columns": {
+            "topic_code": "Topic Code",
+            "topic_name": "Topic Name",
+            "leader_name": "Project Leader",
+            "host_name": "Hosting Unit",
+            "total_work_month": "Duration (Months)",
+            "from_month": "From Month/Year",
+            "to_month": "To Month/Year",
+            "total_cost": "Total Budget (VND)",
+            "topic_type_name": "Topic Type",
+            "report_status": "Report Status",
+            "report_date": "Report Date",
+            "implementation_progress": "Implementation Progress (%)",
+            "check_status": "Check Status",
+            "comment": "Comment",
+            "is_sent_mail": "Notification Sent",
+            "execution_status": "Execution Status"
+        },
+        "report_status": {
+            "submitted_report": "Report Submitted",
+            "still_valid": "Still Valid",
+            "late": "Overdue"
+        },
+        "check_status": {
+            "waiting": "Waiting for Check",
+            "request_change": "Adjustment Requested",
+            "not_meet_requirement": "Does Not Meet Requirements",
+            "on_schedule": "On Schedule"
+        },
+        "execution_status": {
+            "in_progress": "In Progress",
+            "complete": "Reported"
+        },
+        "tabs_detail": {
+            "main_tasks": {
+                "fieldSetTitle": "Task List",
+                "title": "Main Tasks",
+                "columns": {
+                    "content": "Task Content (According to Proposal)",
+                    "product_result": "Product Results (According to Proposal)",
+                    "fromMonth": "Start Time",
+                    "toMonth": "End Time",
+                    "completed_product": "Achieved Product Results",
+                    "expected_cost": "Approved Budget Estimate (VND)",
+                    "implement_cost": "Implementation Cost (VND)",
+                    "note": "Note",
+                    "evidence_file": "Evidence"
+                }
+            },
+            "finished_product": {
+                "title": "Completed Products",
+                "columns": {
+                    "author": "Author Name",
+                    "publish_year": "Publication Year",
+                    "project_name": "Project Name",
+                    "project_information_in_magazine": "Journal/Publisher/Volume/Page Number"
+                }
+            },
+            "training_results": {
+                "title": "Training Results"
+            },
+            "budget": {
+                "title": "Budget"
+            },
+            "self_assessment": {
+                "title": "Self-Assessment"
+            }
+        }
+    }
+}

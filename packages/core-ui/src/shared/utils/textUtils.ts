@@ -14,5 +14,13 @@ export const textUtils = {
         const noHtml = (html ?? "").replace(/<[^>]+>/g, "");
         return noHtml.trim().toLowerCase();
     },
+    formatRecordNameResponse(code?: string, name?: string): string {
+        if (!code && !name) return "không xác định";
+        if (code && name) return `${code} - ${name}`;
+        return code ?? name ?? "không xác định";
+    },
 
+    isNullOrEmpty(value?: string | null) {
+        return value === null || value === undefined || value?.length === 0;
+    }
 }

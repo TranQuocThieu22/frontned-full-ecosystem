@@ -1,12 +1,12 @@
 
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_skiywzymoc_Read from "@/modules-features/admin/skiywzymoc/F_skiywzymoc_Read";
+import F_skiywzymoc_Read from "@/features/admin/skiywzymoc/F_skiywzymoc_Read";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <F_skiywzymoc_Read />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

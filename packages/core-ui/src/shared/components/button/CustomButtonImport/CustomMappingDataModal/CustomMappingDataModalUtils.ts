@@ -1,9 +1,10 @@
 function isDDMMYYYYFormat(date?: string): boolean {
-    if (!date) return false;
+    const trimmed = date != null ? String(date).trim() : "";
+    if (!trimmed) return false;
 
     // Kiểm tra định dạng dd/MM/yyyy bằng regex
     const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-    const match = date.match(regex);
+    const match = trimmed.match(regex);
     if (!match) return false;
 
     const day = parseInt(match[1] ?? "", 10);
@@ -23,11 +24,12 @@ function isDDMMYYYYFormat(date?: string): boolean {
 }
 
 function convertToYYYYMMDD(date?: string): string | null {
-    if (!date) return null;
+    const trimmed = date != null ? String(date).trim() : "";
+    if (!trimmed) return null;
 
     // Kiểm tra định dạng dd/MM/yyyy
     const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-    const match = date.match(regex);
+    const match = trimmed.match(regex);
     if (!match) return null;
 
     const day = parseInt(match[1] ?? "", 10);

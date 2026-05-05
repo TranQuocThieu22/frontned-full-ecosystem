@@ -30,7 +30,7 @@ export const AQDataSynchronizationService = {
     AQDataSystem: () => {
         return axiosInstance.post<CustomApiResponse<null>>(CONTROLLER + "/AQDataSystem")
     },
-    // Danh mục Quy chế/Thông tư
+    // Danh mục Quy chế / Thông tư
     AQDataRegulation: () => {
         return axiosInstance.post<CustomApiResponse<null>>(CONTROLLER + "/AQDataRegulation")
     },
@@ -38,7 +38,7 @@ export const AQDataSynchronizationService = {
     AQDataMajor: () => {
         return axiosInstance.post<CustomApiResponse<null>>(CONTROLLER + "/AQDataMajor")
     },
-    // Danh mục khóa/ khối đào tạo
+    // Danh mục khóa / khối đào tạo
     AQDataFieldOfStudy: () => {
         return axiosInstance.post<CustomApiResponse<null>>(CONTROLLER + "/AQDataFieldOfStudy")
     },
@@ -88,4 +88,12 @@ export const AQDataSynchronizationService = {
     GetInfoById: (syncBatchLogId?: number) => {
         return axiosInstance.get<CustomApiResponse<SyncBatchLog>>(CONTROLLER + `/GetInfoById?logId=${syncBatchLogId}`)
     },
+    EdusoftCourseSectionStudentPointSync: (body: { semester?: number, filter?: EdusoftCourseSectionStudentPointSyncFilter[] }) => {
+        return axiosInstance.post<CustomApiResponse<SyncBatchLog>>(CONTROLLER + "/edusoft-course-section-student-point-sync", body)
+    },
+}
+
+export interface EdusoftCourseSectionStudentPointSyncFilter {
+    subjectCode?: string;
+    courseSectionName?: string
 }

@@ -9,7 +9,7 @@ export const menuDataObject = {
             icon: <IconSettings />,
             links: [
                 { pageId: 1, name: "Account management", label: "Quản lý tài khoản ", link: "accountManagement" },
-                { pageId: 100005, name: "Account group management", label: "Quản lý nhóm tài khoản", link: "roleManagement" },
+                { pageId: 100009, name: "Account group management", label: "Quản lý nhóm tài khoản", link: "roleManagement" },
                 { pageId: 2, name: "Access control level", label: "Phân quyền cấp đơn vị", link: "accessControlLevel" },
                 { pageId: 3, name: "Access control", label: "Phân quyền sử dụng", link: "accessControl" },
                 { pageId: 4, name: "Security regulations", label: "Quy định an toàn/ bảo mật thông tin", link: "securityPolicyDocs" },

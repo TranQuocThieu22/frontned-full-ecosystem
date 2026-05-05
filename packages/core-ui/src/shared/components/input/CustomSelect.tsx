@@ -30,6 +30,7 @@ export function CustomSelect({ label, isLoading, isError, ...rest }: CustomSelec
     }
     return (
         <Select
+            inputWrapperOrder={['label', 'input', 'error', 'description']}
             allowDeselect={false}
             searchable
             label={label}

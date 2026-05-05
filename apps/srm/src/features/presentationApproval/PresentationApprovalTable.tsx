@@ -3,19 +3,18 @@ import { EnumColorProposalReviewStatus, EnumIconProposalReviewStatus, EnumLabelP
 import { EnumColorTopicStatus, EnumIconTopicStatus, EnumLabelTopicStatus } from "@/shared/consts/enum/EnumTopicStatus";
 import useAcademicYearStore from "@/shared/features/AcademicYear/useAcademicYearStore";
 import { SRMTopic } from "@/shared/interfaces/SRMTopic";
-import { CustomDataTable } from "@aq-fe/core-ui/shared/components/dataDisplay/CustomDataTable";
+import { CustomColumnDef } from "@aq-fe/core-ui/shared/components/dataDisplay/CustomDataTable";
 import { CustomNumberFormatter } from "@aq-fe/core-ui/shared/components/dataDisplay/CustomNumberFormatter";
 import { CustomThemeIconSquareCheck } from "@aq-fe/core-ui/shared/components/dataDisplay/CustomThemeIconSquareCheck";
 import { CustomFieldset } from "@aq-fe/core-ui/shared/components/layout/CustomFieldset";
 import { CustomFlexRow } from "@aq-fe/core-ui/shared/components/layout/CustomFlexRow";
 import { CustomButtonViewFileAPI } from "@aq-fe/core-ui/shared/components/withAPI/CustomButtonViewFileAPI";
+import { CustomDataTableAPI } from "@aq-fe/core-ui/shared/components/withAPI/CustomDataTableAPI";
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
 import { Center } from "@mantine/core";
-import { MRT_ColumnDef } from "mantine-react-table";
 import { useMemo } from "react";
 import { DisplayEnumBadge } from "../submitMissionReport/DisplayEnumBadge";
 import SubmitMissionReportDetailButton from "../submitMissionReport/SubmitMissionReportDetailButton";
-import PresentationApprovalExport from "./PresentationApprovalExport";
 import PresentationApprovalModal from "./PresentationApprovalModal";
 
 export default function PresentationApprovalTable() {
@@ -29,7 +28,7 @@ export default function PresentationApprovalTable() {
         }
     });
 
-    const column = useMemo<MRT_ColumnDef<SRMTopic>[]>(() => [
+    const column = useMemo<CustomColumnDef<SRMTopic>[]>(() => [
         {
             header: "Mã đăng ký",
             accessorKey: "code",
@@ -55,9 +54,9 @@ export default function PresentationApprovalTable() {
         {
             header: "Tổng kinh phí thực hiện",
             accessorKey: "totalCost",
-            accessorFn: (row) => {
-                if (!row.totalCost || row.totalCost === 0) return "";
-                return <CustomNumberFormatter value={row.totalCost} />
+            Cell: ({ row }) => {
+                if (!row.original.totalCost || row.original.totalCost === 0) return "";
+                return <CustomNumberFormatter value={row.original.totalCost} />;
             },
             size: 200
         }, //
@@ -79,70 +78,61 @@ export default function PresentationApprovalTable() {
             header: "Tình trạng của đề tài",
             accessorKey: "status",
             size: 350,
-            accessorFn: (row) => <Center>
-                <DisplayEnumBadge
-                    enumStatus={row.status}
-                    enumLabel={EnumLabelTopicStatus}
-                    enumColor={EnumColorTopicStatus}
-                    enumIcon={EnumIconTopicStatus} />
-            </Center>
+            accessorFn: (row) => (row.status != null ? EnumLabelTopicStatus[row.status as keyof typeof EnumLabelTopicStatus] ?? "" : ""),
+            Cell: ({ row }) => (
+                <Center>
+                    <DisplayEnumBadge
+                        enumStatus={row.original.status}
+                        enumLabel={EnumLabelTopicStatus}
+                        enumColor={EnumColorTopicStatus}
+                        enumIcon={EnumIconTopicStatus} />
+                </Center>
+            )
         }, //
         {
             header: "File thuyết minh",
             accessorKey: "attachmentPath",
-            accessorFn: (row) => {
-                if (!row.attachmentPath) return "";
-                return <Center><CustomButtonViewFileAPI filePath={row.attachmentPath} /></Center>
+            accessorFn: (row) => (row.attachmentPath ? row.attachmentPath : "Không có file"),
+            Cell: ({ row }) => {
+                if (!row.original.attachmentPath) return "";
+                return <Center><CustomButtonViewFileAPI filePath={row.original.attachmentPath} /></Center>;
             }
         },
         {
             header: "Trạng thái duyệt",
             accessorKey: "proposalStatus",
             size: 200,
-            accessorFn: (row) => <Center>
-                <DisplayEnumBadge
-                    enumStatus={row.proposalStatus ?? 1}
-                    enumLabel={EnumLabelProposalReviewStatus}
-                    enumColor={EnumColorProposalReviewStatus}
-                    enumIcon={EnumIconProposalReviewStatus} />
-            </Center>
+            accessorFn: (row) => EnumLabelProposalReviewStatus[(row.proposalStatus ?? 1) as keyof typeof EnumLabelProposalReviewStatus] ?? "",
+            Cell: ({ row }) => (
+                <Center>
+                    <DisplayEnumBadge
+                        enumStatus={row.original.proposalStatus ?? 1}
+                        enumLabel={EnumLabelProposalReviewStatus}
+                        enumColor={EnumColorProposalReviewStatus}
+                        enumIcon={EnumIconProposalReviewStatus} />
+                </Center>
+            )
         }, //
         { header: "Nhận xét", accessorKey: "proposalReview" }, //
         {
             header: "Đã gửi thông báo",
             accessorKey: "proposalIsSentMail",
-            accessorFn: (row) => <Center><CustomThemeIconSquareCheck checked={row.proposalIsSentMail} /></Center>
+            accessorFn: (row) => (row.proposalIsSentMail ? "Đã gửi thông báo" : "Chưa gửi thông báo"),
+            Cell: ({ row }) => <Center><CustomThemeIconSquareCheck checked={row.original.proposalIsSentMail} /></Center>,
         }, //
     ], []);
 
     return (
         <CustomFieldset title="Danh sách hợp đồng">
-            <CustomDataTable
+            <CustomDataTableAPI
                 enableRowNumbers={false}
-                isError={PresentationApprovalQuery.isError}
-                isLoading={PresentationApprovalQuery.isLoading}
-                columns={column}
-                data={PresentationApprovalQuery.data || []}
                 enableRowSelection
                 enableColumnPinning
-                initialState={{
-                    columnPinning: {
-                        right: ['proposalStatus'],
-                    },
-
-                }}
-                renderTopToolbarCustomActions={({ table }) => {
-                    const selectedData = table.getSelectedRowModel().flatRows.flatMap((item) => item.original) || [];
-                    return (
-                        <>
-                            <PresentationApprovalExport data={
-                                selectedData.length > 0 ?
-                                    table.getSelectedRowModel().flatRows.flatMap((item) => item.original) :
-                                    PresentationApprovalQuery.data ||
-                                    []
-                            } loading={PresentationApprovalQuery.isFetching} />
-                        </>
-                    )
+                pinningRightColumns={['proposalStatus']}
+                query={PresentationApprovalQuery}
+                columns={column}
+                exportProps={{
+                    fileName: "Danh sách phê duyệt thuyết minh"
                 }}
                 renderRowActions={({ row }) => (
                     <CustomFlexRow gap="xs">

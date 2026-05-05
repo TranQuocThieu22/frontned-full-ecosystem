@@ -22,13 +22,14 @@ export function AcademicYearsRead() {
 
   const academicyearsQuery = useCustomReactQuery({
     queryKey: ['academicyearsQuery'],
-    axiosFn: () => academicYearService.academicGetAll(),
+    axiosFn: () => academicYearService.getAllAcademicYears(),
     options: {
       select: (data) => {
         return data.filter(item => item.id != 0)
       }
     }
   })
+  
   const columns = useMemo<MRT_ColumnDef<AcademicYear>[]>(
     () => [
       { header: "Năm học", accessorKey: "code" },
@@ -93,7 +94,7 @@ export function AcademicYearsRead() {
           return (
             <CustomCenterFull>
               <AcademicYearsUpdate values={row.original} />
-              <AcademicYearsDelete values={row.original!} />
+              <AcademicYearsDelete value={row.original!} />
             </CustomCenterFull>
           );
         }}

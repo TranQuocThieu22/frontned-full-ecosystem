@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "WebFetch(domain:192.168.1.17)",
+      "Bash(dir \"c:\\\\quocthieu\\\\AQnewWeb\")",
+      "Bash(dir \"C:\\\\Users\\\\Admin\\\\.claude\\\\plans\")",
+      "Bash(powershell -Command \"[System.IO.File]::WriteAllText\\('C:\\\\Users\\\\Admin\\\\.claude\\\\plans\\\\peaceful-enchanting-anchor-agent-afc0412c02ce289c1.md', 'placeholder'\\)\")",
+      "Read(//c/Users/Admin/AQCoreFe/apps/iam/**)",
+      "Read(//c/Users/Admin/AQCoreFe/apps/school-iam/**)",
+      "Read(//c/Users/Admin/AQCoreFe/apps/sae/**)",
+      "Read(//c/Users/Admin/AQCoreFe/packages/aq-fe-framework/**)",
+      "Read(//c/Users/Admin/AQCoreFe/packages/core-ui/**)",
+      "Read(//c/Users/Admin/AQnewWeb/apps/iam/**)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Admin\\.claude\\plans",
+      "c:\\quocthieu\\AQnewWeb"
+    ]
+  },
+  "allowedTools": [
+    "Bash"
+  ]
+}

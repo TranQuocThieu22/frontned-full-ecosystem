@@ -13,7 +13,6 @@ import { useDisclosure } from "@mantine/hooks";
 import { useIsFetching } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import CostReviewSetupCreateModal from "./CostReviewSetupCreateModal";
-import CostReviewSetupImportButton from "./CostReviewSetupImportButton";
 import CostReviewSetupUpdateModal from "./CostReviewSetupUpdateModal";
 
 export default function CostReviewSetupTable() {
@@ -40,25 +39,30 @@ export default function CostReviewSetupTable() {
     const columns = useMemo<CustomColumnDef<SRMEvaluationCommittee>[]>(() => [
         {
             header: "Mã tổ thẩm định",
-            accessorKey: "code"
+            accessorKey: "code",
+            importFieldProps: { isRequired: true }
         },
         {
             header: "Tên tổ thẩm định",
             accessorKey: "name",
-            size: columnSizeObject.name
+            size: columnSizeObject.name,
+            importFieldProps: { isRequired: true }
         },
         {
             header: "Ngày họp",
             accessorKey: "meetingDate",
-            type: "ddMMyyyy"
+            type: "ddMMyyyy",
+            importFieldProps: { parseType: "date" }
         },
         {
             header: "Địa điểm họp",
             accessorKey: "meetingLocation",
+            importFieldProps: {}
         },
         {
             header: "Thời gian họp",
             accessorKey: "meetingTime",
+            importFieldProps: {}
         },
         {
             header: "Danh sách thành phần",
@@ -88,6 +92,9 @@ export default function CostReviewSetupTable() {
             header: "Trạng thái tổ",
             accessorKey: "status",
             type: "statusBadge",
+            importFieldProps: {
+                parseType: "number",
+            },
             statusBadgeProps: {
                 enumObject: SRMEvaluationCommitteeStatusEnum,
                 enumLabel: SRMEvaluationCommitteeStatusLabel,
@@ -112,11 +119,22 @@ export default function CostReviewSetupTable() {
                 columns={columns}
                 deleteListFn={evaluationCommitteeService.deleteListIds}
                 deleteFn={evaluationCommitteeService.delete}
+                buttonImportProps={{
+                    fileName: "Danh sách tổ thẩm định kinh phí",
+                    onSubmit: (finalValues: SRMEvaluationCommittee[]) => {
+                        const mapped = finalValues.map((item) => ({
+                            ...item,
+                            meetingDate: item.meetingDate,
+                            type: EnumEvaluationCommitteeType.CostAppraisal,
+                            academicYearId: academicYearStore?.state?.academicYear?.id,
+                        }));
+                        return evaluationCommitteeService.createOrUpdateList(mapped);
+                    },
+                }}
                 renderTopToolbarCustomActions={({ table }) => {
                     return (
                         <>
                             <CostReviewSetupCreateModal />
-                            <CostReviewSetupImportButton />
                         </>
                     )
                 }}

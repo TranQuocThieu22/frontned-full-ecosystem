@@ -1,12 +1,12 @@
 'use client'
 
-import ApproveLeaveRead from "@/modules-features/admin/ModuleApproveLeave/ApproveLeaveRead";
-import { MyPageContent } from "aq-fe-framework/components";
+import ApproveLeaveRead from "@/features/admin/ModuleApproveLeave/ApproveLeaveRead";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
   return (
-    <MyPageContent>
+    <CustomPageContent>
       <ApproveLeaveRead />
-    </MyPageContent>
+    </CustomPageContent>
   )
 }

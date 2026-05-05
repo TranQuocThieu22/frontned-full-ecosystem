@@ -49,7 +49,6 @@ export default function EvidenceCreateOrUpdateButton({
     },
   });
   const filterStore = useS_Shared_Filter();
-  console.log(data);
 
   const form = useForm<IEvidenceForm>({
     initialValues: {

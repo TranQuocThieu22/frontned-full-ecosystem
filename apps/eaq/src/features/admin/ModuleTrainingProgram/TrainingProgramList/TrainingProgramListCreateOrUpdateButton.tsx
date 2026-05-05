@@ -1,22 +1,22 @@
 "use client";
 
-import { ITrainingProgram } from "@/shared/interfaces/trainingProgram/ITrainingProgram";
 import { service_EAQTrainingProgram } from "@/shared/APIs/service_EAQTrainingProgram";
 import { service_Department } from "@/shared/APIs/service__department";
+import { ITrainingProgram } from "@/shared/interfaces/trainingProgram/ITrainingProgram";
+import {
+    CustomButtonCreateUpdate
+} from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
+import { CustomNumberInput } from "@aq-fe/core-ui/shared/components/input/CustomNumberInput";
+import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
+import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
+import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
+import { departmenType } from "@aq-fe/core-ui/shared/consts/enum/departmentEnum";
+import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
 import { SimpleGrid, Stack } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
-import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
-import {
-    CustomButtonCreateUpdate
-} from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
-import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
-import { CustomNumberInput } from "@aq-fe/core-ui/shared/components/input/CustomNumberInput";
-import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
-import { departmenType } from "@aq-fe/core-ui/shared/consts/enum/departmentEnum";
 
 export default function TrainingProgramListCreateOrUpdateButton(
     { data, isLoading }:
@@ -120,7 +120,7 @@ export default function TrainingProgramListCreateOrUpdateButton(
             actionIconProps={{
                 loading: isLoading,
             }}
-            useMyReactMutationProps={{
+            useCustomReactMutationProps={{
                 options: {
                     onSuccess: () => {
                         queryClient.invalidateQueries({ queryKey: ['standardSetQuery'], refetchType: 'active' });

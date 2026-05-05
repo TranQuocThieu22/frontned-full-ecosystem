@@ -62,19 +62,34 @@ function cleanPath(path: string): string {
     return result;
 }
 
-export function CustomBasicAppShell({ children, menu, extraTopRight, title, logoutRedirect, isDev }: CustomBasicAppShellProps) {
+export function CustomBasicAppShell({
+    children,
+    menu,
+    extraTopRight,
+    title,
+    logoutRedirect,
+    isDev,
+    disablePageContentQuery,
+    disableGetAQModuleQuery,
+}: CustomBasicAppShellProps) {
     isDev = process.env.NEXT_PUBLIC_IS_DEV == "1"
     const colorScheme = useComputedColorScheme("light")
     const pathname = usePathname();
     const media = useMediaQuery("(min-width: 72em)");
+    const enablePageContentQuery = !disablePageContentQuery && process.env.NEXT_PUBLIC_AQMODULE !== "iam"
     const pageContentQuery = useCustomReactQuery({
         queryKey: ['pageContents'],
-        axiosFn: () => pageService.getAll()
+        axiosFn: () => pageService.getAll(),
+        options: {
+            enabled: enablePageContentQuery
+        }
     })
 
     const permissionStore = usePermissionStore();
     const appShellStore = useBasicAppShellStore();
-    const { data: moduleData } = useGetAQModuleQuery();
+    const { data: moduleData } = useGetAQModuleQuery({
+        enabled: !disableGetAQModuleQuery,
+    });
 
     const [faviconUrl, setFaviconUrl] = useState<string>("");
     const [isLoadingPermission, setIsLoadingPermission] = useState(true);
@@ -250,7 +265,7 @@ export function CustomBasicAppShell({ children, menu, extraTopRight, title, logo
         >
             <CustomAppSpotlight menu={filteredMenu} />
             <AppShell.Section grow component={ScrollArea} p={5} pr={20} type="auto" >
-                <RenderNavLinks items={filteredMenu} />
+                <RenderNavLinks items={filteredMenu.filter(item => !item.isHidden)} />
             </AppShell.Section>
             <AppShell.Section className="rounded-tr-2xl shadow-[0_-4px_6px_rgba(0,0,0,0.1)]" style={{
                 border: `1px solid ${colorScheme === "dark" ? "var(--mantine-color-dark-4)" : "var(--mantine-color-gray-3)"

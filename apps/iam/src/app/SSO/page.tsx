@@ -1,14 +1,24 @@
 'use client'
-import { APP_CONFIG } from "@/shared/configs/appConfig"
+
+import { appConfig } from "@/shared/configs/appConfig"
 import { menuData } from "@/shared/consts/data/menuData"
 import { AuthenticateSSOHandler } from "@aq-fe/core-ui/features/authenticate/AuthenticateSSOHandler"
+import { Suspense } from 'react'
+
+function SSOContent() {
+    return (
+        <AuthenticateSSOHandler
+            aqModule={appConfig.aqModule}
+            siteUrl={appConfig.alias}
+            menuData={menuData}
+        />
+    )
+}
 
 export default function Page() {
     return (
-        <AuthenticateSSOHandler
-            aqModule={APP_CONFIG.aqModule}
-            siteUrl={APP_CONFIG.alias}
-            menuData={menuData}
-        />
+        <Suspense fallback={null}>
+            <SSOContent />
+        </Suspense>
     )
 }

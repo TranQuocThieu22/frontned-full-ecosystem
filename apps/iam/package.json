@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@aq-fe/core-ui": "workspace:*",
+    "@aq-fe/aq-core-framework": "workspace:*",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/roboto": "^5.2.9",

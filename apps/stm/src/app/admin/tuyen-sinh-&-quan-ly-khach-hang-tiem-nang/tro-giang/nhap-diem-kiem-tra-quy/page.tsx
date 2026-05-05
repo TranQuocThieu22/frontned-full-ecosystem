@@ -1,12 +1,12 @@
 'use client'
 
-import EnterQuarterTestScoresTable from "@/modules-features/admin/MEEnterQuarterTestScores/EnterQuarterTestScoresTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import EnterQuarterTestScoresTable from "@/features/admin/MEEnterQuarterTestScores/EnterQuarterTestScoresTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <EnterQuarterTestScoresTable />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

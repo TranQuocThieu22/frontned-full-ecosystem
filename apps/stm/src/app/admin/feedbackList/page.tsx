@@ -1,9 +1,9 @@
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_klfidusjgn_Read from "@/modules-features/admin/klfidusjgn/F_klfidusjgn_Read";
+import F_klfidusjgn_Read from "@/features/admin/klfidusjgn/F_klfidusjgn_Read";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <F_klfidusjgn_Read />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

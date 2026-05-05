@@ -1,12 +1,12 @@
 "use client"
 import { adminMenuData } from '@/data/adminMenuData'
-import { MyPageContent } from 'aq-fe-framework/components'
-import { Feat_PageContentTable } from 'aq-fe-framework/modules-features'
+import PageContentTable from '@aq-fe/core-ui/features/core/pageContent/PageContentTable'
+import { CustomPageContent } from '@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent'
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <Feat_PageContentTable menuData={adminMenuData} />
-        </MyPageContent>
+        <CustomPageContent>
+            <PageContentTable menuData={adminMenuData} />
+        </CustomPageContent>
     )
 }

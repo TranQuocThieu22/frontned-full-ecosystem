@@ -2,12 +2,12 @@ import { service_account } from "@/api/services/service_account";
 import { service_studentActivityPlan } from "@/api/services/service_studentActivityPlan";
 import { StudentActivityPlan } from "@/interfaces/StudentActivityPlan";
 import useS_Shared_ActivityPlan from "@/shared/features/ActivityPlan/useS_Shared_ActivityPlan";
-import { CustomActionIconUpdate } from "@aq-fe/core-ui/shared/components/button/CustomActionIconUpdate";
+import { CustomButtonCreateUpdate } from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
 import { CustomDateInput } from "@aq-fe/core-ui/shared/components/input/CustomDateInput";
 import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
 import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
-import { Grid, GridCol } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
@@ -46,9 +46,12 @@ export default function SemesterStudentListUpdate({ values }: { values: StudentA
         }
     })
     return (
-        <CustomActionIconUpdate
+        <CustomButtonCreateUpdate
+            isUpdate
             disclosure={disc}
-            modalSize={"60%"}
+            modalProps={{
+                size: '60%'
+            }}
             form={form}
             onSubmit={async () => {
                 const res = await service_studentActivityPlan.update({
@@ -60,9 +63,9 @@ export default function SemesterStudentListUpdate({ values }: { values: StudentA
                 disc[1].close()
                 return res
             }}
-            title="Chi tiết">
+        >
             <Grid columns={12}>
-                <GridCol span={6}>
+                <Grid.Col span={6}>
                     <CustomTextInput
                         label="Mã sinh viên"
                         value={values?.user?.code ?? ''}
@@ -88,8 +91,8 @@ export default function SemesterStudentListUpdate({ values }: { values: StudentA
                         disabled
                         value={values?.user?.majorsName ?? ''}
                     />
-                </GridCol>
-                <GridCol span={6}>
+                </Grid.Col>
+                <Grid.Col span={6}>
                     <CustomDateInput
                         disabled
                         label="Ngày sinh"
@@ -142,8 +145,8 @@ export default function SemesterStudentListUpdate({ values }: { values: StudentA
                         disabled
                         value={values?.user?.facultyCode ?? ''}
                     />
-                </GridCol>
+                </Grid.Col>
             </Grid>
-        </CustomActionIconUpdate>
+        </CustomButtonCreateUpdate>
     );
 }

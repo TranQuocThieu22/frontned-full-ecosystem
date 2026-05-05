@@ -1,153 +1,66 @@
-import { acceptanceCouncilService } from "@/shared/APIs/acceptanceCouncilService";
+"use client";
+
+import { contractService } from "@/shared/APIs/contractService";
 import { liquidationMinuteService } from "@/shared/APIs/liquidationMinuteService";
 import useAcademicYearStore from "@/shared/features/AcademicYear/useAcademicYearStore";
 import { SRMLiquidationMinute } from "@/shared/interfaces/SRMLiquidationMinute";
-import { CustomButton } from "@aq-fe/core-ui/shared/components/button/CustomButton/CustomButton";
-import { ModalImportId, MyModalImport } from "@aq-fe/core-ui/shared/components/overlays/MyModalStackImport/MyModalImport";
-import { useCustomReactMutation } from "@aq-fe/core-ui/shared/hooks/useCustomReactMutation";
+import { CustomButtonImport } from "@aq-fe/core-ui/shared/components/button/CustomButtonImport/CustomButtonImport";
+import { FieldOption } from "@aq-fe/core-ui/shared/components/button/CustomButtonImport/CustomMappingDataModal/CustomMappingFormatDataModal";
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
-import { excelUtils, IExcelColumnConfig } from "@aq-fe/core-ui/shared/utils/excelUtils";
-import { useModalsStack } from "@mantine/core";
-import ExcelJS from "exceljs";
 
-const config: IExcelColumnConfig<SRMLiquidationMinute>[] = [
-    {
-        fieldKey: "srmContractId",
-        fieldName: "Id đề tài thanh lý",
-        isRequired: true,
-    },
-    {
-        fieldKey: "minuteNumber",
-        fieldName: "Số biên bản",
-        isRequired: true,
-    },
-    {
-        fieldKey: "liquidationDate",
-        fieldName: "Ngày biên bản",
-        isRequired: true,
-    },
-    {
-        fieldKey: "proposedBudget",
-        fieldName: "Kinh phí đề nghị",
-    },
-    {
-        fieldKey: "refundedBudget",
-        fieldName: "Kinh phí hoàn trả",
-    },
-    {
-        fieldKey: "centralBudget",
-        fieldName: "Kinh phí TW (Thanh toán)",
-    },
-    {
-        fieldKey: "provincialBudget",
-        fieldName: "Kinh phí Tỉnh (Thanh toán)",
-    },
-    {
-        fieldKey: "universityBudget",
-        fieldName: "Kinh phí Trường (Thanh toán)",
-    },
-    {
-        fieldKey: "otherBudget",
-        fieldName: "Kinh phí Khác (Thanh toán)",
-    },
+type ImportRow = SRMLiquidationMinute & { contractCode?: string };
+
+const fields: FieldOption<ImportRow>[] = [
+    { fieldKey: "contractCode", fieldName: "Mã đề tài thanh lý", isRequired: true },
+    { fieldKey: "minuteNumber", fieldName: "Số biên bản", isRequired: true },
+    { fieldKey: "liquidationDate", fieldName: "Ngày biên bản", isRequired: true, parseType: "date" },
+    { fieldKey: "proposedBudget", fieldName: "Kinh phí đề nghị", parseType: "number" },
+    { fieldKey: "refundedBudget", fieldName: "Kinh phí hoàn trả", parseType: "number" },
+    { fieldKey: "centralBudget", fieldName: "Kinh phí TW (Thanh toán)", parseType: "number" },
+    { fieldKey: "provincialBudget", fieldName: "Kinh phí Tỉnh (Thanh toán)", parseType: "number" },
+    { fieldKey: "universityBudget", fieldName: "Kinh phí Trường (Thanh toán)", parseType: "number" },
+    { fieldKey: "otherBudget", fieldName: "Kinh phí Khác (Thanh toán)", parseType: "number" },
 ];
-
-const config2: IExcelColumnConfig<{ value: string, label: string }>[] = [
-    {
-        fieldKey: "value",
-        fieldName: "ID đề tài",
-    },
-    {
-        fieldKey: "label",
-        fieldName: "Tên đề tài",
-    },
-];
-
 
 export default function LiquidationMinutesImportButton() {
     const academicYearStore = useAcademicYearStore();
 
-    const importMutation = useCustomReactMutation({
-        axiosFn: (body: SRMLiquidationMinute[]) => {
-            return liquidationMinuteService.createOrUpdateList(body.map((item) => {
-                return {
-                    ...item,
-                }
-            }));
-        },
-        mutationType: "import",
-    });
-
-    const acceptanceCouncilQuery = useCustomReactQuery({
-        queryKey: ['acceptanceCouncilQuery_LiquidationMinutesImportButton', academicYearStore?.state?.academicYear?.id],
-        axiosFn: () => {
-            return acceptanceCouncilService.getContractAccepted({
-                AcademicYearId: academicYearStore?.state?.academicYear?.id ?? 0
-            });
-        },
+    const contractQuery = useCustomReactQuery({
+        queryKey: ["liquidation_contracts", academicYearStore?.state?.academicYear?.id],
+        axiosFn: () =>
+            contractService.GetAllByAcademicYear({
+                AcademicYearId: academicYearStore?.state?.academicYear?.id ?? 0,
+            }),
         options: {
-            enabled: !!academicYearStore?.state?.academicYear?.id
-        }
+            enabled: !!academicYearStore?.state?.academicYear?.id,
+        },
     });
-
-
-    const stack = useModalsStack<ModalImportId>([]);
-    const handleExport = async () => {
-        const workbook = new ExcelJS.Workbook();
-        await excelUtils.addSheet<SRMLiquidationMinute>({
-            workbook: workbook,
-            sheetName: "Danh sách đề tài yêu cầu điều chỉnh",
-            data: [],
-            config: config,
-        });
-        await excelUtils.addSheet<{ value: string, label: string }>({
-            workbook: workbook,
-            sheetName: "Danh sách đề tài thanh lý",
-            data: acceptanceCouncilQuery.data?.map(item => (
-                {
-                    value: item.id!.toString(),
-                    label: item?.srmTopic?.registerName || ""
-                }
-            )) || [],
-            config: config2,
-        });
-        excelUtils.download({ name: "Mẫu Import biên bản thanh lý", workbook });
-    };
 
     return (
-        <>
-            <MyModalImport
-                fieldDefinition={config.map((item) => ({
-                    key: item.fieldKey,
-                    label: item.fieldName,
-                    isRequired: item.isRequired,
-                }))}
-                stack={stack}
-                onExportStructure={handleExport}
-                onExecute={(finalValues: SRMLiquidationMinute[]) => {
-                    finalValues = finalValues.map((item) => {
-                        return {
-                            ...item,
-                            minuteNumber: item.minuteNumber?.toString() || "",
-                            proposedBudget: Number(item.proposedBudget || 0),
-                            refundedBudget: Number(item.refundedBudget || 0),
-                            centralBudget: Number(item.centralBudget || 0),
-                            provincialBudget: Number(item.provincialBudget || 0),
-                            universityBudget: Number(item.universityBudget || 0),
-                            otherBudget: Number(item.otherBudget || 0),
-                            totalCost: Number((item.centralBudget || 0) + (item.provincialBudget || 0) + (item.universityBudget || 0) + (item.otherBudget || 0)),
-                            academicYearId: academicYearStore?.state?.academicYear?.id || 0,
-                            srmContractId: Number(item.srmContractId || 0),
-                        }
-                    });
-                    importMutation.mutate(finalValues, {
-                        onSuccess: () => {
-                            stack.closeAll();
-                        },
-                    });
-                }}
-            />
-            <CustomButton actionType="import" onClick={() => stack.open("FileImportConfig")} />
-        </>
+        <CustomButtonImport<ImportRow>
+            fields={fields}
+            fileName="Mẫu Import biên bản thanh lý"
+            buttonProps={{ loading: contractQuery.isLoading }}
+            onSubmit={(finalValues) => {
+                const contracts = contractQuery.data ?? [];
+                const mapped = (finalValues ?? []).map((item) => {
+                    return {
+                        ...item,
+                        minuteNumber: item.minuteNumber?.toString() ?? "",
+                        proposedBudget: item.proposedBudget,
+                        refundedBudget: item.refundedBudget,
+                        centralBudget: item.centralBudget,
+                        provincialBudget: item.provincialBudget,
+                        universityBudget: item.universityBudget,
+                        otherBudget: item.otherBudget,
+                        totalCost: item.totalCost,
+                        academicYearId: academicYearStore?.state?.academicYear?.id ?? 0,
+                        srmContractId: contracts.find(c => c.code === item.contractCode)?.id,
+                    } as SRMLiquidationMinute;
+                });
+
+                return liquidationMinuteService.createList(mapped);
+            }}
+        />
     );
 }

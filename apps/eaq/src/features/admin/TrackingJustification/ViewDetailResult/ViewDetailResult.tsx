@@ -1,5 +1,5 @@
 import IRequirementDetail from "@/shared/interfaces/requirement/IRequirementDetail";
-import {Accordion, Box, Group, Stack, Text} from "@mantine/core";
+import { Accordion, Box, Group, Paper, Stack, Text } from "@mantine/core";
 import ViewDetailResultRow from "./ViewDetailResultRow";
 
 interface IProps {
@@ -8,14 +8,12 @@ interface IProps {
 
 export default function ViewDetailResult({ data }: IProps) {
   return (
-    <>
+    <Paper>
       <Accordion className="border">
         <Accordion.Item value="3">
           <Accordion.Control>
-            <Group
-              className={`ml-1 border-l-4 border-l-[var(--mantine-color-blue-4)] px-2 w-fit bg-[var(--mantine-color-blue-1)]`}
-            >
-              <Text fw={600} color="var(--mantine-color-blue-9)">
+            <Group ml={1}>
+              <Text fw={600} c="var(--mantine-color-blue-9)">
                 Danh sách kết quả thực hiện đảm bảo chất lượng CTĐT
               </Text>
             </Group>
@@ -44,6 +42,6 @@ export default function ViewDetailResult({ data }: IProps) {
           </Accordion.Panel>
         </Accordion.Item>
       </Accordion>
-    </>
+    </Paper>
   );
 }

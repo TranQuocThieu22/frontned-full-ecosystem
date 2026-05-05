@@ -28,9 +28,6 @@ export default function ProposalViewDetailButton({ values }: IProps) {
                 size: "60vw",
                 title: "Chi tiết đề xuất"
             }}
-            scrollAreaAutosizeProps={{
-                h: "auto"
-            }}
             onSubmit={() => { }}
             actionIconProps={{
                 actionType: "view",

@@ -1,12 +1,12 @@
 import { academicYearService } from "@aq-fe/core-ui/shared/APIs/academicYearService";
-import { CustomButtonDeleteList } from "@aq-fe/core-ui/shared/components/button/CustomButtonDeleteList";
+import { CustomButtonSafeDeleteList } from "@aq-fe/core-ui/shared/components/button/CustomButtonSafeDeleteList";
 
 export function AcademicYearsDeleteList({ values }: { values: any }) {
     return (
-        <CustomButtonDeleteList
-            contextData={values.map((item: any) => item.code).join(",")}
+        <CustomButtonSafeDeleteList
+            count={values.length}
             onSubmit={() => {
-                return academicYearService.deleteList(values)
+                return academicYearService.safeDeleteList(values)
             }}
         />
     )

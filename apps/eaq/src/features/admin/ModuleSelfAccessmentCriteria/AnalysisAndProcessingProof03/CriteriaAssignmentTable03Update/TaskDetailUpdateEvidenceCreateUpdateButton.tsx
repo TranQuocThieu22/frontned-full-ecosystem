@@ -3,16 +3,16 @@ import { service_EAQEvaluationPlan } from "@/shared/APIs/service_EAQEvaluationPl
 import { ITaskDetailEvidence } from "@/shared/interfaces/evidence/ITaskDetailEvidence";
 import { ITaskDetail } from "@/shared/interfaces/task/ITaskDetail";
 import useS_Shared_Filter from "@/shared/stores/useS_Shared_Filter";
-import { Group, SimpleGrid, Stack } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { useDisclosure } from "@mantine/hooks";
-import { useEffect } from "react";
-import { cleanTDRequirementsAndEvidences } from "./shared/CleanTDRequirements";
 import { CustomButtonCreateUpdate } from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
 import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
 import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
 import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
+import { Group, SimpleGrid, Stack } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { useDisclosure } from "@mantine/hooks";
+import { useEffect } from "react";
+import { cleanTDRequirementsAndEvidences } from "./shared/CleanTDRequirements";
 
 interface Props {
   values?: ITaskDetailEvidence;
@@ -126,7 +126,7 @@ export default function TaskDetailUpdateEvidenceCreateUpdateButton({
         isUpdate={!!values}
         onSubmit={() => handleSubmit(form.values, !!values)}
         disclosure={disc}
-        useMyReactMutationProps={{
+        useCustomReactMutationProps={{
           successNotification: !!values
             ? "Cập nhật thành công" : "Tạo thành công"
         }}

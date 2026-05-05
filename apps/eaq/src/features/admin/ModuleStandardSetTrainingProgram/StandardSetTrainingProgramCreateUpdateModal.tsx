@@ -1,16 +1,16 @@
-import { StandardSetTrainingProgram } from "@/shared/interfaces/standardSetTrainingProgram/TrainingProgramStandardSet";
 import { service_EAQStandardSet } from "@/shared/APIs/service_EAQStandardSet";
 import { service_EAQTrainingProgram } from "@/shared/APIs/service_EAQTrainingProgram";
-import { useForm } from "@mantine/form";
-import { useDisclosure } from "@mantine/hooks";
-import { useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect } from "react";
-import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
-import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
+import { StandardSetTrainingProgram } from "@/shared/interfaces/standardSetTrainingProgram/TrainingProgramStandardSet";
 import {
     CustomButtonCreateUpdate
 } from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
 import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
+import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
+import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
+import { useForm } from "@mantine/form";
+import { useDisclosure } from "@mantine/hooks";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCallback, useEffect } from "react";
 
 type updatePayload = Pick<StandardSetTrainingProgram, 'id' | 'eaqStandardSetId' | 'note'>
 interface Props {
@@ -104,7 +104,7 @@ export default function StandardSetTrainingProgramCreateUpdateModal({ values }: 
             }}
             isUpdate={isUpdate}
             onSubmit={handleSubmit}
-            useMyReactMutationProps={{
+            useCustomReactMutationProps={{
                 options: {
                     onSuccess: () => {
                         queryClient.invalidateQueries({ queryKey: ['standardSetQuery'] });

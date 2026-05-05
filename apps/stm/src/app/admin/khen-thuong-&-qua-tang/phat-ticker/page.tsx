@@ -1,12 +1,12 @@
 'use client'
 
-import TickerDistributionTable from "@/modules-features/admin/METickerDistribution/TickerDistributionTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import TickerDistributionTable from "@/features/admin/METickerDistribution/TickerDistributionTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <TickerDistributionTable />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

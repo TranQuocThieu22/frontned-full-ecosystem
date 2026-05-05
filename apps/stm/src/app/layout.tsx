@@ -1,5 +1,6 @@
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
+import Provider from '@/providers/Provider';
 import '@mantine/charts/styles.css';
 import { ColorSchemeScript } from '@mantine/core';
 import '@mantine/core/styles.css';
@@ -10,7 +11,6 @@ import '@mantine/spotlight/styles.css';
 import '@mantine/tiptap/styles.css';
 import 'mantine-react-table/styles.css';
 import "./globals.css";
-import { MainLayout } from './main-layout';
 
 export const metadata = {
   title: 'Hệ thống quản lí đào tạo ngắn hạn',
@@ -27,9 +27,9 @@ export default function RootLayout({
         <ColorSchemeScript defaultColorScheme="light" />
       </head>
       <body>
-        <MainLayout>
+        <Provider>
           {children}
-        </MainLayout>
+        </Provider>
       </body>
     </html>
   );

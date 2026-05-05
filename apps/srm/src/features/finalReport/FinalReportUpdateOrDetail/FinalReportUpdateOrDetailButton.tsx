@@ -61,10 +61,6 @@ export default function FinalReportUpdateOrDetailButton({ values, actionType = "
 
     return (
         <CustomButtonCreateUpdate
-            scrollAreaAutosizeProps={{
-                h: "auto",
-            }}
-
             modalProps={{
                 title: actionType == "update" ? "Cập nhật đề tài"
                     : "Chi tiết đề tài",

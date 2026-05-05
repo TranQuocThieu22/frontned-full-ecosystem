@@ -1,8 +1,8 @@
 import MyFlexRow from "@/components/Layouts/FlexRow/MyFlexRow"
 import { utils_date_formatToDateTimeString } from "@/utils/date"
+import { colorsObject } from "@aq-fe/core-ui/shared/consts/object/colorsObject"
 import { Box, Paper, Text } from "@mantine/core"
 import { IconCheckbox } from "@tabler/icons-react"
-import { colorsObject } from "aq-fe-framework/shared"
 
 interface MyTitleDateStatusProps {
     title?: string

@@ -71,9 +71,6 @@ export default function LiquidationMinutesCreateOrUpdate({ values, actionType = 
 
     return (
         <CustomButtonCreateUpdate
-            scrollAreaAutosizeProps={{
-                h: "auto",
-            }}
             modalProps={{
                 size: "80%"
             }}

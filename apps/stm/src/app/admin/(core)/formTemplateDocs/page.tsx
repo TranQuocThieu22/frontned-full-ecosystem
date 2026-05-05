@@ -1,12 +1,12 @@
 "use client"
 import { object_documentTypes } from '@/constants/object/object_documentTypes'
-import { MyPageContent } from 'aq-fe-framework/components'
-import { F_formTemplateDocs } from 'aq-fe-framework/modules-features'
+import { F_formTemplateDocs } from '@aq-fe/core-ui/features/core/formTemplateDocs/F_formTemplateDocs'
+import { CustomPageContent } from '@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent'
 
 export default function Page() {
     return (
-        <MyPageContent >
+        <CustomPageContent >
             <F_formTemplateDocs FormTypeId={object_documentTypes.Form} />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

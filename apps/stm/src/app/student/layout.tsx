@@ -1,6 +1,6 @@
 'use client'
 import { studentMenuData } from "@/data/studentMenuData";
-import F_zr8z26fbqn_SendNotification from "@/modules-features/student/zr8z26fbqn/F_zr8z26fbqn_SendNotification";
+import F_zr8z26fbqn_SendNotification from "@/features/student/zr8z26fbqn/F_zr8z26fbqn_SendNotification";
 import { BasicAppShell } from "aq-fe-framework/components";
 import { ReactNode } from "react";
 

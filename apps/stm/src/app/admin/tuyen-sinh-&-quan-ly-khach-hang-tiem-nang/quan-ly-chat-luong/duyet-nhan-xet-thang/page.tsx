@@ -1,12 +1,12 @@
 'use client'
 
-import MonthlyReviewsApprovalTable from "@/modules-features/admin/ModuleMonthlyReviewsApproval/MonthlyReviewsApprovalTable"
-import { MyPageContent } from "aq-fe-framework/components"
+import MonthlyReviewsApprovalTable from "@/features/admin/ModuleMonthlyReviewsApproval/MonthlyReviewsApprovalTable"
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent"
 
 export default function page() {
   return (
-    <MyPageContent>
-        <MonthlyReviewsApprovalTable/>
-    </MyPageContent>
+    <CustomPageContent>
+      <MonthlyReviewsApprovalTable />
+    </CustomPageContent>
   )
 }

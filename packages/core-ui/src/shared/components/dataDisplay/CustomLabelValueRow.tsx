@@ -4,7 +4,6 @@ import { ReactNode } from 'react';
 interface CustomLabelValueRowProps {
     label?: ReactNode;
     value?: ReactNode;
-    spacing?: number;
     labelProps?: TextProps,
     valueProps?: TextProps,
     groupProps?: GroupProps

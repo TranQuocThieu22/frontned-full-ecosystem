@@ -2,11 +2,11 @@
 import { service_EAQStandard } from '@/shared/APIs/service_EAQStandard';
 import { IStandard } from '@/shared/interfaces/standard/Standard';
 import useS_Shared_Filter from '@/shared/stores/useS_Shared_Filter';
-import { useForm } from '@mantine/form';
-import { CustomActionIconUpdate } from "@aq-fe/core-ui/shared/components/button/CustomActionIconUpdate";
-import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
-import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
 import { CustomButtonCreateUpdate } from '@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate';
+import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
+import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
+import { useForm } from '@mantine/form';
+import { useEffect } from 'react';
 
 export default function StandardStructure_UpdateStandard({
   value,
@@ -25,6 +25,9 @@ export default function StandardStructure_UpdateStandard({
       name: (value) => (!value ? 'Vui lòng nhập tên tiêu chuẩn' : null),
     },
   });
+  useEffect(() => {
+    form.setValues({ ...value })
+  }, [value])
 
   return (
     <CustomButtonCreateUpdate

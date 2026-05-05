@@ -1,0 +1,27 @@
+---
+description: Không dùng CustomCenterFull trong renderRowActions của CustomDataTableAPI
+alwaysApply: false
+globs: apps/stm/src/**/*.tsx
+---
+
+# CustomDataTableAPI – renderRowActions
+
+**Không bọc nội dung `renderRowActions` bằng `CustomCenterFull`** khi dùng `CustomDataTableAPI`.
+
+- **Lý do**: Bảng đã có layout cho cột actions; bọc thêm `CustomCenterFull` gây thừa và có thể ảnh hưởng hiển thị.
+
+**Ví dụ:**
+
+```tsx
+// ❌ Tránh
+renderRowActions={({ row }) => (
+  <CustomCenterFull>
+    <SomeAction data={row.original} />
+  </CustomCenterFull>
+)}
+
+// ✅ Đúng
+renderRowActions={({ row }) => (
+  <SomeAction data={row.original} />
+)}
+```

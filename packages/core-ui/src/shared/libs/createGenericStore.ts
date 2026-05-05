@@ -8,7 +8,16 @@ export interface GenericStore<T> {
     resetState: () => void;
 }
 
-export function createGenericStore<T>({ initialState, storageKey }: { initialState: T, storageKey?: string }) {
+export function createGenericStore<T>({
+    initialState,
+    storageKey,
+    persistOptions,
+}: {
+    initialState: T;
+    storageKey?: string;
+    // Optional extra options for Zustand `persist`, e.g. `partialize` to avoid persisting large fields.
+    persistOptions?: any;
+}) {
     const storeCreator = (set: any) => ({
         state: initialState,
         setState: (newState: T) => set({ state: newState }),
@@ -18,6 +27,11 @@ export function createGenericStore<T>({ initialState, storageKey }: { initialSta
     });
 
     return storageKey
-        ? create(persist<GenericStore<T>>(storeCreator, { name: storageKey }))
+        ? create(
+            persist<GenericStore<T>>(storeCreator, {
+                name: storageKey,
+                ...persistOptions,
+            }),
+        )
         : create<GenericStore<T>>(storeCreator);
 }

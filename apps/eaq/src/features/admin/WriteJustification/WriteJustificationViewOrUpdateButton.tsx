@@ -21,7 +21,7 @@ import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQ
 import { CustomButtonModal } from "@aq-fe/core-ui/shared/components/button/CustomButtonModal/CustomButtonModal";
 import UsedEvidenceTable from "@/features/admin/WriteJustification/Components/UsedEvidenceTable";
 import ViewOrUpdateButtonLayout from "@/features/admin/WriteJustification/Components/ViewOrUpdateButtonLayout";
-import ViewOrUpdateRequirementLayout from "@/features/admin/WriteJustification/Components/ViewOrUpdateRequirementLayout";
+import ViewOrUpdateRequirementLayout from "@/shared/components/ViewOrUpdateRequirementLayout";
 
 interface Props {
   data?: IRequirement;

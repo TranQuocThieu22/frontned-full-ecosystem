@@ -1,11 +1,11 @@
 'use client'
-import MonthlyAcademicReportTable from "@/modules-features/monthlyAcademicReport/MonthlyAcademicReportTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import MonthlyAcademicReportTable from "@/features/monthlyAcademicReport/MonthlyAcademicReportTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <MonthlyAcademicReportTable />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

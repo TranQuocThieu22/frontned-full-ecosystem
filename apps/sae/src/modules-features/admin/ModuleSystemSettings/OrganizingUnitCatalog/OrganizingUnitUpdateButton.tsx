@@ -1,6 +1,5 @@
 import { service_department } from "@/api/services/service_department";
 import { Department } from "@/interfaces/department";
-import { CustomActionIconUpdate } from "@aq-fe/core-ui/shared/components/button/CustomActionIconUpdate";
 import { CustomButtonCreateUpdate } from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
 import { CustomTextInput } from "@aq-fe/core-ui/shared/components/input/CustomTextInput";
 import { Group } from "@mantine/core";

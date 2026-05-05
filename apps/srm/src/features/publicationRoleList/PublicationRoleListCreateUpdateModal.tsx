@@ -66,7 +66,6 @@ export default function PublicationRoleListCreateUpdateModal({ values }: Props) 
                 title: isUpdate
                     ? "Cập nhật vai trò thực hiện đề tài" : "Tạo vai trò thực hiện đề tài mới",
             }}
-            scrollAreaAutosizeProps={{ h: "auto" }}
         >
             <CustomTextInput label="Mã vai trò" {...form.getInputProps("code")} readOnly={isUpdate} />
             <CustomTextInput label="Tên vai trò" {...form.getInputProps("name")} />

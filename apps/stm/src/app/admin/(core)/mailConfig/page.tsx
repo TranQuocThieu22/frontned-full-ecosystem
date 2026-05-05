@@ -1,13 +1,13 @@
 "use client"
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import { F_mailConfig_Read } from "aq-fe-framework/modules-features";
+import { F_mailConfig_Read } from "@aq-fe/core-ui/features/core/mailConfig/F_mailConfig_Read";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 import { utils_converter_enumToSelectOptions } from "aq-fe-framework/utils";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <F_mailConfig_Read emailModule={utils_converter_enumToSelectOptions(ENUM_EMAILCONFIG_MODULE)} />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }
 

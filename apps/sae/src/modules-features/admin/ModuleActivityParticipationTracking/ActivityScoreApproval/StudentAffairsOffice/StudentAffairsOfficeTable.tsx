@@ -45,13 +45,13 @@ export default function StudentAffairsOfficeTable() {
             header: "Tên sự kiện",
             accessorKey: "name",
             size: 300,
-            accessorFn: (row) => (
+            Cell: ({ row }) => (
                 <Flex>
-                    <CustomHtmlWrapper html={row.name!} />
+                    <CustomHtmlWrapper html={row.original.name!} />
                     <Text>{" "}
                         <Tooltip label="Hoạt động cố định">
                             <span
-                                hidden={!(row as Event).isRequired}
+                                hidden={!(row.original as Event).isRequired}
                                 style={{ color: "red" }}>(*)</span>
                         </Tooltip>
                     </Text>
@@ -63,10 +63,10 @@ export default function StudentAffairsOfficeTable() {
         { header: "Đơn vị công nhận", accessorKey: "completedName" },
         {
             header: "Điểm tối đa", accessorKey: "maxPoint", size: 150,
-            accessorFn: (row) => {
+            Cell: ({ row }) => {
                 return (
                     <CustomCenterFull>
-                        <Text size="sm">{row.maxPoint}</Text>
+                        <Text size="sm">{row.original.maxPoint}</Text>
                     </CustomCenterFull>
                 )
             }
@@ -74,8 +74,8 @@ export default function StudentAffairsOfficeTable() {
         {
             header: "Điểm trừ", accessorKey: "null",
             size: 150,
-            accessorFn:
-                (row) => {
+            Cell:
+                ({ row }) => {
                     return (
                         <CustomCenterFull>
                             <Text size="sm">{0}</Text>

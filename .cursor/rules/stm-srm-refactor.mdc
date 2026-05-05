@@ -1,0 +1,248 @@
+---
+description: STM refactor rules to follow SRM/core-ui patterns (services, hooks, structure, naming)
+alwaysApply: false
+globs: apps/stm/src/**/*.ts,apps/stm/src/**/*.tsx
+---
+
+# STM → SRM/Core-UI Refactor Rules
+
+## 1. Service & Axios Usage
+
+- **Dùng service cho mọi API**:
+  - Không gọi `baseAxios.get/post/...` trực tiếp trong component.
+  - Thay bằng `*Service` trong `apps/stm/src/shared/APIs/` (dùng `createBaseApi`).
+- **Định nghĩa service**:
+  - File: `apps/stm/src/shared/APIs/<entity>Service.ts`.
+  - Mỗi entity dùng:
+    ```ts
+    import axiosInstance from "@aq-fe/core-ui/shared/configs/axiosInstance";
+    import { createBaseApi } from "@aq-fe/core-ui/shared/libs/createBaseApi";
+    import { Entity } from "@/shared/interfaces/entity";
+
+    const CONTROLLER = "/entity";
+
+    export const entityService = {
+      ...createBaseApi<Entity>(CONTROLLER, axiosInstance),
+      // custom endpoints thêm ngay dưới
+    };
+    ```
+- **Custom endpoint**:
+  - Thêm method mới ngay trong service, ví dụ:
+    ```ts
+    getStudent: (body: ExamGetStudentBody) =>
+      axiosInstance.post<CustomApiResponse<CourseSection[]>>(
+        CONTROLLER + "/GetStudent",
+        body,
+      ),
+    ```
+
+## 2. Query Hooks
+
+- **Không dùng `useQuery` trực tiếp** trong STM.
+- Thay bằng:
+  ```ts
+  import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
+
+  const query = useCustomReactQuery({
+    queryKey: ["subjects"],          // plural, lower-case
+    axiosFn: () => subjectService.getAll({ cols: ["RoomType"] }),
+  });
+  ```
+- **Không ép generic** cho `useCustomReactQuery`:
+  - Không viết `useCustomReactQuery<Foo[]>`.
+  - Kiểu dữ liệu được suy ra từ `axiosFn` (service).
+
+## 3. Mutation Hooks
+
+- **Không dùng `useMutation` trực tiếp**.
+- Thay bằng `useCustomReactMutation`:
+  ```ts
+  const mutation = useCustomReactMutation({
+    axiosFn: (body: ExamRegistrationCheckItem[]) =>
+      examService.examRegistrationCheck(body),
+    mutationType: "update", // create | update | delete | import | sync ...
+  });
+  ```
+- **Không ép generic** trên `useCustomReactMutation`.
+- **`CustomButtonCreateUpdate` không cần khai báo generic type**:
+  - Không viết `CustomButtonCreateUpdate<Foo, Bar>`.
+  - Type được suy ra từ `form` và `onSubmit`.
+- **Nếu không cần transform payload, submit thẳng `values`**:
+  - Không cần tạo `payload` trung gian.
+  - Ví dụ:
+    ```ts
+    onSubmit={(values, isUpdate) => {
+      if (isUpdate) return someService.update(values);
+      return someService.create(values);
+    }}
+    ```
+- **`CustomSelectAPI` không dùng `form.getInputProps(...)`**:
+  - Dùng `value={form.getValues().field}` và `onChange={(value) => form.setFieldValue("field", value)}`.
+- **Không tự `invalidateQueries` hoặc `refetchQueries`**:
+  - Không dùng `useQueryClient()` cho invalidate mặc định.
+  - `useCustomReactMutation` đã có `autoInvalidate` và notification mặc định.
+- **Không tự show notification thành công**:
+  - Không gọi `utils_notification_show` trong `onSuccess` khi chỉ cần message CRUD chuẩn.
+  - Nếu cần message khác, dùng `successNotification`:
+    ```ts
+    useCustomReactMutation({
+      axiosFn: (body: SomeBody) => someService.update(body),
+      mutationType: "update",
+      successNotification: "Cập nhật trạng thái thành công",
+    });
+    ```
+- **`onSuccess` chỉ dùng cho logic thêm**:
+  - Ví dụ: đóng modal, scroll, set state cục bộ.
+  - Không lặp lại invalidate hoặc notification mặc định.
+
+## 4. Module Structure & Naming
+
+- **Mỗi màn hình 1 cấp folder**:
+  - Route: `apps/stm/src/app/admin/<feature>/page.tsx` hoặc `apps/stm/src/app/admin/<featureList>/page.tsx`.
+  - Module: `apps/stm/src/modules-features/admin/<feature>/<Component>.tsx`.
+- **Không dùng path lồng kiểu `subject/subjectList` cho màn chuẩn**:
+  - Ví dụ: `subjectList`:
+    - Route: `app/admin/subjectList/page.tsx`.
+    - Module chính: `modules-features/admin/subjectList/SubjectListTable.tsx`.
+- **Tên component theo SRM style**:
+  - Bảng list: `XxxListTable` (ví dụ `SubjectListTable`).
+  - Form create/update trong modal: `XxxCreateUpdateModal` hoặc `XxxCreateUpdate`.
+  - Nút/hành động: `XxxCreateButton`, `XxxDeleteButton`, `XxxUpdateButton` nếu tách riêng.
+- **Không giữ tên cũ khó hiểu / mã hóa**:
+  - Đổi `F3_3ReadCourseModule` → `SubjectListTable`.
+  - Đổi các component cũ dạng `F_*` sang tên mô tả chức năng, ví dụ:
+    - `F_ozjablkxer_DaysOffDetail` → `DaysOffDetailTable` (nếu có thể).
+
+## 5. Page Components
+
+- **Page đơn giản**:
+  - Chỉ wrap module chính trong `CustomPageContent`:
+    ```ts
+    import FeatureTable from "@/modules-features/admin/feature/FeatureTable";
+    import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
+
+    export default function Page() {
+      return (
+        <CustomPageContent>
+          <FeatureTable />
+        </CustomPageContent>
+      );
+    }
+    ```
+
+## 6. Subject List Specific
+
+- **Service**:
+  - File: `shared/APIs/subjectService.ts`:
+    ```ts
+    const CONTROLLER = "/subject";
+
+    export const subjectService = {
+      ...createBaseApi<Subject>(CONTROLLER, axiosInstance),
+    };
+    ```
+- **Module**:
+  - File: `modules-features/admin/subjectList/SubjectListTable.tsx`.
+  - Dùng `useCustomReactQuery` + `subjectService.getAll({ cols: ["RoomType"] })`.
+  - Dùng `CustomFieldset` + `CustomDataTableAPI` thay vì `MyDataTable` trực tiếp.
+- **Create/Update modal title**:
+  - Với danh mục môn học, title modal **chỉ cần**: `"Chi tiết môn học"` (không cần phân biệt `"Thêm..."` / `"Sửa..."`).
+- **Menu**:
+  - `adminMenuData.ts` trỏ `link: "subjectList"` (không phải `"subject/subjectList"`).
+
+## 6b. Score Config Specific (Cấu hình điểm CT)
+
+- **Module**:
+  - File list: `modules-features/admin/scoreConfig/ScoreConfigTable.tsx`.
+  - File form chi tiết: `modules-features/admin/scoreConfig/ScoreConfigUpdateProgram.tsx` (wrapper SRM cho form cấu hình điểm chương trình).
+- **Route**:
+  - `app/admin/scoreConfig/page.tsx` render `ScoreConfigTable`.
+- **Naming**:
+  - Dùng tên rõ nghĩa theo SRM: `ScoreConfigTable`, `ScoreConfigUpdateProgram` (không giữ tên cũ dạng `F3_3UpdateProgram` trong code mới; nếu cần giữ để tương thích, chỉ dùng re-export mỏng).
+
+## 7. Import (Excel) có map code → ID
+
+- **Tạo query lookup ở trên**, không gọi service trong `onSubmit`:
+  - Ví dụ map mã tính chất phòng → `roomTypeId`: tạo `roomTypeQuery` với `useCustomReactQuery` + `roomTypeService.getAll()` ngay trong component.
+  - Lấy dữ liệu: `const roomTypes = roomTypeQuery.data ?? []`, dùng `roomTypes` trong `onSubmit` để map `roomTypeCode` → `roomTypeId`.
+- **Loading nút Import**: truyền `buttonProps: { loading: subjectQuery.isLoading || roomTypeQuery.isLoading }` (hoặc tương ứng query chính + query lookup) để nút Import hiển thị loading khi đang lấy danh sách chính hoặc danh sách tra cứu.
+- **Map theo mã (code)** trong `onSubmit`: so sánh `String(r.code ?? "").trim() === roomTypeCode` (hoặc field tương ứng), ghi chú comment "Map theo mã (code) ... để dễ hiểu khi import".
+- **Không cần tạo object phức tạp**: chỉ cần `return service.createList((values ?? []).map((item) => ({ ...item, roomTypeId: roomTypes.find(...)?.id })))` (spread `item` rồi ghi đè thêm field id map từ code). Không cần liệt kê từng field (code, name, ...) trong object trả về.
+
+## 8. `getAll` – dùng prop `cols`, viết hoa chữ đầu
+
+- **Dùng prop `cols`**, không truyền qua `params: "?cols=..."`:
+  - Đúng: `getAll({ cols: ["RoomType"] })` hoặc `getAll({ cols: ["Branch", "RoomType"] })`.
+  - Sai: `getAll({ params: "?cols=roomType" })`.
+- **Luôn viết hoa chữ đầu** từng phần trong `cols` (PascalCase):
+  - Đúng: `["RoomType"]`, `["User"]`, `["Branch", "RoomType"]`.
+  - Sai: `["roomType"]`, `["branch", "roomType"]`.
+- `createBaseApi.getAll` nhận `cols?: string[]` và gửi lên query dạng `cols=RoomType,Branch`.
+
+## 9. DataTable columns – bỏ 2 cột audit
+
+- **Luôn bỏ hai cột sau** khi refactor bảng (list/read):
+  - **"Người cập nhật"** (`nguoiCapNhat`).
+  - **"Ngày cập nhật"** (`ngayCapNhat`).
+- Nếu gặp trong code cũ hoặc khi tạo bảng mới: không thêm vào `columns`, không dùng `utils_date_dateToDDMMYYYString` cho `ngayCapNhat`.
+
+## 10. Cột checkbox chỉ hiển thị – dùng `type: "squareCheck"`
+
+- **Nếu cột chỉ hiển thị checkbox (không chỉnh sửa)** trên bảng: dùng `type: "squareCheck"` trong column, không dùng `Cell` với `<Checkbox checked={...} onChange={() => {}} />`.
+- Ví dụ:
+  ```ts
+  { header: "Có tổ chức thi", accessorKey: "isTesting", type: "squareCheck" },
+  { header: "Có cấp chứng chỉ", accessorFn: (row) => row.certificateId != null, type: "squareCheck" },
+  ```
+
+## 11. Enum/label theo SRM – không dùng `switch/case` để hiển thị
+
+- Khi cần hiển thị label theo giá trị enum (ví dụ: hệ điểm, cách tổng kết, trạng thái), **không dùng `switch/case`** trong `accessorFn`/`Cell`.
+- Thay bằng:
+  - `export enum ...` + `export const ...Label: Record<Enum, string> = { ... }`
+  - Trong table: `accessorFn: (row) => LabelMap[row.someEnum as keyof typeof LabelMap] ?? ""`
+- Ví dụ:
+  ```ts
+  export enum ScoreSystemEnum { He4 = 1, He10 = 2 }
+  export const ScoreSystemLabel: Record<ScoreSystemEnum, string> = {
+    [ScoreSystemEnum.He4]: "Hệ 4",
+    [ScoreSystemEnum.He10]: "Hệ 10",
+  }
+  ```
+
+## 12. Sau khi refactor – xóa phần cũ không còn dùng
+
+- Khi đã tạo module/service mới theo SRM (route trỏ sang code mới) và **đảm bảo không còn import/tham chiếu** tới code cũ:
+  - Xóa toàn bộ file/module cũ (ví dụ: `modules-features/(3)/3-2`, `(3)/3-3/F3_3Read...`) để tránh **code chết**.
+  - Trước khi xóa: dùng search (`rg`/`Grep` trong project) để chắc chắn không còn chuỗi import như `modules-features/(3)/...` hoặc tên component cũ (`F3_2Read`, `F3_3Read`, ...).
+- Mục tiêu: sau mỗi lần refactor, **danh mục chỉ còn code mới** (service + module admin chuẩn SRM), không giữ song song 2 phiên bản.
+
+## 13. Delete trong bảng – dùng props của CustomDataTableAPI
+
+- Khi có bảng dùng **CustomDataTableAPI**, **không tạo component delete riêng** (ví dụ `XxxDeleteButton`, `XxxDeleteListButton`).
+- Dùng trực tiếp props của bảng:
+  - **`deleteFn={(id) => ...}`**: xóa một dòng (icon delete trên từng row).
+  - **`deleteListFn={(ids) => ...}`**: xóa nhiều dòng đã chọn (nút xóa hàng loạt trên toolbar).
+- Trong `deleteFn`/`deleteListFn`: gọi service (ví dụ `service.delete(id)` hoặc build body rồi `service.saveXxx(body)` nếu API là soft delete), sau đó **invalidate query** (ví dụ `queryClient.invalidateQueries({ queryKey: ["entity", id] })`) để bảng refetch.
+- Chỉ tạo component delete riêng khi có logic đặc biệt không gói được trong deleteFn (workflow nhiều bước, confirm tùy biến phức tạp).
+
+## 14. Components & hooks – dùng core-ui, không dùng component nội bộ
+
+- **Không dùng component từ `@/components/`** (ví dụ `@/components/CenterFull/MyCenterFull`, `@/components/Buttons/Button/MyButton`). Luôn dùng từ **@aq-fe/core-ui**.
+- **Không dùng aq-fe-framework**: Ưu tiên hook và component từ **@aq-fe/core-ui** thay vì **aq-fe-framework**.
+- **Ví dụ thay thế**:
+  - `@/components/*` → core-ui: `MyActionIconModal`, `CustomButton`, `CustomDataTable`, `CustomFlexColumn`, `CustomTextInput`, `CustomNumberInput`, `CustomFieldset`, `CustomCenterFull`, `CustomActionIconDelete`, `MyButtonModal` từ các path tương ứng trong `@aq-fe/core-ui/shared/components/`
+  - `MyNumberInput` (aq-fe-framework) → `CustomNumberInput` từ `@aq-fe/core-ui/shared/components/input/CustomNumberInput`
+  - `MyFieldset` (aq-fe-framework) → `CustomFieldset` từ `@aq-fe/core-ui/shared/components/layout/CustomFieldset`
+  - Query: `useCustomReactQuery` (core-ui), không dùng `useMyReactQuery` (aq-fe-framework)
+  - Mutation: `useCustomReactMutation` (core-ui)
+- **Create / Update form** (theo pattern SRM): Dùng **CustomButtonCreateUpdate** (core-ui). Ưu tiên **một component cho cả Thêm + Sửa** (như SRM: TopicTypeListCreateOrUpdate, CouncilRoleListCreateUpdateModal, JournalCreateOrUpdateButton).
+  - Props: `data?: Entity` (khi có = sửa, khi không có = thêm), cùng các prop khác (programId, programData, ...). `isUpdate={!!data}`.
+  - **Form**: initialValues mặc định cho create; dùng `useEffect` để `form.setValues(data)` khi `data` thay đổi (khi mở modal sửa).
+  - **onSubmit(values)**: return `service.xxx(buildBody(values))` (Promise). Component tự xử lý mutation, đóng modal, reset form.
+  - **modalProps.title**: điều kiện theo `isUpdate` (ví dụ `isUpdate ? "Sửa ..." : "Thêm ..."`).
+  - **useCustomReactMutationProps.successNotification**: điều kiện theo `isUpdate`.
+  - **buttonProps.children**: "Thêm"; **actionIconProps**: icon (IconEdit), color khi update.
+  - Có thể dùng `readOnly={isUpdate}` cho field mã (code) khi sửa.
+- **Mục tiêu**: Thống nhất UI và hành vi trên nền core-ui, dễ bảo trì và tái sử dụng trong monorepo.
+

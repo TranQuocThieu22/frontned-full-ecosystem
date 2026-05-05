@@ -11,7 +11,6 @@ import { utils_notification_show } from "@aq-fe/core-ui/shared/utils/notificatio
 import { Stack } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import { IconFileDots } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
@@ -70,19 +69,11 @@ export default function PresentationApprovalModal(
         title: "Chi tiết duyệt thuyết minh",
         size: "35%"
       }}
-      buttonProps={{
-        actionType: "update",
-        leftSection: <IconFileDots />,
-        children: "Duyệt",
-        c: "green.6",
-        bg: "transparent",
-        bd: "1px solid green.6",
-        miw: 150,
+      isActionIcon
+      actionIconProps={{
+        actionType: "validate",
         loading: loading,
-        loaderProps: {
-          size: "xs",
-          color: "green.6"
-        }
+        toolTipProps: { label: "Duyệt" },
       }}
       disclosure={disclosure}>
       <Stack>

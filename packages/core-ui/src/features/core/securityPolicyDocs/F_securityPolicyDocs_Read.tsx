@@ -27,7 +27,7 @@ export default function c_Read({ SecurityTypeId }: { SecurityTypeId: number }) {
   // });
   const query = useCustomReactQuery({
     queryKey: ["F_securityPolicyDocs_Read"],
-    axiosFn: () => documentService.GetByType(SecurityTypeId),
+    axiosFn: () => documentService.getByType(SecurityTypeId),
   });
   const columns = useMemo<CustomColumnDef<Document>[]>(
     () => [

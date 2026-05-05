@@ -4,7 +4,7 @@ import { contractSuspendService } from "@/shared/APIs/contractSuspendService";
 import { EnumContractExecutionStatus, EnumLabelContractExecutionStatus } from "@/shared/consts/enum/EnumContractExecutionStatus";
 import { EnumLabelProcessingStatus, EnumProcessingStatus } from "@/shared/consts/enum/EnumProcessingStatus";
 import { SRMContractSuspend } from "@/shared/interfaces/SRMContractSuspend";
-import { CustomActionIconUpdate } from "@aq-fe/core-ui/shared/components/button/CustomActionIconUpdate";
+import { CustomButtonCreateUpdate } from "@aq-fe/core-ui/shared/components/button/CustomButtonCreateUpdate/CustomButtonCreateUpdate";
 import { CustomFileInput } from "@aq-fe/core-ui/shared/components/input/CustomFileInput";
 import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
 import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
@@ -41,10 +41,15 @@ export default function StopHandleUpdate({ values }: { values: SRMContractSuspen
   });
 
   return (
-    <CustomActionIconUpdate
-      title="Cập nhật đề tài"
+    <CustomButtonCreateUpdate
+      isUpdate
+      modalProps={{
+        title: "Cập nhật đề tài"
+      }}
+      actionIconProps={{
+        disabled: values.processingStatus === EnumProcessingStatus.processed
+      }}
       form={form}
-      disabled={values.processingStatus === EnumProcessingStatus.processed}
       onSubmit={async (formValues) => {
         const updateData: IContractSuspendUpdate = {
           ...values,
@@ -106,6 +111,6 @@ export default function StopHandleUpdate({ values }: { values: SRMContractSuspen
         }}
         error={form.errors.processingAttachmentPath}
       />
-    </CustomActionIconUpdate>
+    </CustomButtonCreateUpdate>
   );
 }

@@ -1,0 +1,39 @@
+---
+description: Use Mantine useDisclosure for modal disclosure (no handcrafted tuples)
+globs: **/*.tsx
+alwaysApply: false
+---
+
+# Mantine `useDisclosure` standard
+
+When working with modals/components that expect Mantine `UseDisclosureReturnValue` (e.g. `CustomModal`), **always** create the disclosure with `useDisclosure()` and pass it through.
+
+## Rules
+
+- Do **NOT** handcraft tuples like:
+
+```tsx
+// ❌ BAD (type/readonly issues, breaks expectations)
+const disclosure = [open, { close: onClose, open: () => {}, toggle: () => {} }] as const
+```
+
+- Prefer:
+
+```tsx
+// ✅ GOOD
+import { useDisclosure } from "@mantine/hooks"
+
+const disc = useDisclosure(false)
+<CustomModal disclosure={disc} title="..." />
+```
+
+- If a child component needs to control open/close, pass the whole disclosure:
+
+```tsx
+import type { UseDisclosureReturnValue } from "@mantine/hooks"
+
+function Child({ disclosure }: { disclosure: UseDisclosureReturnValue }) {
+  const [opened, handlers] = disclosure
+  // handlers.open() / handlers.close()
+}
+```

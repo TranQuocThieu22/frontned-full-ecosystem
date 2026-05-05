@@ -1,11 +1,11 @@
 'use client'
-import TrackCirculatingTickersTable from "@/modules-features/admin/METrackCirculatingTickers/TrackCirculatingTickersTable";
-import { MyPageContent } from "aq-fe-framework/components";
+import TrackCirculatingTickersTable from "@/features/admin/METrackCirculatingTickers/TrackCirculatingTickersTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <TrackCirculatingTickersTable />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

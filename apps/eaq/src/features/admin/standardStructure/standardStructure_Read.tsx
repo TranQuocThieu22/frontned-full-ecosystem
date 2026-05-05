@@ -8,12 +8,6 @@ import { CustomTabs } from "@aq-fe/core-ui/shared/components/navigation/CustomTa
 import { CustomFieldset } from "@aq-fe/core-ui/shared/components/layout/CustomFieldset";
 
 export default function StandardStructure_Read() {
-    const tabData = [
-        { label: "Tiêu chuẩn" },
-        { label: "Tiêu chí" },
-        { label: "Yêu cầu" },
-    ];
-
     return (
         <CustomFieldset title="Cấu trúc bộ tiêu chuẩn">
             <CustomTabs tabs={[

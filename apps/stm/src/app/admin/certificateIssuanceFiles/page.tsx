@@ -1,10 +1,10 @@
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
-import F_jecrdsrw6z_Read from "@/modules-features/admin/jecrdsrw6z/F_jecrdsrw6z_Read";
+import CertificateIssuanceFilesTable from "@/features/admin/certificateIssuanceFiles/CertificateIssuanceFilesTable";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
-            <F_jecrdsrw6z_Read />
-        </MyPageContent>
+        <CustomPageContent title="Hồ sơ cấp chứng chỉ">
+            <CertificateIssuanceFilesTable />
+        </CustomPageContent>
     )
 }

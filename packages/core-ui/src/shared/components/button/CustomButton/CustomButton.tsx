@@ -1,3 +1,4 @@
+import { isGlobalSyncButtonHidden } from "@aq-fe/core-ui/shared/configs/syncButtonVisibility";
 import { usePermissionStore } from "@aq-fe/core-ui/shared/stores/usePermissionStore";
 import { actionType } from "@aq-fe/core-ui/shared/types/actionType";
 import { Button, ButtonProps, MantineColorScheme, useMantineColorScheme } from "@mantine/core";
@@ -132,6 +133,11 @@ export function CustomButton({ children, actionType, isCheckPermission = true, .
     const config = actionType ? getActionConfig(colorScheme)[actionType] : {};
     const shouldHide = (() => {
         const page = permissionStore.state.currentPermissionPage;
+
+        // Ẩn toàn bộ nút có actionType="sync" nếu được cấu hình global
+        if (actionType === "sync" && isGlobalSyncButtonHidden()) {
+            return true;
+        }
 
         // Không check quyền trong các trường hợp sau
         if (!isCheckPermission || !actionType || !page || permissionStore.state.isSuperAdmin) {

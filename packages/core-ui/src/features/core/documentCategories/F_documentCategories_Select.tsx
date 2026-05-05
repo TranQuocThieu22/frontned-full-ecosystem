@@ -20,7 +20,7 @@ export function F_documentCategories_Select({ documentTypeId, label = "", dataMa
 
   const query = useCustomReactQuery({
     queryKey: [`/DocumentAttribute/GetByType?documentType=${documentTypeId}`],
-    axiosFn: () => documentAttributeService.GetByType(documentTypeId)
+    axiosFn: () => documentAttributeService.getByType(documentTypeId)
   })
 
   if (query.isLoading) return "Loading...";

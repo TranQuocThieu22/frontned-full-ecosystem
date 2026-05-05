@@ -1,12 +1,12 @@
 "use client"
 import { adminMenuData } from "@/data/adminMenuData";
-import { MyPageContent } from "aq-fe-framework/components";
-import { Feat_accessControl } from "aq-fe-framework/modules-features";
+import { Feat_accessControl } from "@aq-fe/core-ui/features/core/accessControl/Feat_accessControl";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <Feat_accessControl menuData={adminMenuData} />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }

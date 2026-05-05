@@ -80,17 +80,17 @@ export default function CodeFormulaImport({
           id: number;
           name: string;
         }>[] = [
-          {
-            fieldKey: "id",
-            fieldName: "Giá trị",
-            isRequired: true,
-          },
-          {
-            fieldKey: "name",
-            fieldName: "Tên",
-            isRequired: true,
-          },
-        ];
+            {
+              fieldKey: "id",
+              fieldName: "Giá trị",
+              isRequired: true,
+            },
+            {
+              fieldKey: "name",
+              fieldName: "Tên",
+              isRequired: true,
+            },
+          ];
 
         if (businessTypeEnum) {
           await excelUtils.addSheet<{ id: number; name: string }>({

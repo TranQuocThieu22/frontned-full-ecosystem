@@ -4,7 +4,7 @@ import { SRMTopic } from "@/shared/interfaces/SRMTopic";
 import { CustomButtonModal } from "@aq-fe/core-ui/shared/components/button/CustomButtonModal/CustomButtonModal";
 import { Tabs } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconFileDescription, IconInfoCircle, IconUsers } from "@tabler/icons-react";
+import { IconInfoCircle, IconUsers } from "@tabler/icons-react";
 import { useEffect } from "react";
 import GeneralInfoForm from "./TabGeneralInfo/GeneralInfoForm";
 import TopicMemberTable from "./TabMember/TopicMemberTable";
@@ -31,11 +31,10 @@ export default function SubmitMissionReportDetailButton({ topic, loading }: Prop
                     size: "100%",
                     title: "Sửa hội đồng xét duyệt"
                 }}
-                buttonProps={{
-                    children: "Xem chi tiết",
-                    variant: "outline",
-                    leftSection: <IconFileDescription />,
-                    loading: loading
+                isActionIcon
+                actionIconProps={{
+                    actionType: "view",
+                    loading: loading,
                 }}
                 disclosure={disclosure}
             >

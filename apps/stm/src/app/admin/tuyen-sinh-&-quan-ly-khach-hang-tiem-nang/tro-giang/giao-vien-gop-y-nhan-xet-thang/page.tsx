@@ -1,12 +1,12 @@
 'use client'
 
-import MonthlyTeacherFeedbackLayout from "@/modules-features/admin/MEMonthlyTeacherFeedback/MonthlyTeacherFeedbackLayout";
-import { MyPageContent } from "aq-fe-framework/components";
+import MonthlyTeacherFeedbackLayout from "@/features/admin/MEMonthlyTeacherFeedback/MonthlyTeacherFeedbackLayout";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <MonthlyTeacherFeedbackLayout />
-        </MyPageContent>
+        </CustomPageContent>
     );
 }

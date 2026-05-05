@@ -25,9 +25,26 @@ export default function StudentAffairsTable() {
     const isRequiredHidden = useState<boolean>(true);
     const activityPlanStore = useS_Shared_ActivityPlan();
     const currentLoginUser = useAuthenticateStore();
+    const { state: permissionState } = permissionStore;
+    const { state: userState } = currentLoginUser;
+    const isAdmin = userState.userId?.toString() === "1";
+    const workingUnitId = userState.workingUnitId;
+    const planId = activityPlanStore.state.ActivityPlan?.id;
+    const canModifyEvent = (row: IStudentAffairsParticipationEventInfoViewModel, requireCreate: boolean) => {
+        const hasPermission = requireCreate
+            ? permissionState.currentPermissionPage?.isCreate
+            : permissionState.currentPermissionPage?.isUpdate;
 
+        if (!hasPermission) return false;
+
+        if (isAdmin) return true;
+
+        if (!workingUnitId || !row.reviewedBy) return false;
+
+        return row.reviewedBy === workingUnitId;
+    };
     const query_Event_EventOnPlan = useCustomReactQuery({
-        queryKey: ["getEventOnPlanForPointRecord", activityPlanStore.state.ActivityPlan?.id],
+        queryKey: ["getEventOnPlanForPointRecord", planId],
         axiosFn: () => service_event.getEventOnPlanForPointRecord({
             standardId: undefined,
             host: 0,
@@ -35,173 +52,14 @@ export default function StudentAffairsTable() {
             startDate: undefined,
             endDate: undefined,
             // isOrganization: false,
-            activityPlanId: activityPlanStore.state.ActivityPlan?.id ?? 0,
-        })
+            activityPlanId: planId ?? 0,
+        }),
+        options: {
+            enabled: !!planId,
+        }
     })
 
-    const columns = useMemo<CustomColumnDef<IStudentAffairsParticipationEventInfoViewModel>[]>(() => [
-        {
-            header: "Điều", accessorKey: "standardCode", size: 100,
-        },
-        {
-            header: "Tên sự kiện",
-            accessorKey: "name",
-            size: 250,
-            accessorFn: (row) => (
-                <Flex>
-                    <CustomHtmlWrapper html={row.name!} />
-                    <Text>
-                        <Tooltip label="Hoạt động cố định">
-                            <span
-                                hidden={!(row as IStudentAffairsParticipationEventInfoViewModel).isRequired}
-                                style={{ color: "red" }}>(*)</span>
-                        </Tooltip>
-                    </Text>
-                </Flex>
-            )
-        },
-        { header: "Đơn vị tổ chức", accessorKey: "hostName" },
-        { header: "Đơn vị ghi nhận", accessorKey: "reviewedName" },
-        { header: "Đơn vị công nhận", accessorKey: "completedName" },
-        {
-            header: "Điểm tối đa", accessorKey: "maxPoint", size: 150,
-            accessorFn: (row) => {
-                return (
-                    <CustomCenterFull>
-                        <Text size="sm">{row.maxPoint}</Text>
-                    </CustomCenterFull>
-                )
-            }
-        },
-        {
-            header: "Điểm trừ", accessorKey: "minPoint", size: 150,
-            accessorFn: (row) => {
-                return (
-                    <CustomCenterFull>
-                        <Text size="sm">{row.minPoint}</Text>
-                    </CustomCenterFull>
-                )
-            }
-        },
-        {
-            header: "Trạng thái",
-            accessorKey: "isPointVerified",
-            type: "squareCheck",
-            size: 150,
-        },
-        {
-            header: "Số lượng sinh viên đăng ký", accessorKey: "registrationCount",
-            size: 150,
-            accessorFn: (row) => {
-                return (
-                    <CustomCenterFull >
-                        <StudentAffairsRegistrationList
-                            eventValue={row}
-                            iconType="number"
-                            reviewedByUserId={row.reviewedBy!}
-                            userWorkingUnitId={currentLoginUser.state.workingUnitId ?? null}
-                            userRoleIds={currentLoginUser.state.roleIds!}
-                        />
-                    </CustomCenterFull>
-                )
-            }
-        },
-        {
-            header: "Số lượng sinh viên tham gia", accessorKey: "participationCount",
-            size: 150,
-            accessorFn: (row) => {
-                return (
-                    <CustomCenterFull >
-                        <StudentAffairsButtonUpdate
-                            eventValue={row} iconType="number"
-                            reviewedByUserId={row.reviewedBy!}
-                            userWorkingUnitId={currentLoginUser.state.workingUnitId ?? null}
-                            userRoleIds={currentLoginUser.state.roleIds!}
-                        />
-                    </CustomCenterFull>
-                )
-            }
-        },
-        {
-            header: "Thêm SV", accessorKey: "addStudent",
-            enableSorting: false,
-            size: 150,
-            accessorFn: (row) => {
-                return (
-                    <CustomCenterFull >
-                        <StudentAffairsButtonUpdate eventValue={row} iconType="icon"
-                            reviewedByUserId={row.reviewedBy!}
-                            userWorkingUnitId={currentLoginUser.state.workingUnitId ?? null}
-                            userRoleIds={currentLoginUser.state.roleIds!}
-                        />
-                    </CustomCenterFull>
-                )
-            }
-        },
-        {
-            header: "Import", accessorKey: "import",
-            size: 150,
-            enableSorting: false,
-            accessorFn: (row) => {
-                return (
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
-                        {
-                            (permissionStore.state.currentPermissionPage?.isCreate) &&
-                                ((row.reviewedBy !== null && currentLoginUser.state.workingUnitId !== null &&
-                                    row.reviewedBy === currentLoginUser.state.workingUnitId) || (currentLoginUser.state.roleIds?.[0]! === 2) || currentLoginUser.state.userId?.toString() === '1') ?
-                                <StudentAffairsImport eventId={row.id!} />
-                                :
-                                <Text c="dimmed" size="sm">Hoạt động của đơn vị khác</Text>
-                        }
-                    </div>
-                )
-            }
-        },
-        {
-            header: "File minh chứng", accessorKey: "fileProof",
-            size: 150,
-            enableSorting: false,
-            accessorFn: (row) => {
-                return (
-                    <CustomCenterFull>
-                        {
-                            (permissionStore.state.currentPermissionPage?.isUpdate) &&
-                                ((row.reviewedBy !== null && currentLoginUser.state.workingUnitId !== null &&
-                                    row.reviewedBy === currentLoginUser.state.workingUnitId) || (currentLoginUser.state.roleIds?.some(item => item === 2)) || currentLoginUser.state.userId?.toString() === '1') ?
-                                <StudentAffairsUploadProofFile eventValue={row} />
-                                :
-                                <Text c="dimmed" size="sm">Hoạt động của đơn vị khác</Text>
-                        }
-                    </CustomCenterFull >
-                )
-            }
-        },
-        {
-            header: "Xem minh chứng ghi nhận điểm", accessorKey: "proofPath",
-            enableSorting: false,
-            type: "viewFile"
-
-        },
-        {
-            header: "QR code", accessorKey: "qrCode",
-            enableSorting: false,
-            size: 150,
-            accessorFn: (row) => {
-                return (
-                    <CustomCenterFull>
-                        {(permissionStore.state.currentPermissionPage?.isCreate) &&
-                            ((row.reviewedBy !== null && currentLoginUser.state.workingUnitId !== null &&
-                                row.reviewedBy === currentLoginUser.state.workingUnitId) || (currentLoginUser.state.roleIds?.some(item => item === 2)) || currentLoginUser.state.userId?.toString() === '1') ?
-                            <StudentAffairsGenerateQR eventValue={row} />
-                            :
-                            <Text c="dimmed" size="sm">Hoạt động của đơn vị khác</Text>
-                        }
-                    </CustomCenterFull >
-                )
-            }
-        },
-    ], []);
+    const columns = useMemo(() => getColumns(currentLoginUser, canModifyEvent), [currentLoginUser, permissionState.currentPermissionPage])
 
     const filteredData = useMemo(() => {
         if (!isRequiredHidden[0]) {
@@ -214,7 +72,9 @@ export default function StudentAffairsTable() {
         });
     }, [query_Event_EventOnPlan.data, isRequiredHidden[0]]);
 
-
+    if (!planId) {
+        return <CustomCenterFull><Text>Đang tải thông tin kế hoạch...</Text></CustomCenterFull>;
+    }
     return (
         <CustomFlexColumn>
             <CustomFieldset title={`Ghi nhận điểm tham gia - Phòng công tác sinh viên`}>
@@ -256,3 +116,175 @@ export default function StudentAffairsTable() {
         </CustomFlexColumn>
     )
 }
+
+const getColumns = (currentLoginUser: any,
+    canModifyEvent: (row: IStudentAffairsParticipationEventInfoViewModel, req: boolean) => boolean
+): CustomColumnDef<IStudentAffairsParticipationEventInfoViewModel>[] => [
+        { header: "Điều", accessorKey: "standardCode", size: 100, },
+        {
+            header: "Tên sự kiện",
+            accessorKey: "name",
+            size: 250,
+            Cell: ({ cell, row }) => {
+                const cellValue = cell.getValue() as string;
+                return (
+                    <Flex>
+                        <CustomHtmlWrapper html={cellValue!} />
+                        <Text>
+                            <Tooltip label="Hoạt động cố định">
+                                <span
+                                    hidden={!(row.original as IStudentAffairsParticipationEventInfoViewModel).isRequired}
+                                    style={{ color: "red" }}>(*)</span>
+                            </Tooltip>
+                        </Text>
+                    </Flex>);
+            }
+        },
+        { header: "Đơn vị tổ chức", accessorKey: "hostName" },
+        { header: "Đơn vị ghi nhận", accessorKey: "reviewedName" },
+        { header: "Đơn vị công nhận", accessorKey: "completedName" },
+        {
+            header: "Điểm tối đa", accessorKey: "maxPoint", size: 150,
+            Cell: ({ row }) => {
+                return (
+                    <CustomCenterFull>
+                        <Text size="sm">{row.original.maxPoint}</Text>
+                    </CustomCenterFull>
+                )
+            },
+        },
+        {
+            header: "Điểm trừ", accessorKey: "minPoint", size: 150,
+            Cell: ({ row }) => {
+                return (
+                    <CustomCenterFull>
+                        <Text size="sm">{row.original.minPoint}</Text>
+                    </CustomCenterFull>
+                )
+            }
+        },
+        { header: "Trạng thái", accessorKey: "isPointVerified", type: "squareCheck", size: 150, },
+        {
+            header: "Số lượng sinh viên đăng ký", accessorKey: "registrationCount",
+            size: 150,
+            Cell: ({ row }) => {
+                return (
+                    <CustomCenterFull >
+                        <StudentAffairsRegistrationList
+                            eventValue={row.original}
+                            iconType="number"
+                            reviewedByUserId={row.original.reviewedBy!}
+                            userWorkingUnitId={currentLoginUser.state.workingUnitId ?? null}
+                            userRoleIds={currentLoginUser.state.roleIds!}
+                        />
+                    </CustomCenterFull>
+                )
+            }
+        },
+        {
+            header: "Số lượng sinh viên tham gia", accessorKey: "participationCount",
+            size: 150,
+            Cell: ({ row }) => {
+                return (
+                    <CustomCenterFull >
+                        <StudentAffairsButtonUpdate
+                            eventValue={row.original} iconType="number"
+                            reviewedByUserId={row.original.reviewedBy || 0}
+                            userWorkingUnitId={currentLoginUser.state.workingUnitId ?? null}
+                            userRoleIds={currentLoginUser.state.roleIds!}
+                        />
+                    </CustomCenterFull>
+                )
+            }
+        },
+        {
+            header: "Thêm SV", accessorKey: "addStudent",
+            enableSorting: false,
+            size: 150,
+            Cell: ({ row }) => {
+                return (
+                    <CustomCenterFull >
+                        <StudentAffairsButtonUpdate eventValue={row.original} iconType="icon"
+                            reviewedByUserId={row.original.reviewedBy || 0}
+                            userWorkingUnitId={currentLoginUser.state.workingUnitId ?? null}
+                            userRoleIds={currentLoginUser.state.roleIds!}
+                        />
+                    </CustomCenterFull>
+                )
+            }
+        },
+        {
+            header: "Import", accessorKey: "import",
+            size: 150,
+            enableSorting: false,
+            Cell: ({ row }) => {
+                return (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        {canModifyEvent(row.original, true)
+                            ? <StudentAffairsImport eventId={row.original.id!} />
+                            : <Text c="dimmed" size="sm">Hoạt động của đơn vị khác</Text>
+                        }
+                        {/* {
+                            (permissionStore.state.currentPermissionPage?.isCreate) &&
+                                ((row.original.reviewedBy !== null && currentLoginUser.state.workingUnitId !== null &&
+                                    row.original.reviewedBy === currentLoginUser.state.workingUnitId) || (currentLoginUser.state.roleIds?.[0]! === 2) || currentLoginUser.state.userId?.toString() === '1') ?
+                                <StudentAffairsImport eventId={row.original.id!} />
+                                :
+                                <Text c="dimmed" size="sm">Hoạt động của đơn vị khác</Text>
+                        } */}
+                    </div>
+                )
+            }
+        },
+        {
+            header: "File minh chứng", accessorKey: "fileProof",
+            size: 150,
+            enableSorting: false,
+            Cell: ({ row }) => {
+                return (
+                    <CustomCenterFull>
+                        {canModifyEvent(row.original, false)
+                            ? <StudentAffairsUploadProofFile eventValue={row.original} />
+                            : <Text c="dimmed" size="sm">Hoạt động của đơn vị khác</Text>
+                        }
+                        {/* {
+                            (permissionStore.state.currentPermissionPage?.isUpdate) &&
+                                ((row.original.reviewedBy !== null && currentLoginUser.state.workingUnitId !== null &&
+                                    row.original.reviewedBy === currentLoginUser.state.workingUnitId) || (currentLoginUser.state.roleIds?.some(item => item === 2)) || currentLoginUser.state.userId?.toString() === '1') ?
+                                <StudentAffairsUploadProofFile eventValue={row.original} />
+                                :
+                                <Text c="dimmed" size="sm">Hoạt động của đơn vị khác</Text>
+                        } */}
+                    </CustomCenterFull >
+                )
+            }
+        },
+        {
+            header: "Xem minh chứng ghi nhận điểm", accessorKey: "proofPath",
+            enableSorting: false,
+            type: "viewFile"
+
+        },
+        {
+            header: "QR code", accessorKey: "qrCode",
+            enableSorting: false,
+            size: 150,
+            Cell: ({ row }) => {
+                return (
+                    <CustomCenterFull>
+                        {canModifyEvent(row.original, true)
+                            ? <StudentAffairsGenerateQR eventValue={row.original} />
+                            : <Text c="dimmed" size="sm">Hoạt động của đơn vị khác</Text>
+                        }
+                        {/* {(permissionStore.state.currentPermissionPage?.isCreate) &&
+                            ((row.original.reviewedBy !== null && currentLoginUser.state.workingUnitId !== null &&
+                                row.original.reviewedBy === currentLoginUser.state.workingUnitId) || (currentLoginUser.state.roleIds?.some(item => item === 2)) || currentLoginUser.state.userId?.toString() === '1') ?
+                            <StudentAffairsGenerateQR eventValue={row.original} />
+                            :
+                            <Text c="dimmed" size="sm">Hoạt động của đơn vị khác</Text>
+                        } */}
+                    </CustomCenterFull >
+                )
+            }
+        },
+    ]

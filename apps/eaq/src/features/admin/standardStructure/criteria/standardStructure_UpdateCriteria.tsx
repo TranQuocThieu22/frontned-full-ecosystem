@@ -7,7 +7,7 @@ import { service_EAQStandard } from '@/shared/APIs/service_EAQStandard';
 import { ICriteria } from '@/shared/interfaces/criteria/Criteria';
 import { IStandard } from '@/shared/interfaces/standard/Standard';
 import useS_Shared_Filter from '@/shared/stores/useS_Shared_Filter';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CustomTextArea } from "@aq-fe/core-ui/shared/components/input/CustomTextArea";
 import { useCustomReactQuery } from "@aq-fe/core-ui/shared/hooks/useCustomReactQuery";
 import { CustomSelect } from "@aq-fe/core-ui/shared/components/input/CustomSelect";
@@ -51,7 +51,9 @@ export default function StandardStructure_UpdateCriteria({
       name: (value) => (!value ? 'Vui lòng nhập tên tiêu chí' : null),
     },
   });
-
+  useEffect(() => {
+    form.setValues({ ...value })
+  }, [value])
   return (
     <CustomButtonCreateUpdate
       isUpdate
@@ -80,14 +82,8 @@ export default function StandardStructure_UpdateCriteria({
           })) || []
         }
         value={selectStandard?.id?.toString() ?? ''}
-        onChange={(value) => {
-          const selected = standardQuery.data?.find(
-            (s) => s.id?.toString() === value
-          );
-          setSelectStandard(selected || {});
-          form.setFieldValue('eaqStandardId', selected?.id);
-        }}
         error={form.errors.eaqStandardId}
+        readOnly
       />
       <CustomTextInput
         readOnly

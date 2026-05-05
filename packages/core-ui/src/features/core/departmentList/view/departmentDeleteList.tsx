@@ -1,5 +1,5 @@
 import { departmentService } from "@aq-fe/core-ui/shared/APIs/departmentService";
-import { CustomButtonDeleteList } from "@aq-fe/core-ui/shared/components/button/CustomButtonDeleteList";
+import { CustomButtonSafeDeleteList } from "@aq-fe/core-ui/shared/components/button/CustomButtonSafeDeleteList";
 import { Department } from "@aq-fe/core-ui/shared/interfaces/Department";
 import { MRT_TableInstance } from "mantine-react-table";
 
@@ -10,14 +10,14 @@ interface Props {
 
 export default function DepartmentDeleteList({ table, values }: Props) {
   return (
-    <CustomButtonDeleteList
+    <CustomButtonSafeDeleteList
       count={values.length}
       buttonProps={{
         disabled: values?.length === 0,
       }}
       onSuccess={() => table.resetRowSelection()}
       onSubmit={() => {
-        return departmentService.deleteList(values);
+        return departmentService.safeDeleteList(values);
       }}
     />
   );

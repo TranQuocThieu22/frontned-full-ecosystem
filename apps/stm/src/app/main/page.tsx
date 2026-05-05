@@ -1,18 +1,18 @@
 'use client'
 
-import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
+import TrainingCenterCard from "@/features/main/_components/TrainingCenterCard";
+import { CustomPageContent } from "@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent";
 import { SimpleGrid } from "@mantine/core";
-import TrainingCenterCard from "@/modules-features/main/_components/TrainingCenterCard";
 
 export default function Page() {
   return (
-    <MyPageContent title="Danh sách trung tâm đào tạo">
+    <CustomPageContent title="Danh sách trung tâm đào tạo">
       <SimpleGrid cols={{ base: 1, xs: 2, md: 3, lg: 5 }}>
         {data.map((course, index) => (
-          <TrainingCenterCard key={index} href={`/main/course-list/${course.courseId}`} image={course.image} title={course.title} />
+          <TrainingCenterCard key={index} href={`/main/course-list`} image={course.image} title={course.title} />
         ))}
       </SimpleGrid>
-    </MyPageContent>
+    </CustomPageContent>
   )
 }
 

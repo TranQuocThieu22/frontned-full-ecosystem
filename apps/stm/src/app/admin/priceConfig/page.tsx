@@ -1,11 +1,11 @@
-import MyPageContent from '@/components/Layouts/PageContent/MyPageContent'
-import F_z5bc0yuwug_Read from '@/modules-features/admin/z5bc0yuwug/F_z5bc0yuwug_Read'
+import F_z5bc0yuwug_Read from '@/features/admin/z5bc0yuwug/F_z5bc0yuwug_Read'
+import { CustomPageContent } from '@aq-fe/core-ui/shared/components/layout/CustomPageContent/CustomPageContent'
 
 // Khai báo đơn giá
 export default function Page() {
     return (
-        <MyPageContent>
+        <CustomPageContent>
             <F_z5bc0yuwug_Read />
-        </MyPageContent>
+        </CustomPageContent>
     )
 }
