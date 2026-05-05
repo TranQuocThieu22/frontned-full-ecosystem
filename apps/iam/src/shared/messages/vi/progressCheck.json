@@ -1,0 +1,111 @@
+{
+    "progressCheck": {
+        "viewDetail": "Xem chi tiết",
+        "detailTopic": "Chi tiết đề tài",
+        "title": "Theo dõi tiến độ",
+        "columns": {
+            "topic_code": "Mã đề tài",
+            "topic_name": "Tên đề tài",
+            "leader_name": "Chủ nhiệm đề tài",
+            "host_name": "Đơn vị chủ trì",
+            "total_work_month": "Thời gian thực hiện (Tháng)",
+            "from_month": "Từ tháng/ năm",
+            "to_month": "Đến tháng/ năm",
+            "total_cost": "Tổng kinh phí (VNĐ)",
+            "topic_type_name": "Loại đề tài",
+            "report_status": "Trạng thái báo cáo",
+            "report_date": "Ngày báo cáo",
+            "implementation_progress": "Tiến độ thực hiện (%)",
+            "check_status": "Trạng thái kiểm tra",
+            "comment": "Nhận xét",
+            "is_sent_mail": "Đã gửi thông báo",
+            "execution_status": "Trạng thái thực hiện"
+        },
+        "report_status": {
+            "submitted_report": "Đã nộp báo cáo",
+            "still_valid": "Còn hạn",
+            "late": "Trễ hạn"
+        },
+        "check_status": {
+            "waiting": "Chờ kiểm tra",
+            "request_change": "Yêu cầu điều chỉnh",
+            "not_meet_requirement": "Không đạt yêu cầu",
+            "on_schedule": "Đúng tiến độ"
+        },
+        "execution_status": {
+            "in_progress": "Đang thực hiện",
+            "complete": "Đã báo cáo"
+        },
+        "tabs_detail": {
+            "main_tasks": {
+                "fieldSetTitle": "Danh sách công việc",
+                "title": "Công việc chính",
+                "columns": {
+                    "content": "Nội dung công việc (Theo thuyết minh)",
+                    "expected_product": "Kết quả sản phẩm (Theo thuyết minh)",
+                    "fromMonth": "Thời gian (bắt đầu)",
+                    "toMonth": "Thời gian (Kết thúc)",
+                    "completed_product": "Kết quả sản phẩm đạt được",
+                    "expected_cost": "Dự toán kinh phí được duyệt (đồng)",
+                    "implement_cost": "Khi phí thực hiện (đồng)",
+                    "note": "Ghi chú",
+                    "evidence_file": "Minh chứng"
+                }
+            },
+            "finished_product": {
+                "fieldSetTitle": "Danh sách sản phẩm hoàn thành",
+                "title": "Sản phẩm hoàn thành",
+                "columns": {
+                    "author": "Tên tác giả",
+                    "publish_year": "Năm công bố",
+                    "project_name": "Tên công trình",
+                    "project_information_in_magazine": "Tên tạp chí/NXB/Số tập trang đăng con",
+                    "issn_isbn": "ISSN/ISBN",
+                    "product_type": "Loại sản phẩm",
+                    "attach_file": "Minh chứng"
+                },
+                "product_type": {
+                    "international_article": "Bài báo quốc tế",
+                    "point_attribute_article": "Bài báo thuộc HĐGS tính điểm",
+                    "trainning": "Đào tạo",
+                    "document": "Tài liệu/ Cẩm nang",
+                    "other": "Khác",
+                    "study_guide": "Hướng dẫn NCKH"
+                }
+            },
+            "training_results": {
+                "fieldSetTitle": "Danh sách kết quả đào tạo",
+                "title": "kết quả đào tạo",
+                "columns": {
+                    "fullname": "Họ và tên",
+                    "start_month": "Thời gian bắt đầu",
+                    "end_month": "Thời gian kết thúc",
+                    "has_protected": "Đã bảo vệ",
+                    "status": "Tình trạng",
+                    "attach_file": "Minh chứng"
+                }
+            },
+            "budget": {
+                "title": "Kinh phí",
+                "fields": {
+                    "total_approved_budget": "Tổng kinh phí được duyệt",
+                    "funds_provided_reporting_period": "Kinh phí đã cấp kỳ báo cáo",
+                    "funds_provided_cumulative": "Kinh phí đã cấp lũy kế",
+                    "funds_used_reporting_period": "Kinh phí đã sử dụng trong kỳ báo cáo",
+                    "funds_used_cumulative": "Kinh phí đã sử dụng lũy kế",
+                    "unused_funds": "Kinh phí chưa sử dụng, chuyển kỳ sau",
+                    "request_for_funding": "Đề nghị cấp kinh phí đợt tiếp theo"
+                }
+            },
+            "self_assessment": {
+                "title": "Tự đánh giá",
+                "fields": {
+                    "unfinished_task": "Công việc chưa hoàn thành, vấn đề phát sinh, thay đổi so với kế hoạch ban đầu (Nêu nguyên nhân, nếu có)",
+                    "self_assessment": "Tự nhận xét và đánh giá kết quả đạt được so với dự kiến ban đầu (vượt tiến độ/theo đúng tiến độ/chậm tiến độ...)",
+                    "future_work": "Những công việc cần triển khai trong thời gian tới",
+                    "conclude": "Kết luận và kiến nghị"
+                }
+            }
+        }
+    }
+}

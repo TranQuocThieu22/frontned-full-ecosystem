@@ -1,0 +1,12 @@
+{
+    "BASE_APP_TITLE": "Welcome to the Base App",
+    "MENU": {
+        "FEATURE_1": "Feature 1",
+        "FEATURE_2": "Feature 2",
+        "FEATURE_3": "Feature 3",
+        "FEATURE_4": {
+            "TITLE": "Feature 4"
+        },
+        "FEATURE_5": "Feature 5"
+    }
+}

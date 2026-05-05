@@ -1,0 +1,125 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.header {
+    background: var(--mantine-color-white);
+    border-bottom: 1px solid var(--mantine-color-gray-3);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+:global([data-mantine-color-scheme='dark']) .header {
+    background: var(--mantine-color-dark-7);
+    border-bottom-color: var(--mantine-color-dark-4);
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.titleText {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--mantine-color-gray-9);
+}
+
+:global([data-mantine-color-scheme='dark']) .titleText {
+    color: var(--mantine-color-gray-0);
+}
+
+.subtitle {
+    font-size: 13px;
+    color: var(--mantine-color-gray-6);
+    margin-left: 4px;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.syncModeSwitch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--mantine-color-gray-0);
+    border-radius: 8px;
+}
+
+:global([data-mantine-color-scheme='dark']) .syncModeSwitch {
+    background: var(--mantine-color-dark-6);
+}
+
+.syncLabel {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--mantine-color-gray-7);
+}
+
+:global([data-mantine-color-scheme='dark']) .syncLabel {
+    color: var(--mantine-color-gray-3);
+}
+
+.syncLabel.active {
+    color: var(--mantine-color-blue-6);
+}
+
+.mainContent {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.canvasWrapper {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.resizeHandle {
+    width: 4px;
+    background: var(--mantine-color-gray-3);
+    cursor: col-resize;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+.resizeHandle:hover {
+    background: var(--mantine-color-blue-5);
+}
+
+.resizeHandle:active {
+    background: var(--mantine-color-blue-6);
+}
+
+:global([data-mantine-color-scheme='dark']) .resizeHandle {
+    background: var(--mantine-color-dark-4);
+}
+
+:global([data-mantine-color-scheme='dark']) .resizeHandle:hover {
+    background: var(--mantine-color-blue-5);
+}
+
+.editorWrapper {
+    flex-shrink: 0;
+    min-width: 300px;
+    max-width: 70%;
+}
+
+.badge {
+    font-size: 11px;
+    padding: 4px 8px;
+}

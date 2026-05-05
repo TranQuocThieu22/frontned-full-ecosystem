@@ -1,0 +1,19 @@
+{
+  "extends": "@aq-fe/typescript-config/react-library.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@aq-fe/core-ui/*": [
+        "./src/*"
+      ],
+    }
+  },
+  "include": [
+    ".",
+    "src/shared/types/i18next.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

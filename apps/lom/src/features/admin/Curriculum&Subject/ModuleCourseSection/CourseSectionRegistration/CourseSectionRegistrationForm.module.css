@@ -1,0 +1,40 @@
+.hoverButton {
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+.hoverButton .buttonText {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-width 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;
+    margin-left: 0px;
+}
+
+.hoverButton:hover .buttonText {
+    max-width: 200px;
+    opacity: 1;
+    margin-left: 10px;
+}
+
+.iconDefault {
+    display: inline-block;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.iconHover {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hoverButton:hover .iconDefault {
+    display: none;
+    opacity: 0;
+}
+
+.hoverButton:hover .iconHover {
+    display: inline-block;
+    opacity: 1;
+}

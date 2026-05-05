@@ -1,0 +1,8 @@
+{
+    "COMPONENT": {
+        "GENERAL_CREATE_BUTTON": "Add New"
+    },
+    "BUTTON": {
+        "SAVE": "Save Data from BaseApp"
+    }
+}

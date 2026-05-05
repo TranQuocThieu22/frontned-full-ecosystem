@@ -1,0 +1,403 @@
+.calendarWrapper {
+  
+  /* ===================================================
+     1. LAYOUT CƠ BẢN & BORDER
+     =================================================== */
+  
+  /* Background và màu nền chính của lịch */
+  :global(.fc) {
+    background-color: var(--fc-bg-color) !important;
+  }
+
+  /* Đường viền các ô lịch - áp dụng cho grid và cells */
+  :global(.fc) :global(.fc-scrollgrid) {
+    border-color: var(--fc-border-color) !important;
+  }
+
+  :global(.fc) :global(.fc-scrollgrid) :global(td),
+  :global(.fc) :global(.fc-scrollgrid) :global(th) {
+    border-color: var(--fc-border-color) !important;
+  }
+
+  :global(.fc-theme-standard) :global(td),
+  :global(.fc-theme-standard) :global(th) {
+    border-color: var(--fc-border-color) !important;
+  }
+
+  :global(.fc-theme-standard) :global(.fc-scrollgrid) {
+    border-color: var(--fc-border-color) !important;
+  }
+
+  /* ===================================================
+     2. TOOLBAR - THANH ĐIỀU KHIỂN TRÊN CÙNG
+     =================================================== */
+  
+  /* Container chính của toolbar */
+  :global(.fc) :global(.fc-toolbar) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px !important;
+  }
+
+  /* Tiêu đề tháng/tuần/ngày */
+  :global(.fc) :global(.fc-toolbar-title) {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: var(--fc-text-color) !important;
+  }
+
+  /* Các nhóm nút trong toolbar */
+  :global(.fc-toolbar-chunk) {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  /* ===================================================
+     3. BUTTONS - CÁC NÚT ĐIỀU KHIỂN
+     =================================================== */
+  
+  /* Nút view switcher (Tháng/Tuần/Ngày) */
+  :global(.fc-button-group) {
+    display: flex !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
+    box-shadow: var(--fc-box-shadow) !important;
+  }
+
+  :global(.fc-button-group) :global(.fc-button) {
+    border-radius: 0 !important;
+    border-right-width: 0 !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
+    min-width: 70px !important;
+    height: 36px !important;
+    font-size: 13px !important;
+    transition: all 0.2s !important;
+    background-color: var(--fc-button-bg) !important;
+    border-color: var(--fc-button-border) !important;
+    color: var(--fc-text-color) !important;
+  }
+
+  /* Bo góc cho nút đầu và cuối trong group */
+  :global(.fc-button-group) :global(.fc-button:first-child) {
+    border-top-left-radius: 6px !important;
+    border-bottom-left-radius: 6px !important;
+  }
+
+  :global(.fc-button-group) :global(.fc-button:last-child) {
+    border-right-width: 1px !important;
+    border-top-right-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+  }
+
+  /* Nút đang được chọn */
+  :global(.fc-button-group) :global(.fc-button-active) {
+    background-color: #339af0 !important;
+    border-color: #339af0 !important;
+    color: white !important;
+    font-weight: 600 !important;
+    z-index: 2 !important;
+    box-shadow: var(--fc-box-shadow-active) !important;
+  }
+
+  /* Hover effect cho các nút chưa được chọn */
+  :global(.fc-button-group) :global(.fc-button:hover:not(.fc-button-active)) {
+    background-color: var(--fc-button-hover-bg) !important;
+  }
+
+  /* Nút "Hôm nay" */
+  :global(.fc-today-button) {
+    border-radius: 6px !important;
+    padding: 0 15px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    height: 36px !important;
+    transition: all 0.2s !important;
+    margin-left: 8px !important;
+    background-color: var(--fc-button-bg) !important;
+    border: 1px solid var(--fc-button-border) !important;
+    color: var(--fc-text-color) !important;
+  }
+
+  :global(.fc-today-button:hover) {
+    background-color: var(--fc-button-hover-bg) !important;
+  }
+
+  /* Nút điều hướng trước/sau */
+  :global(.fc-prev-button),
+  :global(.fc-next-button) {
+    border-radius: 6px !important;
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-right: 4px !important;
+    background-color: var(--fc-button-bg) !important;
+    border: 1px solid var(--fc-button-border) !important;
+    color: var(--fc-text-color) !important;
+  }
+
+  :global(.fc-prev-button:hover),
+  :global(.fc-next-button:hover) {
+    background-color: var(--fc-button-hover-bg) !important;
+  }
+
+  /* ===================================================
+     4. HEADER NGÀY THÁNG & HIGHLIGHT NGÀY HÔM NAY
+     =================================================== */
+  
+  /* Header các cột ngày trong tuần */
+  :global(.fc) :global(th) {
+    font-weight: 500 !important;
+    background-color: var(--fc-header-bg) !important;
+    color: var(--fc-text-color) !important;
+  }
+
+  /* Số ngày trong lịch */
+  :global(.fc-day-number) {
+    font-size: 0.85rem !important;
+    font-weight: 400 !important;
+    color: var(--fc-day-number-color) !important;
+  }
+
+  :global(.fc-daygrid-day-number) {
+    padding: 8px 16px 4px 8px !important;
+  }
+
+  /* Highlight ngày hôm nay - tab tháng */
+  :global(.fc-daygrid-day.fc-day-today) {
+    font-weight: 500 !important;
+    color: #44a0f8 !important;
+    background-color: var(--fc-today-bg) !important;
+  }
+
+  /* Highlight ngày hôm nay - tab tuần/ngày */
+  :global(.fc-timegrid-col.fc-day-today) {
+    background-color: var(--fc-today-bg) !important;
+  }
+
+  /* Highlight header của ngày hôm nay */
+  :global(.fc-col-header-cell.fc-day-today) {
+    color: #44a0f8 !important;
+    background-color: var(--fc-today-bg) !important;
+  }
+
+  :global(.fc-col-header-cell.fc-day-today) :global(.fc-day-name) {
+    color: #44a0f8 !important;
+  }
+
+  :global(.fc-col-header-cell.fc-day-today) :global(.fc-day-number) {
+    color: #44a0f8 !important;
+  }
+
+  /* ===================================================
+     5. SỰ KIỆN CƠ BẢN - STYLE CHUNG CHO TẤT CẢ EVENT
+     =================================================== */
+  
+  /* Style cơ bản cho tất cả sự kiện - Blockquote style */
+  :global(.fc-event) {
+    cursor: pointer !important;
+    border-left-width: 0px !important;
+    border-left-style: solid !important;
+    border-radius: 4px !important;
+    padding: 2px 0px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Border trái 4px chỉ hiện ở ngày bắt đầu của event */
+  :global(.fc-event-start) {
+    border-left-width: 4px !important;
+  }
+
+  /* Khoảng cách giữa các event */
+  :global(.fc-daygrid-event) {
+    margin-bottom: 2px !important;
+  }
+
+  /* Container chính của event */
+  :global(.fc-event-main) {
+    padding: 0px 4px !important;
+  }
+
+  /* Tiêu đề event - hiển thị với ellipsis khi quá dài */
+  :global(.fc-event-title) {
+    font-weight: 500 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--fc-text-color) !important;
+  }
+
+  :global(.fc-event-title) :global(p) {
+    margin: 0;
+    padding: 0;
+    display: inline;
+  }
+
+  /* Thời gian event */
+  :global(.fc-event-time) {
+    padding: 0 !important;
+    color: var(--fc-text-color) !important;
+  }
+
+  /* Time prefix (giờ phía trước tên event nhiều ngày) */
+  :global(.time-prefix) {
+    color: var(--fc-time-color) !important;
+    opacity: 1 !important;
+    font-weight: 400 !important;
+    font-size: 13px !important;
+  }
+
+  /* Khoảng thời gian (DD/MM - DD/MM) */
+  :global(.event-date-range) {
+    font-size: 13px !important;
+    opacity: 0.85 !important;
+    font-weight: 400 !important;
+    margin-left: 4px !important;
+    overflow: hidden !important;
+    color: var(--fc-text-color) !important;
+  }
+
+  /* Ẩn giờ của event nhiều ngày ở các ngày tiếp theo (không phải ngày bắt đầu) */
+  :global(.fc-daygrid-event:not(.fc-event-start)) :global(.fc-event-title::before) {
+    content: "" !important;
+  }
+
+  /* ===================================================
+     6. SỰ KIỆN NHIỀU NGÀY (Multi-day events)
+     =================================================== */
+  
+  /* Ngăn overflow cho event nhiều ngày */
+  :global(.fc-daygrid-block-event) :global(.fc-event-main) {
+    overflow: hidden !important;
+  }
+
+  :global(.fc-daygrid-block-event) :global(.fc-event-main-frame) {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  :global(.fc-daygrid-block-event) :global(.fc-event-title-container) {
+    overflow: hidden !important;
+  }
+
+  /* ===================================================
+     7. SỰ KIỆN 1 NGÀY (Single-day events)
+     Hiển thị dạng dot (chấm tròn) trong tab tháng
+     =================================================== */
+  
+  /* Style cho event 1 ngày trong tab tháng */
+  :global(.single-day-event.fc-daygrid-event) {
+    display: flex !important;
+    align-items: center !important;
+    padding: 2px 4px !important;
+    border-left-width: 0 !important;
+    background-color: transparent !important;
+  }
+
+  /* Chấm tròn (dot) phía trước event 1 ngày */
+  :global(.single-day-event.fc-daygrid-event::before) {
+    content: "" !important;
+    display: inline-block !important;
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50% !important;
+    margin-right: 6px !important;
+    flex-shrink: 0 !important;
+    background-color: var(--fc-event-border-color) !important;
+  }
+
+  /* Style cho event 1 ngày trong tab tuần */
+  :global(.single-day-event.fc-timegrid-event) {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+
+  :global(.single-day-event.fc-timegrid-event) :global(.fc-event-main) {
+    overflow: hidden !important;
+  }
+
+  :global(.single-day-event.fc-timegrid-event) :global(.fc-event-main-frame) {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  :global(.single-day-event.fc-timegrid-event) :global(.fc-event-title) {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  /* Layout chung cho event 1 ngày */
+  :global(.single-day-event) :global(.fc-event-main) {
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    width: 100% !important;
+  }
+
+  /* Thời gian của event 1 ngày */
+  :global(.single-day-event) :global(.fc-event-time) {
+    font-weight: 400 !important;
+    margin-right: 4px !important;
+    flex-shrink: 0 !important;
+    color: var(--fc-time-color) !important;
+  }
+
+  /* Tiêu đề event 1 ngày */
+  :global(.single-day-event) :global(.fc-event-title) {
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  /* Ẩn date range cho event 1 ngày (vì chỉ có 1 ngày) */
+  :global(.single-day-event) :global(.event-date-range) {
+    display: none !important;
+  }
+
+  /* ===================================================
+     8. MORE LINK & POPOVER (Xem thêm events)
+     =================================================== */
+  
+  /* Link "Xem thêm" khi có nhiều event */
+  :global(.fc-more-link) {
+    margin-top: 8px !important;
+    margin-left: 6px !important;
+    font-weight: 500 !important;
+    color: var(--fc-text-color) !important;
+  }
+
+  /* Popover hiển thị danh sách event khi click "Xem thêm" */
+  :global(.fc-popover) {
+    max-height: 120px !important;
+    background-color: var(--fc-button-bg) !important;
+    border-color: var(--fc-button-border) !important;
+    z-index: 1 !important;
+  }
+
+  :global(.fc-popover-header) {
+    background-color: var(--fc-header-bg) !important;
+    color: var(--fc-text-color) !important;
+  }
+
+  /* Body của popover - có thể scroll nếu quá dài */
+  :global(.fc-popover-body) {
+    max-height: 120px !important;
+    overflow-y: auto !important;
+    background-color: var(--fc-button-bg) !important;
+  }
+
+  :global(.fc-popover-close) {
+    color: var(--fc-text-color) !important;
+  }
+}

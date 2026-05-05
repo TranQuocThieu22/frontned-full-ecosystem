@@ -1,0 +1,16 @@
+{
+    "EXAMPLE_FEATURE": {
+        "TITLE": "Chức năng mẫu"
+    },
+    "FEATURE_1": {
+        "TITLE": "This is feature 1."
+    },
+    "FEATURE_2": {
+        "TITLE": "This is feature 2."
+    },
+    "COURSE": {
+        "COMPONENT": {
+            "CREATE_COURSE_BUTTON": "Thêm Khóa Học Mới"
+        }
+    }
+}

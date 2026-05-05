@@ -1,0 +1,59 @@
+{
+    "User": {
+        "id": "int pk",
+        "code": "nvarchar",
+        "name": "nvarchar",
+        "passwordHash": "nvarchar",
+        "roleId": "ref Role.id",
+        "username": "nvarchar",
+        "email": "nvarchar",
+        "AQModuleId": "int"
+    },
+    "Role": {
+        "id": "int pk",
+        "code": "nvarchar",
+        "name": "nvarchar",
+        "isActive": "boolean",
+        "notes": "nvarchar",
+        "AQModuleId": "int"
+    },
+    "UserRole": {
+        "id": "int pk",
+        "userId": "ref User.id",
+        "roleId": "ref Role.id"
+    },
+    "UserPermission": {
+        "id": "int pk",
+        "userId": "ref User.id",
+        "pageId": "ref Page.id",
+        "isCreate": "boolean",
+        "isRead": "boolean",
+        "isUpdate": "boolean",
+        "isDelete": "boolean",
+        "isPrint": "boolean",
+        "isExport": "boolean"
+    },
+    "RolePermission": {
+        "id": "int pk",
+        "roleId": "ref Role.id",
+        "pageId": "ref Page.id",
+        "isCreate": "boolean",
+        "isRead": "boolean",
+        "isUpdate": "boolean",
+        "isDelete": "boolean",
+        "isPrint": "boolean",
+        "isExport": "boolean"
+    },
+    "Page": {
+        "id": "int pk",
+        "code": "nvarchar",
+        "name": "nvarchar",
+        "url": "nvarchar",
+        "description": "nvarchar",
+        "link": "nvarchar",
+        "documentFilePath": "nvarchar",
+        "order": "int",
+        "groupOrder": "int",
+        "AQModuleId": "int"
+    }
+}

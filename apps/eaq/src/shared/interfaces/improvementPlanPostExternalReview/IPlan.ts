@@ -1,0 +1,17 @@
+export interface IPlan {
+    id?: number,
+    maTieuChuan?: string,
+    maTieuChi?: string,
+    tenTieuChi?: string,
+    maHanChe?: string,
+    hanChe?: string,
+    maCongViec?: string,
+    tenCongViec?: string,
+    maMinhChungDuKien?: string,
+    tenMinhChungDuKien?: string,
+    thoiHan?: string,
+    ketQuaDuKien?: string,
+    donViChuTri?: string,
+    donViPhoiHop?: string,
+    note?: string,
+}

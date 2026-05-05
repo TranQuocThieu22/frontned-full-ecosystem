@@ -1,0 +1,1 @@
+# base-app is the template to start new project

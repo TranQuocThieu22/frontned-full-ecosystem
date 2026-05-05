@@ -1,0 +1,46 @@
+"use client"
+import { useLoadAxiosConfig } from '@aq-fe/core-ui/shared/hooks/useLoadAxiosConfig';
+import { DotWave } from 'ldrs/react';
+import { ReactNode, useEffect } from 'react';
+import { aqModuleIdEnum } from "@aq-fe/core-ui/shared/consts/enum/aqModuleIdEnum";
+import { useProjectInfoStore } from "@aq-fe/core-ui/shared/stores/useProjectInfoStore";
+import CustomReactQueryProvider from '@aq-fe/core-ui/shared/providers/CustomReactQueryProvider';
+import CustomMantineProvider from '@aq-fe/core-ui/shared/providers/CustomMantineProvider';
+import { APP_CONFIG } from '@/shared/configs/appConfig';
+
+export default function Provider({ children }: { children?: ReactNode }) {
+    const projectInfoStore = useProjectInfoStore()
+    const { flag: isReady } = useLoadAxiosConfig({ prefix: APP_CONFIG.alias, aqModule: APP_CONFIG.aqModule });
+    // useLoadAxiosConfigAqFramework({ axiosInstance: baseAxios, prefix: "/eaq", aqModule: "eaq" });
+    useEffect(() => {
+        // Set giá trị AQ module hiện tại đang
+        //  hỗ trợ cho phần tạo tài khoản update 09/09/2025
+        projectInfoStore.setProperty("aqModuleId", aqModuleIdEnum.EAQ)
+    }, [])
+    if (!isReady) return (
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+            }}
+        >
+            <DotWave
+                size="70"
+                speed="1"
+                color="gray"
+            />
+        </div>
+    )
+
+    return (
+        <CustomReactQueryProvider>
+            {/* <MyDateProvider> */}
+            <CustomMantineProvider>
+                {children}
+            </CustomMantineProvider>
+            {/* </MyDateProvider> */}
+        </CustomReactQueryProvider>
+    )
+}

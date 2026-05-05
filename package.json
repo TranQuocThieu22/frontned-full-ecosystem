@@ -1,0 +1,26 @@
+{
+  "name": "AQCoreFe",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types",
+    "eaq": "pnpm exec turbo dev --filter=eaq",
+    "sae": "pnpm exec turbo dev --filter=sae",
+    "lom": "pnpm exec turbo dev --filter=lom"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2",
+    "turbo": "2.5.8",
+    "typescript": "5.9.2"
+  },
+  "packageManager": "pnpm@10.14.0",
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "uuid": "13.0.0"
+  }
+}

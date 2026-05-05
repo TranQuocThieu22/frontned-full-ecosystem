@@ -1,0 +1,31 @@
+'use client'
+import { useForm } from "@mantine/form";
+import { MyActionIconUpdate, MyDateInput, MySelect, MyTextArea, MyTextInput } from "aq-fe-framework/components";
+import { IInfoViewModel } from "./ReadReviewType";
+export default function ReviewTypeUpdate({ values }: { values: IInfoViewModel }) {
+    const form = useForm<IInfoViewModel>({
+        initialValues: values
+    })
+
+    return (
+        <MyActionIconUpdate
+            title="Chi tiết loại xét duyệt"
+            form={form} onSubmit={() => { }}
+            modalSize={"60%"}
+        >
+            <MyTextInput
+                label="Mã quy trình"
+                {...form.getInputProps("maQuyTrinh")}
+            />
+
+            <MyTextInput
+                label="Tên quy trình"
+                {...form.getInputProps("tenQuyTrinh")}
+            />
+            <MyTextArea
+                label="Ghi chú"
+                {...form.getInputProps("ghiChu")}
+            />
+        </MyActionIconUpdate>
+    )
+}

@@ -1,0 +1,212 @@
+import { ActionIcon, Button, Center, Grid } from "@mantine/core";
+import { IconCaretLeft, IconCaretLeftFilled, IconCaretRight, IconCaretRightFilled } from "@tabler/icons-react";
+import { MyDataTable, MyFieldset, MyFlexColumn } from "aq-fe-framework/components";
+import { MRT_ColumnDef } from "mantine-react-table";
+import { useMemo, useState } from "react";
+
+
+interface I {
+    subjectCode?: string;     // Mã môn học
+    subjectName?: string;     // Tên môn học
+    studyGroupCode?: string;  // Nhóm học
+    practiceGroup?: string;   // Tổ TH
+    classCode?: string;       // Danh sách lớp
+    studentCode?: string;     // Mã CBGD
+    studentLastName?: string;
+    studentFirstName?: string;     // Tên CBGD
+    registeredCount?: number; // Sĩ số đăng ký
+}
+export default function FeatAOLecturerEvaluateStudent() {
+    const [canSelect, setCanSelect] = useState<I[]>(objectCanSelectData);
+    const [selected, setSelected] = useState<I[]>(objectSelectedData);
+
+    const columns = useMemo<MRT_ColumnDef<I>[]>(() => [
+        { header: "Mã môn học", accessorKey: "subjectCode" },
+        { header: "Tên môn học", accessorKey: "subjectName" },
+        { header: "Nhóm học", accessorKey: "studyGroupCode" },
+        { header: "Tổ TH", accessorKey: "practiceGroup" },
+        { header: "Danh sách lớp", accessorKey: "classCode" },
+        { header: "Mã sinh viên", accessorKey: "studentCode" },
+        { header: "Họ và đệm", accessorKey: "studentLastName" },
+        { header: "Tên sinh viên", accessorKey: "studentFirstName" },
+        {
+            header: "Mã lớp", accessorKey: "registeredCount",
+            accessorFn(row) {
+                return row.classCode
+            }
+        },
+    ], []);
+
+    const moveRight = () => {
+        setSelected((prev) => [...prev, ...canSelect]);
+        setCanSelect([]);
+    };
+
+    const moveLeft = () => {
+        setCanSelect((prev) => [...prev, ...selected]);
+        setSelected([]);
+    };
+
+    return (
+        <Grid>
+            <Grid.Col span={{ base: 12, md: 5.5 }}>
+                <MyFieldset title="Danh sách đối tượng có thể chọn" h={'100%'}>
+                    <MyDataTable columns={columns} data={canSelect} />
+                </MyFieldset>
+            </Grid.Col>
+            <Grid.Col span={{ base: 12, md: 1 }}>
+                <Center h="100%">
+                    <MyFlexColumn align={'center'}>
+                        <ActionIcon size={"lg"}>
+                            <IconCaretRight style={{ width: '90%', height: '90%' }} />
+                        </ActionIcon>
+                        <ActionIcon size={"lg"}>
+                            <IconCaretRightFilled style={{ width: '90%', height: '90%' }} />
+                        </ActionIcon>
+                        <ActionIcon size={"lg"}>
+                            <IconCaretLeft style={{ width: '90%', height: '90%' }} />
+                        </ActionIcon>
+                        <ActionIcon size={"lg"}>
+                            <IconCaretLeftFilled style={{ width: '90%', height: '90%' }} />
+                        </ActionIcon>
+                    </MyFlexColumn>
+                </Center>
+            </Grid.Col>
+            <Grid.Col span={{ base: 12, md: 5.5 }}>
+                <MyFieldset title="Danh sách đối tượng đã chọn">
+                    <MyDataTable renderTopToolbarCustomActions={() => <Button bg={'green'}>Phát phiếu</Button>} columns={columns} data={selected} />
+                </MyFieldset>
+            </Grid.Col>
+        </Grid>
+    );
+}
+
+
+const objectCanSelectData: I[] = [
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "Lan",
+
+        registeredCount: 35,
+    },
+];
+
+const objectSelectedData: I[] = [
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "La",
+        registeredCount: 35,
+    },
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "Linh",
+        registeredCount: 35,
+    },
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "Lan",
+        registeredCount: 35,
+    },
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "Hạ",
+        registeredCount: 35,
+    },
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "Châu",
+        registeredCount: 35,
+    },
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "Ly",
+        registeredCount: 35,
+    },
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "Canh",
+        registeredCount: 35,
+    },
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "Mau",
+        registeredCount: 35,
+    },
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "Huy",
+        registeredCount: 35,
+    },
+    {
+        subjectCode: "MH001",
+        subjectName: "Lập trình web và ứng dụng",
+        studyGroupCode: "01",
+        practiceGroup: "",
+        classCode: "1T240101",
+        studentCode: "SV001",
+        studentLastName: "Tô",
+        studentFirstName: "Nam",
+        registeredCount: 35,
+    },
+
+];

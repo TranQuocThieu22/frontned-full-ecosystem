@@ -1,0 +1,101 @@
+{
+    "Users": {
+        "UserId": "int pk",
+        "Username": "nvarchar",
+        "Email": "varchar",
+        "PasswordHash": "varbinary",
+        "FirstName": "nvarchar",
+        "LastName": "nvarchar",
+        "IsActive": "bit",
+        "CreatedAt": "datetime2",
+        "UpdatedAt": "datetime2",
+        "LastLoginAt": "datetimeoffset",
+        "ProfileImage": "varbinary",
+        "RoleId": "ref Roles.RoleId"
+    },
+    "Roles": {
+        "RoleId": "int pk",
+        "RoleName": "nvarchar",
+        "Description": "nvarchar",
+        "Permissions": "xml",
+        "CreatedAt": "datetime2"
+    },
+    "Products": {
+        "ProductId": "bigint pk",
+        "ProductCode": "uniqueidentifier",
+        "ProductName": "nvarchar",
+        "Description": "ntext",
+        "Price": "money",
+        "DiscountPrice": "money",
+        "StockQuantity": "int",
+        "Weight": "decimal",
+        "Dimensions": "varchar",
+        "CategoryId": "ref Categories.CategoryId",
+        "IsAvailable": "bit",
+        "Rating": "float",
+        "CreatedAt": "datetime",
+        "UpdatedAt": "datetime"
+    },
+    "Categories": {
+        "CategoryId": "int pk",
+        "CategoryName": "nvarchar",
+        "Slug": "varchar",
+        "Description": "text",
+        "ParentCategoryId": "ref Categories.CategoryId",
+        "DisplayOrder": "smallint",
+        "IsActive": "bit",
+        "CreatedAt": "date"
+    },
+    "Orders": {
+        "OrderId": "bigint pk",
+        "OrderNumber": "varchar",
+        "UserId": "ref Users.UserId",
+        "OrderDate": "datetime2",
+        "ShippedDate": "datetime",
+        "DeliveryDate": "date",
+        "TotalAmount": "money",
+        "TaxAmount": "smallmoney",
+        "ShippingCost": "money",
+        "OrderStatus": "tinyint",
+        "PaymentMethod": "varchar",
+        "ShippingAddress": "nvarchar",
+        "TrackingNumber": "varchar",
+        "Notes": "ntext",
+        "CreatedAt": "datetime2"
+    },
+    "OrderItems": {
+        "OrderItemId": "bigint pk",
+        "OrderId": "ref Orders.OrderId",
+        "ProductId": "ref Products.ProductId",
+        "Quantity": "int",
+        "UnitPrice": "money",
+        "Discount": "real",
+        "TotalPrice": "money",
+        "CreatedAt": "datetime2"
+    },
+    "Reviews": {
+        "ReviewId": "bigint pk",
+        "ProductId": "ref Products.ProductId",
+        "UserId": "ref Users.UserId",
+        "Rating": "tinyint",
+        "Title": "nvarchar",
+        "Comment": "ntext",
+        "IsVerifiedPurchase": "bit",
+        "HelpfulCount": "int",
+        "CreatedAt": "datetime2",
+        "UpdatedAt": "datetime2"
+    },
+    "AuditLog": {
+        "LogId": "bigint pk",
+        "UserId": "ref Users.UserId",
+        "ActionType": "varchar",
+        "TableName": "varchar",
+        "RecordId": "bigint",
+        "OldValues": "xml",
+        "NewValues": "xml",
+        "IPAddress": "varchar",
+        "UserAgent": "varchar",
+        "Timestamp": "datetime2",
+        "SessionId": "uniqueidentifier"
+    }
+}

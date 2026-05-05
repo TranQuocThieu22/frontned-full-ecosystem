@@ -1,0 +1,162 @@
+.tableNode {
+    background: var(--mantine-color-white);
+    border: 2px solid var(--mantine-color-gray-3);
+    border-radius: 8px;
+    min-width: 200px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.tableNode:hover {
+    border-color: var(--mantine-color-blue-5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tableNode.selected {
+    border-color: var(--mantine-color-blue-6);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+.tableNode.highlighted {
+    border-color: var(--mantine-color-orange-5);
+    box-shadow: 0 4px 16px rgba(251, 146, 60, 0.5);
+    transform: scale(1.02);
+}
+
+.tableNode.searched {
+    border-color: #facc15;
+    border-width: 3px;
+    box-shadow: 0 4px 16px rgba(250, 204, 21, 0.5);
+    animation: searchPulse 2s ease-in-out infinite;
+}
+
+@keyframes searchPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 16px rgba(250, 204, 21, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 4px 20px rgba(250, 204, 21, 0.8);
+    }
+}
+
+.tableHeader {
+    background: linear-gradient(135deg, var(--mantine-color-blue-6), var(--mantine-color-blue-7));
+    color: white;
+    padding: 12px 16px;
+    border-radius: 6px 6px 0 0;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tableBody {
+    padding: 0;
+}
+
+.fieldRow {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--mantine-color-gray-2);
+    font-size: 13px;
+    transition: background-color 0.15s ease;
+}
+
+.fieldRow:last-child {
+    border-bottom: none;
+}
+
+.fieldRow:hover {
+    background-color: var(--mantine-color-gray-0);
+}
+
+.fieldIcon {
+    margin-right: 8px;
+    color: var(--mantine-color-gray-6);
+    flex-shrink: 0;
+}
+
+.fieldIcon.pk {
+    color: var(--mantine-color-yellow-6);
+}
+
+.fieldIcon.fk {
+    color: var(--mantine-color-blue-6);
+}
+
+.fieldName {
+    font-weight: 500;
+    color: var(--mantine-color-gray-9);
+    margin-right: 8px;
+}
+
+.fieldType {
+    color: var(--mantine-color-gray-6);
+    font-size: 12px;
+    margin-left: auto;
+    font-family: monospace;
+}
+
+/* Dark mode styles */
+:global([data-mantine-color-scheme='dark']) .tableNode {
+    background: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-4);
+}
+
+:global([data-mantine-color-scheme='dark']) .tableNode:hover {
+    border-color: var(--mantine-color-blue-5);
+}
+
+:global([data-mantine-color-scheme='dark']) .fieldRow {
+    border-bottom-color: var(--mantine-color-dark-5);
+}
+
+:global([data-mantine-color-scheme='dark']) .fieldRow:hover {
+    background-color: var(--mantine-color-dark-5);
+}
+
+:global([data-mantine-color-scheme='dark']) .fieldName {
+    color: var(--mantine-color-gray-1);
+}
+
+:global([data-mantine-color-scheme='dark']) .fieldType {
+    color: var(--mantine-color-gray-5);
+}
+
+:global([data-mantine-color-scheme='dark']) .fieldIcon {
+    color: var(--mantine-color-gray-4);
+}
+
+/* Handle styles */
+.handle {
+    width: 8px !important;
+    height: 8px !important;
+    background: var(--mantine-color-blue-5) !important;
+    border: 2px solid white !important;
+}
+
+.fieldHandle {
+    width: 6px !important;
+    height: 6px !important;
+    background: var(--mantine-color-blue-5) !important;
+    border: 1.5px solid white !important;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.fieldRow:hover .fieldHandle {
+    opacity: 1;
+}
+
+:global([data-mantine-color-scheme='dark']) .handle {
+    border-color: var(--mantine-color-dark-6) !important;
+}
+
+:global([data-mantine-color-scheme='dark']) .fieldHandle {
+    border-color: var(--mantine-color-dark-6) !important;
+}

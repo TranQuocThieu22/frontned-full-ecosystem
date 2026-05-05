@@ -1,0 +1,12 @@
+{
+    "BASE_APP_TITLE": "LOM - Hệ thống đo lường và đánh giá chuẩn đầu ra chương trình đào tạo chương trình đào tạo",
+    "MENU": {
+        "FEATURE_1": "Chức năng 1",
+        "FEATURE_2": "Chức năng 2",
+        "FEATURE_3": "Chức năng 3",
+        "FEATURE_4": {
+            "TITLE": "Chức năng 4"
+        },
+        "FEATURE_5": "Chức năng 5"
+    }
+}

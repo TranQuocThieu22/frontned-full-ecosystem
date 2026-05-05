@@ -1,0 +1,31 @@
+{
+    "BASE_APP_TITLE": "This is Base App from core-ui",
+    "MENU": {
+        "CORE_FEATURE_1": "Core Feature 1"
+    },
+    "DEMO_MENU": {
+        "FEATURE_1": "FEATURE_1",
+        "FEATURE_2": "FEATURE_2",
+        "FEATURE_3": "FEATURE_3"
+    },
+    "APP_LAYOUT": {
+        "RIGHT_SIDENAVBAR": {
+            "HOME_BUTTON": "Home",
+            "MENU_TYPE_CONTROL": {
+                "ALL_FEATURES": "Features",
+                "BUSINESS": "Processes",
+                "PERSONAL": "Personal"
+            },
+            "CONFIG_RIGHT_NAVBAR": {
+                "TITLE": "Right navbar settings",
+                "ENABLE_SCROLL_EFFECT": "Scroll effect",
+                "ENABLE_CONNECTOR_LINES": "Connector lines",
+                "ENABLE_ROUNDED_CORNER": "Curve connector lines",
+                "SHOW_GROUP_DIVIDER": "Feature group divider",
+                "HIGHLIGHT_FEATURE": "Highlight feature",
+                "SHOW_INDEX": "Show index"
+            },
+            "DIMENSION_BACK_BUTTON": "Go back"
+        }
+    }
+}

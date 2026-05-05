@@ -1,0 +1,33 @@
+export enum documentTypeEnum {
+    form01 = 1,
+    form02 = 2,
+    form03 = 3,
+    form04 = 4,
+    // form05 = 5,
+    // form06 = 6,
+    form07 = 7,
+    form08 = 8,
+    form09 = 9,
+    form10 = 10,
+    form11 = 11,
+    // form12 = 12,
+    form13 = 13,
+    form14 = 14,
+}
+
+export const documentTypeEnumLabel: Record<documentTypeEnum, string> = {
+    [documentTypeEnum.form01]: "Quản lý quyết định thành lập hội đồng tự đánh giá CTĐT (Biểu 01)",
+    [documentTypeEnum.form02]: "Quản lý kế hoạch tự đánh giá CTĐT (Biểu 02)",
+    [documentTypeEnum.form03]: "Phân tích và xử lý thông tin, minh chứng (Biểu 03)",
+    [documentTypeEnum.form04]: "Phiếu tự đánh giá tiêu chí (Biểu 04)",
+    // [documentTypeEnum.form05]: " (Biểu 05)",
+    // [documentTypeEnum.form06]: " (Biểu 06)",
+    [documentTypeEnum.form07]: "Kế hoạch đánh giá ngoài CTĐT (Biểu 07)",
+    [documentTypeEnum.form08]: "Biên bản ghi nhớ sau khảo sát sơ bộ CTĐT (Biểu 08)",
+    [documentTypeEnum.form09]: "Biên bản hoàn thành đợt khảo sát chính thức CTĐT (Biểu 09)",
+    [documentTypeEnum.form10]: "Báo cáo kết quả đánh giá ngoài CTĐT (Biểu 10)",
+    [documentTypeEnum.form11]: "Bảng tổng hợp kết quả tự đánh giá và đánh giá ngoài (Biểu 11)",
+    // [documentTypeEnum.form12]: " (Biểu 12)",
+    [documentTypeEnum.form13]: "Báo cáo thẩm định kết quả đánh giá chất lượng CTĐT (Biểu 13)",
+    [documentTypeEnum.form14]: "Nghị quyết của hội đồng kiểm định chất lượng giáo dục (Biểu 14)",
+};

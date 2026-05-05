@@ -1,0 +1,34 @@
+{
+    "schemas": [
+        {
+            "id": "LOM",
+            "name": "LOM",
+            "path": "/schemas/LOM.json"
+        },
+        {
+            "id": "user-role",
+            "name": "User Role",
+            "path": "/schemas/user-role.json"
+        },
+        {
+            "id": "SAE",
+            "name": "SAE",
+            "path": "/schemas/SAE.json"
+        },
+        {
+            "id": "EAQ",
+            "name": "EAQ",
+            "path": "/schemas/EAQ.json"
+        },
+        {
+            "id": "LOM-grading-simple",
+            "name": "LOM CLO Grading Simple",
+            "path": "/schemas/LOM-grading-simple.json"
+        },
+        {
+            "id": "LOM-grading",
+            "name": "LOM Grading",
+            "path": "/schemas/LOM-grading.json"
+        }
+    ]
+}

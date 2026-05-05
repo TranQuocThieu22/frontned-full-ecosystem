@@ -1,0 +1,31 @@
+{
+    "BASE_APP_TITLE": "Đây là base-app",
+    "MENU": {
+        "CORE_FEATURE_1": "Chức năng core 1"
+    },
+    "DEMO_MENU": {
+        "FEATURE_1": "FEATURE_1",
+        "FEATURE_2": "FEATURE_2",
+        "FEATURE_3": "FEATURE_3"
+    },
+    "APP_LAYOUT": {
+        "RIGHT_SIDENAVBAR": {
+            "HOME_BUTTON": "Trang chủ",
+            "MENU_TYPE_CONTROL": {
+                "ALL_FEATURES": "Tất cả",
+                "BUSINESS": "Nghiệp vụ",
+                "PERSONAL": "Cá nhân"
+            },
+            "CONFIG_RIGHT_NAVBAR": {
+                "TITLE": "Điều chỉnh thanh điều hướng",
+                "ENABLE_SCROLL_EFFECT": "Bật hiệu ứng cuộn",
+                "ENABLE_CONNECTOR_LINES": "Hiển thị đường phân cấp",
+                "ENABLE_ROUNDED_CORNER": "Bo tròn đường phân cấp",
+                "SHOW_GROUP_DIVIDER": "Hiển thị đường phân nhóm chức năng",
+                "HIGHLIGHT_FEATURE": "Làm nổi bật chức năng",
+                "SHOW_INDEX": "Hiển thị đánh dấu mục lục"
+            },
+            "DIMENSION_BACK_BUTTON": "Trở về mục trước"
+        }
+    }
+}

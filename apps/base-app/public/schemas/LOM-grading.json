@@ -1,0 +1,114 @@
+{
+    "User": {
+        "id": "int pk",
+        "code": "nvarchar"
+    },
+    "COESubject": {
+        "id": "int pk",
+        "code": "nvarchar",
+        "name": "nvarchar",
+        "nameEg": "nvarchar",
+        "note": "nvarchar",
+        "numberCredits": "int",
+        "numberPeriods": "int",
+        "departmentId": "ref Department.id",
+        "eduUnitId": "int",
+        "eduSubjectId": "int"
+    },
+    "COEGradeSubject": {
+        "id": "int pk",
+        "COEGradeId": "ref COEGrade.id",
+        "COESubjectId": "ref COESubject.id",
+        "activityPlanId": "ref ActivityPlan.id",
+        "COESubjectGroupId": "ref COESubjectGroup.id",
+        "order": "int",
+        "isCore": "boolean",
+        "AMRIValue": "int",
+        "CourseSectionQuantity": "int",
+        "teachingUnitId": "ref Department.id",
+        "measureUnitId": "ref Department.id",
+        "collectUnitId": "ref Department.id",
+        "eduProgramSubjectId": "int",
+        "semester": "int",
+        "userId": "ref User.id"
+    },
+    "COECG": {
+        "id": "int pk",
+        "code": "nvarchar",
+        "COEGradeSubjectId": "ref COEGradeSubject.id",
+        "description": "nvarchar",
+        "order": "int"
+    },
+    "COECLO": {
+        "id": "int pk",
+        "code": "nvarchar",
+        "name": "nvarchar",
+        "densityCLO": "int",
+        "passedDensity": "int",
+        "description": "nvarchar",
+        "COECGId": "ref COECG.id",
+        "order": "int"
+    },
+    "COESubjectFormula": {
+        "id": "int pk",
+        "COEGradeSubjectId": "ref COEGradeSubject.id",
+        "formulaType": "int",
+        "rate": "int"
+    },
+    "COESubjectAssessment": {
+        "id": "int pk",
+        "name": "nvarchar",
+        "COEGradeSubjectId": "ref COEGradeSubject.id",
+        "COESubjectFormulaId": "ref COESubjectFormula.id",
+        "content": "nvarchar",
+        "asssessmentWhen": "nvarchar",
+        "assessmentDuration": "nvarchar",
+        "questionType": "int",
+        "assessmentTool": "nvarchar"
+    },
+    "COESubjectMethod": {
+        "id": "int pk",
+        "COESubjectAssessmentId": "ref COESubjectAssessment.id",
+        "COECLOId": "ref COECLO.id",
+        "density": "int",
+        "evaluation": "nvarchar",
+        "questionQuantity": "int",
+        "maxPoint": "int"
+    },
+    "COECourseSection": {
+        "id": "int pk",
+        "code": "nvarchar",
+        "studyGroup": "nvarchar",
+        "COEGradeSubjectId": "ref COEGradeSubject.id",
+        "isSplitPoint": "boolean",
+        "COESubjectId": "ref COESubject.id",
+        "activityPlanId": "ref ActivityPlan.id",
+        "eduCourseSectionId": "int",
+        "pointRecordUserid": "ref User.id"
+    },
+    "COECourseSectionStudent": {
+        "id": "int pk",
+        "COECourseSectionId": "ref COECourseSection.id",
+        "userId": "ref User.id",
+        "eduEnrollmentId": "int"
+    },
+    "COECourseSectionStudentPoint": {
+        "id": "int pk",
+        "COECourseSectionStudentId": "ref COECourseSectionStudent.id",
+        "COESubjectMethodId": "ref COESubjectMethod.id",
+        "point": "float"
+    },
+    "COECourseSectionStudentResult": {
+        "id": "int pk",
+        "COECourseSectionStudentId": "ref COECourseSectionStudent.id",
+        "COECLOId": "ref COECLO.id",
+        "pointResult": "float"
+    },
+    "COECourseSectionStudentFomulaTypeResult": {
+        "id": "int pk",
+        "COECourseSectionStudentId": "ref COECourseSectionStudent.id",
+        "formulaType": "int",
+        "COESubjectAssessmentId": "ref COESubjectAssessment.id",
+        "pointResult": "float"
+    }
+}

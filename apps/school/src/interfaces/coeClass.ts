@@ -1,0 +1,12 @@
+import { IBaseEntity } from "aq-fe-framework/interfaces"
+import { ICOEClassStudent } from "./coeClassStudent"
+import { ICoeGrade } from "./coeGrade"
+
+export interface ICOEClass extends IBaseEntity {
+  order?: number,
+  coeGradeId?: number,
+  totalStudent?: number,
+  coeGrade?: ICoeGrade
+  note?: string
+  users?: ICOEClassStudent[]
+}

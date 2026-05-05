@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+ <appSettings>
+    <add key="Module" value="qmes" />
+  </appSettings>
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <rule name="Prefix root _next by referer module" stopProcessing="true">
+          <match url="^_next/(.*)" />
+          <conditions logicalGrouping="MatchAll">
+            <add input="{HTTP_REFERER}" pattern="https?://[^/]+/qmes(/|$)" />
+          </conditions>
+          <action type="Rewrite" url="/{C:1}/_next/{R:1}" />
+        </rule>
+        <rule name="Clean URLs" stopProcessing="true">
+          <match url="^qmes/(.*)" />
+          <conditions>
+            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+            <add input="{REQUEST_URI}" pattern="^/_next/static/" negate="true" />
+          </conditions>
+          <action type="Rewrite" url="/qmes/index.html" />
+        </rule>
+      </rules>
+      <outboundRules>
+        <rule name="InjectModuleValue" preCondition="IsConfigJson">
+          <match filterByTags="None" pattern="&quot;module&quot;:\s*&quot;[^&quot;]*&quot;" />
+          <action type="Rewrite" value="&quot;module&quot;: &quot;{APPSETTING:Module}&quot;" />
+        </rule>
+        <preConditions>
+          <preCondition name="IsConfigJson">
+            <add input="{REQUEST_FILENAME}" pattern="config.json$" />
+          </preCondition>
+        </preConditions>
+      </outboundRules>
+    </rewrite>
+    <staticContent>
+      <mimeMap fileExtension=".json" mimeType="application/json" />
+      <mimeMap fileExtension=".webmanifest" mimeType="application/manifest+json" />
+      <mimeMap fileExtension=".wasm" mimeType="application/wasm" />
+    </staticContent>
+  </system.webServer>
+</configuration>

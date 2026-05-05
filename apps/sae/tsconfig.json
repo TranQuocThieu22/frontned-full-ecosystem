@@ -1,0 +1,32 @@
+{
+  "extends": "@aq-fe/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@aq-fe/core-ui/*": [
+        "../../packages/core-ui/src/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "strict": true,
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "../../packages/core-ui/src",
+    ".next/types/**/*.ts",
+    "next-env.d.ts",
+    "next.config.js",
+    "release/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

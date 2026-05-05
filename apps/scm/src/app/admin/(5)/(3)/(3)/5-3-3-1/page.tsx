@@ -1,0 +1,10 @@
+import MyPageContent from "@/components/Layouts/PageContent/MyPageContent";
+import F5_3_3_1Read from "@/modules-features/(5)/(3)/(3)/5-3-3-1/F5_3_3_1Read";
+
+export default function Page() {
+    return (
+        <MyPageContent >
+            <F5_3_3_1Read />
+        </MyPageContent>
+    )
+}

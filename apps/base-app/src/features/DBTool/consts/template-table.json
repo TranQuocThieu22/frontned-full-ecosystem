@@ -1,0 +1,49 @@
+{
+    "TableName": {
+        "id": "int pk",
+        "code": "string",
+        "name": "string"
+    },
+    "FKExample": {
+        "id": "int pk",
+        "name": "string",
+        "TableNameId": "int fk TableName.id"
+    },
+    "MSSQLDataTypes": {
+        "Id": "bigint pk",
+        "IntCol": "int",
+        "SmallIntCol": "smallint",
+        "TinyIntCol": "tinyint",
+        "BitCol": "bit",
+        "DecimalCol": "decimal",
+        "NumericCol": "numeric",
+        "MoneyCol": "money",
+        "SmallMoneyCol": "smallmoney",
+        "FloatCol": "float",
+        "RealCol": "real",
+        "DateCol": "date",
+        "DateTimeCol": "datetime",
+        "DateTime2Col": "datetime2",
+        "DateTimeOffsetCol": "datetimeoffset",
+        "SmallDateTimeCol": "smalldatetime",
+        "TimeCol": "time",
+        "CharCol": "char",
+        "VarCharCol": "varchar",
+        "TextCol": "text",
+        "NCharCol": "nchar",
+        "NVarCharCol": "nvarchar",
+        "NTextCol": "ntext",
+        "BinaryCol": "binary",
+        "VarBinaryCol": "varbinary",
+        "ImageCol": "image",
+        "UniqueIdentifierCol": "uniqueidentifier",
+        "XmlCol": "xml",
+        "JsonCol": "json",
+        "GeographyCol": "geography",
+        "GeometryCol": "geometry",
+        "HierarchyIdCol": "hierarchyid",
+        "SqlVariantCol": "sql_variant",
+        "TimestampCol": "timestamp",
+        "RowVersionCol": "rowversion"
+    }
+}
