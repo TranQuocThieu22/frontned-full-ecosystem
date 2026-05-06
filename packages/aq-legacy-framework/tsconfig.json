@@ -3,11 +3,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@aq-fe/aq-core-framework/*": [
+      "@aq-fe/aq-legacy-framework/*": [
         "./src/*"
       ],
-      "@aq-fe/aq-legacy-framework/*": [
-        "../../packages/aq-legacy-framework/src/*"
+      "@aq-fe/aq-core-framework/*": [
+        "../../packages/aq-core-framework/src/*"
       ],
       "@aq-fe/core-ui/*": [
         "../../packages/core-ui/src/*"
@@ -15,8 +15,7 @@
     }
   },
   "include": [
-    ".",
-    "src/shared/types/i18next.d.ts"
+    "."
   ],
   "exclude": [
     "node_modules",

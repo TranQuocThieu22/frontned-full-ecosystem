@@ -5557,6 +5557,121 @@ importers:
         specifier: 5.9.2
         version: 5.9.2
 
+  packages/aq-legacy-framework:
+    dependencies:
+      '@aq-fe/aq-core-framework':
+        specifier: workspace:*
+        version: link:../aq-core-framework
+      '@aq-fe/core-ui':
+        specifier: workspace:*
+        version: link:../core-ui
+      '@mantine/core':
+        specifier: 8.3.1
+        version: 8.3.1(@mantine/hooks@8.3.1(react@19.1.2))(@types/react@19.1.2)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      '@mantine/form':
+        specifier: 8.3.1
+        version: 8.3.1(react@19.1.2)
+      '@mantine/hooks':
+        specifier: 8.3.1
+        version: 8.3.1(react@19.1.2)
+      '@mantine/modals':
+        specifier: 8.3.1
+        version: 8.3.1(@mantine/core@8.3.1(@mantine/hooks@8.3.1(react@19.1.2))(@types/react@19.1.2)(react-dom@19.1.2(react@19.1.2))(react@19.1.2))(@mantine/hooks@8.3.1(react@19.1.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      '@mantine/notifications':
+        specifier: 8.3.1
+        version: 8.3.1(@mantine/core@8.3.1(@mantine/hooks@8.3.1(react@19.1.2))(@types/react@19.1.2)(react-dom@19.1.2(react@19.1.2))(react@19.1.2))(@mantine/hooks@8.3.1(react@19.1.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      '@mantinex/mantine-logo':
+        specifier: 2.0.0
+        version: 2.0.0(@mantine/core@8.3.1(@mantine/hooks@8.3.1(react@19.1.2))(@types/react@19.1.2)(react-dom@19.1.2(react@19.1.2))(react@19.1.2))(@mantine/hooks@8.3.1(react@19.1.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      '@react-oauth/google':
+        specifier: ^0.13.5
+        version: 0.13.5(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      '@tabler/icons-react':
+        specifier: 3.34.1
+        version: 3.34.1(react@19.1.2)
+      '@tanstack/react-query':
+        specifier: 5.85.9
+        version: 5.85.9(react@19.1.2)
+      '@tanstack/react-table':
+        specifier: 8.20.5
+        version: 8.20.5(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      '@tanstack/table-core':
+        specifier: ^8.21.3
+        version: 8.21.3
+      '@types/file-saver':
+        specifier: ^2.0.7
+        version: 2.0.7
+      axios:
+        specifier: 1.11.0
+        version: 1.11.0
+      clsx:
+        specifier: 2.1.1
+        version: 2.1.1
+      dayjs:
+        specifier: 1.11.18
+        version: 1.11.18
+      exceljs:
+        specifier: ^4.4.0
+        version: 4.4.0
+      file-saver:
+        specifier: ^2.0.5
+        version: 2.0.5
+      lodash:
+        specifier: 4.17.20
+        version: 4.17.20
+      lucide-react:
+        specifier: 0.534.0
+        version: 0.534.0(react@19.1.2)
+      mantine-form-zod-resolver:
+        specifier: 1.3.0
+        version: 1.3.0(@mantine/form@8.3.1(react@19.1.2))(zod@4.1.11)
+      mantine-react-table:
+        specifier: 2.0.0-beta.9
+        version: 2.0.0-beta.9(@mantine/core@8.3.1(@mantine/hooks@8.3.1(react@19.1.2))(@types/react@19.1.2)(react-dom@19.1.2(react@19.1.2))(react@19.1.2))(@mantine/dates@8.3.1(@mantine/core@8.3.1(@mantine/hooks@8.3.1(react@19.1.2))(@types/react@19.1.2)(react-dom@19.1.2(react@19.1.2))(react@19.1.2))(@mantine/hooks@8.3.1(react@19.1.2))(dayjs@1.11.18)(react-dom@19.1.2(react@19.1.2))(react@19.1.2))(@mantine/hooks@8.3.1(react@19.1.2))(@tabler/icons-react@3.34.1(react@19.1.2))(clsx@2.1.1)(dayjs@1.11.18)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
+      next:
+        specifier: 15.0.5
+        version: 15.0.5(@babel/core@7.28.5)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(sass@1.93.2)
+      react:
+        specifier: 19.1.2
+        version: 19.1.2
+      react-dom:
+        specifier: 19.1.2
+        version: 19.1.2(react@19.1.2)
+      react-i18next:
+        specifier: 16.2.4
+        version: 16.2.4(i18next@25.6.0(typescript@5.9.2))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(typescript@5.9.2)
+      tailwind-merge:
+        specifier: 2.6.0
+        version: 2.6.0
+      xlsx:
+        specifier: ^0.18.5
+        version: 0.18.5
+      zod:
+        specifier: 4.1.11
+        version: 4.1.11
+      zustand:
+        specifier: 5.0.8
+        version: 5.0.8(@types/react@19.1.2)(immer@10.1.1)(react@19.1.2)(use-sync-external-store@1.6.0(react@19.1.2))
+    devDependencies:
+      '@aq-fe/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@aq-fe/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: '20'
+        version: 20.19.11
+      '@types/react':
+        specifier: 19.1.2
+        version: 19.1.2
+      '@types/react-dom':
+        specifier: 19.1.2
+        version: 19.1.2(@types/react@19.1.2)
+      typescript:
+        specifier: 5.9.2
+        version: 5.9.2
+
   packages/core-ui:
     dependencies:
       '@dnd-kit/core':
@@ -14171,11 +14286,12 @@ packages:
 
   uuid@3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   v8-compile-cache-lib@3.0.1:
